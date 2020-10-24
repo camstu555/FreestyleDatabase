@@ -1,0 +1,13 @@
+/Users/camstewart/Desktop/rankings-2/rankings-2/obj/Debug/netstandard2.1/FreestyleDatabase.csprojAssemblyReference.cache
+/Users/camstewart/Desktop/rankings-2/rankings-2/obj/Debug/netstandard2.1/FreestyleDatabase.AssemblyInfoInputs.cache
+/Users/camstewart/Desktop/rankings-2/rankings-2/obj/Debug/netstandard2.1/FreestyleDatabase.AssemblyInfo.cs
+/Users/camstewart/Desktop/rankings-2/rankings-2/obj/Debug/netstandard2.1/FreestyleDatabase.csproj.CoreCompileInputs.cache
+/Users/camstewart/Desktop/rankings-2/rankings-2/obj/Debug/netstandard2.1/FreestyleDatabase.RazorComponent.input.cache
+/Users/camstewart/Desktop/rankings-2/rankings-2/obj/Debug/netstandard2.1/RazorDeclaration/App.razor.g.cs
+/Users/camstewart/Desktop/rankings-2/rankings-2/obj/Debug/netstandard2.1/RazorDeclaration/Pages/Database.razor.g.cs
+/Users/camstewart/Desktop/rankings-2/rankings-2/obj/Debug/netstandard2.1/RazorDeclaration/Pages/Index.razor.g.cs
+/Users/camstewart/Desktop/rankings-2/rankings-2/obj/Debug/netstandard2.1/RazorDeclaration/Pages/Rankings.razor.g.cs
+/Users/camstewart/Desktop/rankings-2/rankings-2/obj/Debug/netstandard2.1/RazorDeclaration/Shared/MainLayout.razor.g.cs
+/Users/camstewart/Desktop/rankings-2/rankings-2/obj/Debug/netstandard2.1/RazorDeclaration/Shared/NavMenu.razor.g.cs
+/Users/camstewart/Desktop/rankings-2/rankings-2/obj/Debug/netstandard2.1/RazorDeclaration/Shared/SurveyPrompt.razor.g.cs
+/Users/camstewart/Desktop/rankings-2/rankings-2/obj/Debug/netstandard2.1/RazorDeclaration/_Imports.razor.g.cs
