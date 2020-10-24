@@ -20,7 +20,7 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore -o release --nologo
+      run: dotnet publish --configuration Release -o release
     - name: Test
       run: dotnet test --no-restore --verbosity normal
 
