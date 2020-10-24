@@ -21,6 +21,9 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet publish --configuration Release -o release
+    # changes the base-tag in index.html from '/' to 'FreestyleDatabase' to match GitHub Pages repository subdirectory
+    - name: Change base-tag in index.html from / to FreestyleDatabase
+      run: sed -i 's/<base href="\/" \/>/<base href="\/FreestyleDatabase\/" \/>/g' release/wwwroot/index.html
     - name: Test
       run: dotnet test --no-restore --verbosity normal
 
@@ -30,3 +33,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
         FOLDER: release/wwwroot
+      
