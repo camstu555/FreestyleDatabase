@@ -3,7 +3,7 @@
 @using Radzen.Blazor
 @using rankings2.Models
 
-<h1>Freestyle Wrestling Results</h1>
+@*<h1>Freestyle Wrestling Results</h1>
 
 <RadzenTextBox @bind-Value="@text" Change="OnChange" />
 <RadzenTextBox @bind-Value="@country" Change="OnChange" />
@@ -11,7 +11,7 @@
 
 
 
-<h1>@text</h1>
+<h1>@text</h1>*@
 
 @if (wrestlingData == null)
 {
@@ -19,55 +19,65 @@
 }
 
 
-<RadzenGrid AllowSorting="true" AllowPaging="true" AllowFiltering="true" Data="@wrestlingData" TItem="WrestlingDataModel" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Responsive="false" PageSize="20" PageNumbersCount="20">
+<RadzenGrid AllowSorting="true" AllowPaging="true" AllowFiltering="true" Data="@wrestlingData" TItem="WrestlingDataModel" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Responsive="false" PageSize="30" PageNumbersCount="25">
     <Columns>
-        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="WeightClass" Title="Weight Class" Type="string" TextAlign="Radzen.TextAlign.Center">
+        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="WeightClass" Title="Wt." Type="string" TextAlign="Radzen.TextAlign.Center" Width="50px">
             <Template>
                 @data.WeightClass
             </Template>
         </RadzenGridColumn>
-        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Country1" Title="Country" Type="string" Width="100px" TextAlign="Radzen.TextAlign.Center">
+        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Country1" Title="Co." Type="string" Width="40px" TextAlign="Radzen.TextAlign.Center">
             <Template>
                 <span title=@data.FullCountryName1>@data.Country1Emoji</span>
             </Template>
         </RadzenGridColumn>
         <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="WrestlerName1" Title="Name" Type="string" TextAlign="Radzen.TextAlign.Center">
             <Template>
-               <span title=@data.WrestlerName1>@data.WrestlerName1</span>
+                <span title=@data.FixedWrestlerName1><strong>@data.FixedWrestlerName1</strong></span>
 
             </Template>
         </RadzenGridColumn>
-        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Score" Title="Score" Type="string" Filterable="false" Sortable="false" TextAlign="Radzen.TextAlign.Center" Width="75px">
+        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Result" Title="Result" Type="string" Filterable="false" Sortable="false" TextAlign="Radzen.TextAlign.Center" Width="60px">
+            <Template>
+                @data.Result
+            </Template>
+        </RadzenGridColumn>
+        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Score" Title="Score" Type="string" Filterable="false" Sortable="false" TextAlign="Radzen.TextAlign.Center" Width="60px">
             <Template>
                 @data.Score
             </Template>
         </RadzenGridColumn>
         <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="WrestlerName2" Title="Name" Type="string" TextAlign="Radzen.TextAlign.Center">
             <Template>
-                <span title=@data.WrestlerName2>@data.WrestlerName2</span>
+                <span title=@data.FixedWrestlerName2>@data.FixedWrestlerName2</span>
             </Template>
         </RadzenGridColumn>
-        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Country2" Title="Country" Type="string" TextAlign="Radzen.TextAlign.Center" Width="75px">
+        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Country2" Title="Co." Type="string" TextAlign="Radzen.TextAlign.Center" Width="40px">
             <Template>
                 <span title=@data.FullCountryName2>@data.Country2Emoji</span>
             </Template>
         </RadzenGridColumn>
-        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Round" Title="Round" Type="string" Sortable="false" TextAlign="Radzen.TextAlign.Center">
+        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Round" Title="Round" Type="string" Sortable="false" TextAlign="Radzen.TextAlign.Center" Width="100px">
             <Template>
                 @data.Round
             </Template>
         </RadzenGridColumn>
-        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Date" Title="Date" Type="DateTime" TextAlign="Radzen.TextAlign.Center">
+        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Date" Title="Date" Type="DateTime" TextAlign="Radzen.TextAlign.Center" Width="90px">
             <Template>
                 @data.Date
             </Template>
         </RadzenGridColumn>
-        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Venue" Title="Event" Type="string" TextAlign="Radzen.TextAlign.Center">
+        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Venue" Title="Event" Type="string" TextAlign="Radzen.TextAlign.Center" Width="200px">
             <Template>
-                @data.Venue
+                <span title=@data.Venue>@data.Venue</span>
             </Template>
         </RadzenGridColumn>
-        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Video" Title="Video" Type="string" TextAlign="Radzen.TextAlign.Center" Filterable="false" Sortable="false" Width="75px">
+        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Venue" Title="City" Type="string" TextAlign="Radzen.TextAlign.Center" Width="180px">
+            <Template>
+                <span title=@data.Location>@data.Location</span>
+            </Template>
+        </RadzenGridColumn>
+        <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Video" Title="Video" Type="string" TextAlign="Radzen.TextAlign.Center" Filterable="false" Sortable="false" Width="65px">
             <Template Context="data">
                 @if (data.Video == "")
                 {
@@ -85,7 +95,9 @@
     </Columns>
 </RadzenGrid>
 
-<h1>Total Matches: 1727</h1>
+<br />
+<br />
+<br />
 
 
 @code {

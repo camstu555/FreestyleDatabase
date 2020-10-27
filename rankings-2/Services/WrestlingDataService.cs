@@ -64,6 +64,7 @@ namespace rankings2.Services
                     WrestlerName2 = data.GsxName2.Value,
                     WeightClass = data.GsxWeightClass.Value,
                     Venue = data.GsxTournament.Value,
+                    Location = data.GsxLocation.Value,
                     Result = data.GsxResult.Value,
                     Round = data.GsxRound.Value,
                     Score = data.GsxScore.Value,

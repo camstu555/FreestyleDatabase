@@ -65,6 +65,9 @@ namespace rankings2.Models
         [JsonPropertyName("gsx$video")]
         public GoogleSheetValueModel GsxVideo { get; set; }
 
+        [JsonPropertyName("gsx$location")]
+        public GoogleSheetValueModel GsxLocation { get; set; }
+
     }
 
     public class GoogleSheetValueModel

@@ -61,6 +61,23 @@ namespace rankings2.Models
 
         public string WrestlerName1 { get; set; }
 
+        public string FixedWrestlerName1
+        {
+            get
+            {
+                try
+                {
+                    var lowercase = WrestlerName1.ToLower();
+                    var newName = NameFixer.FirstCharToUpper(lowercase);
+                    return newName;
+                }
+                catch (Exception ex)
+                {
+                    return ex.Message;
+                }
+            }
+        }
+
         public string Result { get; set; }
 
         public string Score { get; set; }
@@ -88,11 +105,30 @@ namespace rankings2.Models
 
         public string WrestlerName2 { get; set; }
 
+        public string FixedWrestlerName2
+        {
+            get
+            {
+                try
+                {
+                    var lowercase = WrestlerName2.ToLower();
+                    var newName = NameFixer.FirstCharToUpper(lowercase);
+                    return newName;
+                }
+                catch (Exception ex)
+                {
+                    return ex.Message;
+                }
+            }
+        }
+
         public string Result2 { get; set; }
 
         public string Date { get; set; }
 
         public string Venue { get; set; }
+
+        public string Location { get; set; }
 
         public string Round { get; set; }
 

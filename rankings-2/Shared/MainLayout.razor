@@ -1,16 +1,33 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="sidebar">
-    <NavMenu />
-</div>
+    <div class="main">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">FreestyleWrestling.org</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-<div class="main">
-    <div class="top-row px-4">
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="Database"> <span class="oi oi-list-rich" aria-hidden="true"></span> International Database <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Rankings"> <span class="oi oi-graph" aria-hidden="true"></span> Rankings</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
 
-        <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+
+        <div class="content px-4">
+            @Body
+        </div>
     </div>
+       
 
-    <div class="content px-4">
-        @Body
-    </div>
-</div>
+
+
+
