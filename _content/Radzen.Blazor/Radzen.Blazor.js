@@ -405,6 +405,7 @@ window.Radzen = {
     var uploadComponent =
       Radzen.uploadComponents && Radzen.uploadComponents[fileInput.id];
     if (uploadComponent) {
+      uploadComponent.files = Array.from(fileInput.files);
       uploadComponent.invokeMethodAsync('RadzenUpload.OnChange', files);
     }
 
@@ -413,23 +414,27 @@ window.Radzen = {
       URL.revokeObjectURL(file.Url);
     }
   },
-  skipFileFromUpload: function (name) {
-    if (!Radzen.filesToSkipOnUpload) {
-      Radzen.filesToSkipOnUpload = [];
+  removeFileFromUpload: function (fileInput, name) {
+    var uploadComponent = Radzen.uploadComponents && Radzen.uploadComponents[fileInput.id];
+    if (!uploadComponent) return;
+    var file = uploadComponent.files.find(function (f) { return f.name == name; })
+    if (!file) return;
+    var index = uploadComponent.files.indexOf(file)
+    if (index != -1) {
+        uploadComponent.files.splice(index, 1);
     }
-
-    Radzen.filesToSkipOnUpload.push(name);
+    fileInput.value = '';
   },
   upload: function (fileInput, url, multiple) {
+    var uploadComponent = Radzen.uploadComponents && Radzen.uploadComponents[fileInput.id];
+    if(!uploadComponent) return;
+    if (!uploadComponent.files) {
+        uploadComponent.files = Array.from(fileInput.files);
+    }
     var data = new FormData();
     var files = [];
-    for (var i = 0; i < fileInput.files.length; i++) {
-      var file = fileInput.files[i];
-      if (
-        Radzen.filesToSkipOnUpload &&
-        Radzen.filesToSkipOnUpload.indexOf(file.name) != -1
-      )
-        continue;
+    for (var i = 0; i < uploadComponent.files.length; i++) {
+      var file = uploadComponent.files[i];
       data.append(multiple ? 'files' : 'file', file, file.name);
       files.push({Name: file.name, Size: file.size});
     }
