@@ -1,25 +1,28 @@
 @page "/Database"
+
+@inject QueryParameterService Query
 @inject WrestlingDataService Http
 @using Radzen.Blazor
 @using rankings2.Models
 
-@*<h1>Freestyle Wrestling Results</h1>
-
-<RadzenTextBox @bind-Value="@text" Change="OnChange" />
-<RadzenTextBox @bind-Value="@country" Change="OnChange" />
-<RadzenTextBox @bind-Value="@emoji" Change="OnChange" />
-
-
-
-<h1>@text</h1>*@
 
 @if (wrestlingData == null)
 {
-    <p>Loading...</p>
+    <p>Loading...Hang tight we are loading thousands of matches for you!</p>
 }
+else{ 
+<RadzenTextBox Placeholder="Wrestler Name" @bind-Value="@text" Change="OnChange" />
 
 
-<RadzenGrid AllowSorting="true" AllowPaging="true" AllowFiltering="true" Data="@wrestlingData" TItem="WrestlingDataModel" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Responsive="false" PageSize="30" PageNumbersCount="25">
+@*<RadzenTextBox @bind-Value="@country" Change="OnChange" />
+<RadzenTextBox @bind-Value="@emoji" Change="OnChange" />*@
+
+<br />
+<br />
+
+
+
+<RadzenGrid AllowSorting="true" AllowPaging="true" AllowFiltering="false" Data="@wrestlingData" TItem="WrestlingDataModel" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Responsive="false" PageSize="30" PageNumbersCount="25">
     <Columns>
         <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="WeightClass" Title="Wt." Type="string" TextAlign="Radzen.TextAlign.Center" Width="50px">
             <Template>
@@ -94,7 +97,7 @@
         </RadzenGridColumn>
     </Columns>
 </RadzenGrid>
-
+}
 <br />
 <br />
 <br />
@@ -112,9 +115,18 @@
 
     private List<WrestlingDataModel> wrestlingData;
 
+
     protected override async Task OnInitializedAsync()
     {
-        wrestlingData = await Http.GetWrestlerDataAsync();
+        text = Query["name"];
+        if (string.IsNullOrEmpty(text))
+        {
+            wrestlingData = await Http.GetWrestlerDataAsync();
+        }
+        else
+        {
+            wrestlingData = await Http.SearchWrestlerDataAsync(text, country, emoji);
+        }
     }
 
 
