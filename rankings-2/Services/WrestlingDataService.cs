@@ -16,7 +16,7 @@ namespace rankings2.Services
             this.googleSheetService = googleSheetService;
         }
 
-        public async Task<List<WrestlingDataModel>> SearchWrestlerDataAsync(string name = null, string country = null, string emoji = null)
+        public async Task<List<WrestlingDataModel>> SearchWrestlerDataAsync(string name = null, string country = null, string emoji = null, string weight = null, string tournament = null)
         {
             var results = await GetWrestlerDataAsync();
 
@@ -38,6 +38,20 @@ namespace rankings2.Services
             {
                 results = results
                     .Where(d => d.Country1Emoji.Contains(emoji, StringComparison.CurrentCultureIgnoreCase) || d.Country2Emoji.Contains(emoji, StringComparison.CurrentCultureIgnoreCase))
+                    .ToList();
+            }
+
+            if (weight != null)
+            {
+                results = results
+                    .Where(d => d.WeightClass.Contains(weight, StringComparison.CurrentCultureIgnoreCase))
+                    .ToList();
+            }
+
+            if (tournament   != null)
+            {
+                results = results
+                    .Where(d => d.Venue.Contains(tournament, StringComparison.CurrentCultureIgnoreCase))
                     .ToList();
             }
 
