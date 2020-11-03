@@ -425,10 +425,10 @@ window.Radzen = {
     }
     fileInput.value = '';
   },
-  upload: function (fileInput, url, multiple) {
+  upload: function (fileInput, url, multiple, clear) {
     var uploadComponent = Radzen.uploadComponents && Radzen.uploadComponents[fileInput.id];
     if(!uploadComponent) return;
-    if (!uploadComponent.files) {
+      if (!uploadComponent.files || clear) {
         uploadComponent.files = Array.from(fileInput.files);
     }
     var data = new FormData();
