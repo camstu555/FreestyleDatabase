@@ -11,8 +11,17 @@
     <div class="spinner"></div>
     <p>Hang tight we are loading thousands of matches for you!</p>
 }
+
 else
 {
+    if (password != realPassword)
+    {
+<RadzenPassword Placeholder="Enter password..." @bind-Value="@password" Change="OnChange"/>
+    }
+
+    if (password == realPassword)
+    {
+
     <RadzenTextBox Placeholder="Wrestler Name" @bind-Value="@text" Change="OnChange" />
     <br />
     <RadzenDropDown Placeholder="Weight Class" AllowClear="true" TValue="string"
@@ -117,10 +126,11 @@ else
             </RadzenGridColumn>
         </Columns>
     </RadzenGrid>
+    }
+<br />
+<br />
+<br />
 }
-<br />
-<br />
-<br />
 
 
 @code {
@@ -129,6 +139,8 @@ else
     public string country;
     public string emoji;
     public string tournament;
+    public string password;
+    public string realPassword = "YazdaniTheGreatest";
 
     public async Task OnChange()
     {
