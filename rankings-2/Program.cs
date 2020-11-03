@@ -23,8 +23,6 @@ namespace rankings_2
             builder.Services.AddScoped<WrestlingDataService>();
             builder.Services.AddScoped<QueryParameterService>();
 
-            services.AddGoogleAnalytics("G-L2542MW6YR");
-
             await builder.Build().RunAsync();
         }
     }
