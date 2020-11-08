@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Collections.Generic;
 
 namespace rankings2.Services
 {
@@ -29,6 +30,34 @@ namespace rankings2.Services
                 }
             }
             return new string(array);
+        }
+
+        public static string FixAmerican(string newAmericanName)
+
+        {
+            Dictionary<string, string> americans = new Dictionary<string, string>()
+        {
+            {"Jordan Ernest Burroughs", "Jordan Burroughs"},
+            {"Jordan Michael Oliver", "Jordan Oliver"},
+            {"Daton Duain Fix", "Daton Fix"},
+            {"Tyler Lee Graff", "Tyler Graff"}
+        };
+
+              foreach (var pair in americans)
+                {
+                string name = pair.Key;
+
+                if (newAmericanName.Contains(name))
+                {
+                    return pair.Value;
+                }
+               
+                }
+
+            return newAmericanName;
+
+
+
         }
     }
 }
