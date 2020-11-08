@@ -570,8 +570,8 @@ window.Radzen = {
       var scrollTop = document.documentElement.scrollTop;
     }
 
-    var top = y ? y : parentRect.bottom + scrollTop;
-    var left = x ? x : parentRect.left + scrollLeft;
+    var top = y ? y + scrollTop: parentRect.bottom + scrollTop;
+    var left = x ? x + scrollLeft: parentRect.left + scrollLeft;
 
     if (syncWidth) {
         popup.style.width = parentRect.width + 'px';
@@ -768,6 +768,7 @@ window.Radzen = {
           false
         );
         var file = fileInput.files[0];
+        if (!file) return;
         if (file.size <= maxFileSize) {
           reader.readAsDataURL(file);
         } else {
