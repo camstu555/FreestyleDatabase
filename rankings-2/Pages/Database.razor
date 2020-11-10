@@ -104,8 +104,20 @@ else
                 </RadzenGridColumn>
                 <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Venue" Title="Event" Type="string" TextAlign="Radzen.TextAlign.Center" Width="200px">
                     <Template>
-                        <span title=@data.Venue>@data.Venue</span>
-                    </Template>
+                        @if (data.Brackets != "") { 
+
+                        <span title="Brackets - @data.Venue">
+                            <a href="@data.Brackets" target="_blank">
+                                @data.Venue
+                            </a>
+                           </span>
+                        }
+                        else
+                        {
+                    <span title=@data.Venue>
+                        @data.Venue</span>
+                                            }
+</Template>
                 </RadzenGridColumn>
                 <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Venue" Title="City" Type="string" TextAlign="Radzen.TextAlign.Center" Width="180px">
                     <Template>

@@ -137,5 +137,7 @@ namespace rankings2.Models
 
         public string Video { get; set; }
 
+        public string Brackets { get; set; }
+
     }
 }

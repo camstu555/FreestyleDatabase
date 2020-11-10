@@ -18,7 +18,7 @@
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Models\" />
-        <Folder Include="Shared\" />
-        <Folder Include="Pages\" />
+    <Folder Include="Shared\" />
+    <Folder Include="Pages\" />
   </ItemGroup>
 </Project>

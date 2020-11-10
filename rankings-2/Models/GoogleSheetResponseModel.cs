@@ -68,6 +68,9 @@ namespace rankings2.Models
         [JsonPropertyName("gsx$location")]
         public GoogleSheetValueModel GsxLocation { get; set; }
 
+        [JsonPropertyName("gsx$bracket")]
+        public GoogleSheetValueModel GsxBracket { get; set; }
+
     }
 
     public class GoogleSheetValueModel

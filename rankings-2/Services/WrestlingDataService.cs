@@ -83,6 +83,7 @@ namespace rankings2.Services
                     Round = data.GsxRound.Value,
                     Score = data.GsxScore.Value,
                     Video = data.GsxVideo.Value,
+                    Brackets = data.GsxBracket.Value,
                 }); ; ;
             });
 
