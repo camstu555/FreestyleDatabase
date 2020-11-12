@@ -30,6 +30,7 @@ else
         <RadzenDropDown Placeholder="Weight Class" AllowClear="true" TValue="string"
                         Data="@(wrestlingData.Select(name => name.WeightClass).Distinct())"
                         TextProperty="WeightClass" ValueProperty="WeightClass" @bind-Value="@weight" Change="OnChange" />
+
         <br />
         <RadzenTextBox Placeholder="Country" @bind-Value="@country" Change="OnChange" />
         <br />
@@ -45,6 +46,9 @@ else
 
 
         {
+            <h3>Search Opponents</h3>
+
+            <RadzenTextBox Placeholder="Wrestler Name" @bind-Value="@opponent" Change="OnChange" />
             var wins = wrestlingData.Where(name => name.FixedWrestlerName1.Contains(text, StringComparison.CurrentCultureIgnoreCase)).Count();
             var losses = wrestlingData.Where(name => name.FixedWrestlerName2.Contains(text, StringComparison.CurrentCultureIgnoreCase)).Count();
             <h1>Wins: @wins</h1>
@@ -104,20 +108,22 @@ else
                 </RadzenGridColumn>
                 <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Venue" Title="Event" Type="string" TextAlign="Radzen.TextAlign.Center" Width="200px">
                     <Template>
-                        @if (data.Brackets != "") { 
+                        @if (data.Brackets != "")
+                        {
 
-                        <span title="Brackets - @data.Venue">
-                            <a href="@data.Brackets" target="_blank">
-                                @data.Venue
-                            </a>
-                           </span>
+                            <span title="Brackets - @data.Venue">
+                                <a href="@data.Brackets" target="_blank">
+                                    @data.Venue
+                                </a>
+                            </span>
                         }
                         else
                         {
-                    <span title=@data.Venue>
-                        @data.Venue</span>
-                                            }
-</Template>
+                            <span title=@data.Venue>
+                                @data.Venue
+                            </span>
+                        }
+                    </Template>
                 </RadzenGridColumn>
                 <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Venue" Title="City" Type="string" TextAlign="Radzen.TextAlign.Center" Width="180px">
                     <Template>
@@ -155,11 +161,12 @@ else
     public string emoji;
     public string tournament;
     public string password;
+    public string opponent;
     public string realPassword = "YazdaniTheGreatest";
 
     public async Task OnChange()
     {
-        wrestlingData = await Http.SearchWrestlerDataAsync(text, country, emoji, weight, tournament);
+        wrestlingData = await Http.SearchWrestlerDataAsync(text, country, emoji, weight, tournament, opponent);
         this.StateHasChanged();
     }
 
