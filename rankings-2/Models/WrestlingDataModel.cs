@@ -116,7 +116,10 @@ namespace rankings2.Models
                 {
                     var lowercase = WrestlerName2.ToLower();
                     var newName = NameFixer.FirstCharToUpper(lowercase);
-                    return newName;
+                    var fixAmericanName = NameFixer.FixAmerican(newName);
+
+                    return fixAmericanName;
+
                 }
                 catch (Exception ex)
                 {
