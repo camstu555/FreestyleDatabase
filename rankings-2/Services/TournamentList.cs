@@ -71,7 +71,9 @@ namespace rankings2.Services
             tourney2019.Add("2019 Kristjan Palusalu Memorial");
             tourney2019.Add("2019 Mongolia Open");
             tourney2019.Add("2019 African Championships");
+            tourney2019.Add("2019 World Cup");
             tourney2019.Add("2019 Dan Kolov");
+            tourney2019.Add("2019 Cerro Pelado");
             tourney2019.Add("2018 German League");
             tourney2019.Add("2019 Takhti Cup");
             tourney2019.Add("2019 Henri Deglane");
@@ -112,6 +114,7 @@ namespace rankings2.Services
             tourney2018.Add("2018 Pan-American Championships");
             tourney2018.Add("2018 European Championships");
             tourney2018.Add("2018 Commonwealth Games");
+            tourney2018.Add("2018 World Cup");
             tourney2018.Add("2018 Kristjan Paluslau");
             tourney2018.Add("2018 Dan Kolov");
             tourney2018.Add("2018 Central American & Carribean Championships");
