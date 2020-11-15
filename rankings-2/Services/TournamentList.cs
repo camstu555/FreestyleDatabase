@@ -123,6 +123,7 @@ namespace rankings2.Services
             tourney2018.Add("2018 Outstanding Ukrainian");
             tourney2018.Add("2018 Cerro Pelado");
             tourney2018.Add("2018 Takhti Cup");
+            tourney2018.Add("2018 African Championships");
             tourney2018.Add("2018 Indian Pro League");
             tourney2018.Add("2018 Ivan Yariguin");
 
