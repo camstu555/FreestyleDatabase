@@ -19,8 +19,8 @@ namespace rankings2.Models
                     var code = CountryCodeConverter.ConvertThreeLetterNameToTwoLetterName(Country1);
                     return string.Concat(code.Select(x => char.ConvertFromUtf32(x + 0x1F1A5)));
                 }
-                catch (Exception ex) {
-                    return ex.Message;
+                catch  {
+                    return Country1;
                 }
             }
         }
@@ -34,9 +34,9 @@ namespace rankings2.Models
                     var code = CountryCodeConverter.ConvertThreeLetterNameToTwoLetterName(Country1);
                     return CountryCodeConverter.TwoLetterNameToDisplayName(code);
                 }
-                catch (Exception ex)
+                catch
                 {
-                    return ex.Message;
+                    return Country1;
                 }
             }
         }
@@ -50,9 +50,9 @@ namespace rankings2.Models
                     var code = CountryCodeConverter.ConvertThreeLetterNameToTwoLetterName(Country2);
                     return CountryCodeConverter.TwoLetterNameToDisplayName(code);
                 }
-                catch (Exception ex)
+                catch
                 {
-                    return ex.Message;
+                    return Country2;
                 }
             }
         }
@@ -99,9 +99,9 @@ namespace rankings2.Models
 
                     return string.Concat(code.Select(x => char.ConvertFromUtf32(x + 0x1F1A5)));
                 }
-                catch (Exception ex)
+                catch
                 {
-                    return ex.Message;
+                    return Country2;
                 }
             }
         }

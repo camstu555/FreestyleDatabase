@@ -5,14 +5,11 @@
 @using Radzen.Blazor
 @using rankings2.Models
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-
-
 
 @if (wrestlingData == null)
 {
     <div class="spinner"></div>
-    <p>Hang tight we are loading thousands of matches for you!</p>
+    <p>Hang tight we are loading over 15,000 matches for you!</p>
 }
 
 else
@@ -40,7 +37,6 @@ else
         <br />
         <br />
 
-
         @if (text != "")
 
 
@@ -58,7 +54,8 @@ else
 
         <h1>@wrestlingData.Count() Total Matches</h1>
 
-        <RadzenGrid AllowSorting="true" AllowPaging="true" AllowFiltering="false" Data="@wrestlingData" TItem="WrestlingDataModel" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Responsive="false" PageSize="30" PageNumbersCount="25">
+
+        <RadzenGrid AllowSorting="true" AllowPaging="true" AllowFiltering="false" Data="@wrestlingData" TItem="WrestlingDataModel" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Responsive="false" PageSize="100" PageNumbersCount="25" >
             <Columns>
                 <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="WeightClass" Title="Wt." Type="string" TextAlign="Radzen.TextAlign.Center" Width="50px">
                     <Template>
@@ -164,6 +161,7 @@ else
     public string opponent;
     public string realPassword = "YazdaniTheGreatest";
 
+
     public async Task OnChange()
     {
         wrestlingData = await Http.SearchWrestlerDataAsync(text, country, emoji, weight, tournament, opponent);
@@ -174,6 +172,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+
+
         text = Query["name"];
         tournament = Query["year"];
         tournament = Query["event"];
@@ -185,6 +185,7 @@ else
         {
             wrestlingData = await Http.SearchWrestlerDataAsync(text, country, emoji, weight, tournament);
         }
+
     }
 
 }

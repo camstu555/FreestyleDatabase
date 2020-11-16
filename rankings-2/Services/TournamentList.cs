@@ -13,6 +13,7 @@ namespace rankings2.Services
             List<string> tourney2020 = new List<string>();
             List<string> tourney2019 = new List<string>();
             List<string> tourney2018 = new List<string>();
+            tourney2020.Add("2020 FloWrestling Burroughs-Valencia");
             tourney2020.Add("2020 Moscow Grand Prix");
             tourney2020.Add("2020 Iran World Team Wrestle-Offs");
             tourney2020.Add("2020 Belarus Championship");
@@ -42,6 +43,7 @@ namespace rankings2.Services
             tourney2019.Add("2019 Alans");
             tourney2019.Add("2019 Grand Prix of Moscow");
             tourney2019.Add("2019 Iran Premier League");
+            tourney2019.Add("2019 Kunayev");
             tourney2019.Add("2019 U23 World Championships");
             tourney2019.Add("2019 World Military Games");
             tourney2019.Add("2019 Akhmat Kadyrov");
