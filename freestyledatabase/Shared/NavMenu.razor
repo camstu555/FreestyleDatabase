@@ -1,0 +1,35 @@
+﻿@code {
+    bool collapseNavMenu = true;
+
+    string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow">
+
+    <a class="navbar-brand text-light" asp-area="" href="#">FreestyleRankings.org</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="@NavMenuCssClass navbar-collapse d-sm-inline-flex flex-sm-row-reverse" @onclick="ToggleNavMenu">
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link" href="Database"> <span class="oi oi-list-rich" aria-hidden="true"></span> International Database <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="Rankings"> <span class="oi oi-graph" aria-hidden="true"></span> Rankings</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="Champions"> <span class="oi oi-badge" aria-hidden="true"></span> Current World/Oly Champs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="Contact"> <span class="oi oi-envelope-closed" aria-hidden="true"></span> Contact</a>
+            </li>
+        </ul>
+    </div>
+</nav>
