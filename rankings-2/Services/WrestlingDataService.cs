@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Radzen;
+using rankings2.Extensions;
 using rankings2.Models;
 
 namespace rankings2.Services
@@ -45,7 +46,7 @@ namespace rankings2.Services
             if (emoji != null)
             {
                 results = results
-                    .Where(d => d.Country1Emoji.Contains(emoji, StringComparison.CurrentCultureIgnoreCase) || d.Country2Emoji.Contains(emoji, StringComparison.CurrentCultureIgnoreCase))
+                    .Where(d => d.Country1Emoji().Contains(emoji, StringComparison.CurrentCultureIgnoreCase) || d.Country2Emoji.Contains(emoji, StringComparison.CurrentCultureIgnoreCase))
                     .ToList();
             }
 
@@ -92,7 +93,7 @@ namespace rankings2.Services
                     Score = data.GsxScore.Value,
                     Video = data.GsxVideo.Value,
                     Brackets = data.GsxBracket.Value,
-                }); ; ;
+                });
             });
 
             return results;

@@ -39,8 +39,6 @@ else
 
         @if (text != "")
 
-
-
         {
             <h3>Search Opponents</h3>
 
@@ -64,7 +62,7 @@ else
                 </RadzenGridColumn>
                 <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Country1" Title="Co." Type="string" Width="40px" TextAlign="Radzen.TextAlign.Center">
                     <Template>
-                        <span title=@data.FullCountryName1>@data.Country1Emoji</span>
+                        <span title=@data.FullCountryName1>@data.Country1Emoji()</span>
                     </Template>
                 </RadzenGridColumn>
                 <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="WrestlerName1" Title="Name" Type="string" TextAlign="Radzen.TextAlign.Center">

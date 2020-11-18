@@ -9,21 +9,6 @@ namespace rankings2.Models
     {
         public string Country1 { get; set; }
 
-        public string Country1Emoji
-        {
-            get
-            {
-               
-                try
-                {
-                    var code = CountryCodeConverter.ConvertThreeLetterNameToTwoLetterName(Country1);
-                    return string.Concat(code.Select(x => char.ConvertFromUtf32(x + 0x1F1A5)));
-                }
-                catch  {
-                    return Country1;
-                }
-            }
-        }
 
         public string FullCountryName1
         {

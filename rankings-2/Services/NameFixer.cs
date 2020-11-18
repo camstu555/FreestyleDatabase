@@ -32,10 +32,7 @@ namespace rankings2.Services
             return new string(array);
         }
 
-        public static string FixAmerican(string newAmericanName)
-
-        {
-            Dictionary<string, string> americans = new Dictionary<string, string>()
+        public static Dictionary<string, string> americans = new Dictionary<string, string>()
         {
             {"Jordan Ernest Burroughs", "Jordan Burroughs"},
             {"Jordan Michael Oliver", "Jordan Oliver"},
@@ -116,27 +113,27 @@ namespace rankings2.Services
             {"Mark John Hall", "Mark Hall"},
             {"James Patrick Downey", "Pat Downey"},
             {"James Patrick Downey Iii", "Pat Downey"},
-            {"Samuel Joseph Brooks", "Sammy Brooks"},  
+            {"Samuel Joseph Brooks", "Sammy Brooks"},
             {"Nicholas Joseph Heflin", "Nick Heflin"},
             {"Trent Niemond Hidlay", "Trent Hidlay"},
             {"Lou John Perez", "Lou Perez"},
             {"Christian Brian Hipsher", "Christian Hipsher"},
-            {"Matthew Christopher Ferraro", "Matthew Ferraro"},  
+            {"Matthew Christopher Ferraro", "Matthew Ferraro"},
             {"Kenneth Rashad Courts", "Kenny Courts"},
             {"J’den Michael Tbory Cox", "J’den Cox"},
             {"Michael Justin Macchiavello", "Mike Macchiavello"},
             {"Bo Dean Nickal", "Bo Nickal"},
-            {"Lucas John Davison", "Lucas Davison"},  
+            {"Lucas John Davison", "Lucas Davison"},
             {"Christian William Brunner", "Christian Brunner"},
             {"Jacob Alexander Warner", "Jacob Warner"},
             {"Kyle Frederick Snyder", "Kyle Snyder"},
             {"Benjamin Errol Provisor", "Ben Provisor"},
-            {"Ty Ryan Jack Walz", "Ty Walz"},  
+            {"Ty Ryan Jack Walz", "Ty Walz"},
             {"Hayden Nicholas Zillmer", "Hayden Zillmer"},
             {"Kyven Ross Gadson", "Kyven Gadson"},
             {"Kollin Raymond Moore", "Kollin Moore"},
             {"Zachery Samuel Elam ", "Zach Elam"},
-            {"Nathan Joseph Burak", "Nathan Burak"},  
+            {"Nathan Joseph Burak", "Nathan Burak"},
             {"Micah Leo Burak", "Micah Burak"},
             {"Franklin Gomez Matos", "Franklin Gomez"},
             {"Frank Chamizo Marquez", "Frank Chamizo"},
@@ -398,7 +395,7 @@ namespace rankings2.Services
             {"Mohammed Al Jawad Zuhair K Kareem", "Mohammed Kareem"},
             {"Divoshan Charles Fernando", "Divoshan Fernando "},
             {"Mehran Nasiriafrachali", "Mehran Nasiri"},
-            {"Karam Shakir Mhmood Mahmood", "Karam Mahmood "}, 
+            {"Karam Shakir Mhmood Mahmood", "Karam Mahmood "},
             {"Mohammed J M Th A Abdulkareem", "Mohammed Abdulkareem"},
             {"Abdullrahman Ibrahim A. Ibrahim", "Abdullrahman Ibrahim"},
             {"Bat-erdene Byambasuren", "Bat-Erdene Byambasuren"},
@@ -416,6 +413,13 @@ namespace rankings2.Services
 
 
         };
+
+
+
+        public static string FixAmerican(string newAmericanName)
+
+        {
+
 
               foreach (var pair in americans)
                 {
