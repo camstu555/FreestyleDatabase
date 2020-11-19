@@ -72,7 +72,8 @@ namespace FreestyleDatabase.Shared.Services
                 corsOptions = new
                 {
                     allowedOrigins = new[] { "*" }
-                }
+                },
+                suggesters = GetSuggesterFromWrestlerModel()
             };
 
             var payloadAsJson = JsonConvert
@@ -181,6 +182,22 @@ namespace FreestyleDatabase.Shared.Services
             return await response.Content.ReadAsStringAsync();
         }
 
+        private List<object> GetSuggesterFromWrestlerModel()
+        {
+            return new List<object>
+            {
+                new {
+                    name = "ac",
+                    searchMode = "analyzingInfixMatching",
+                    sourceFields = new [] {
+                        nameof(WrestlingDataModel.WrestlerName1),
+                        nameof(WrestlingDataModel.WrestlerName2),
+                        nameof(WrestlingDataModel.Venue)
+                    }
+                }
+            };
+        }
+
         private List<object> GetSchemeFromWrestlerModel()
         {
             var type = typeof(WrestlingDataModel);
@@ -196,7 +213,7 @@ namespace FreestyleDatabase.Shared.Services
                 result.Add(new
                 {
                     name = prop.Name,
-                    type = "Edm.String",
+                    type = prop.Name.Equals("date", StringComparison.OrdinalIgnoreCase) ? "Edm.DateTimeOffset" : "Edm.String",
                     key = prop.Name.Equals("id", StringComparison.OrdinalIgnoreCase),
                     searchable = true,
                     filterable = true,

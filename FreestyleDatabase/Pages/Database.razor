@@ -39,8 +39,8 @@ else
             <h3>Search Opponents</h3>
 
             <RadzenTextBox Placeholder="Wrestler Name" @bind-Value="@opponent" Change="OnChange" />
-            var wins = wrestlingData.Where(name => name.FixedWrestlerName1().Contains(text, StringComparison.CurrentCultureIgnoreCase)).Count();
-            var losses = wrestlingData.Where(name => name.FixedWrestlerName2().Contains(text, StringComparison.CurrentCultureIgnoreCase)).Count();
+            var wins = wrestlingData.Where(name => name.FixedWrestlerName1.Contains(text, StringComparison.CurrentCultureIgnoreCase)).Count();
+            var losses = wrestlingData.Where(name => name.FixedWrestlerName2.Contains(text, StringComparison.CurrentCultureIgnoreCase)).Count();
             <h1>Wins: @wins</h1>
             <h1>Loses: @losses</h1>
 
@@ -57,12 +57,12 @@ else
                 </RadzenGridColumn>
                 <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Country1" Title="Co." Type="string" Width="40px" TextAlign="Radzen.TextAlign.Center">
                     <Template>
-                        <span title=@data.FullCountryName1()>@data.Country1Emoji()</span>
+                        <span title=@data.FullCountryName1>@data.Country1Emoji</span>
                     </Template>
                 </RadzenGridColumn>
                 <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="WrestlerName1" Title="Name" Type="string" TextAlign="Radzen.TextAlign.Center">
                     <Template>
-                        <span title=@data.FixedWrestlerName1()><strong>@data.FixedWrestlerName1()</strong></span>
+                        <span title=@data.FixedWrestlerName1><strong>@data.FixedWrestlerName1</strong></span>
                     </Template>
                 </RadzenGridColumn>
                 <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Result" Title="Result" Type="string" Filterable="false" Sortable="false" TextAlign="Radzen.TextAlign.Center" Width="60px">
@@ -77,12 +77,12 @@ else
                 </RadzenGridColumn>
                 <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="WrestlerName2" Title="Name" Type="string" TextAlign="Radzen.TextAlign.Center">
                     <Template>
-                        <span title=@data.FixedWrestlerName2()>@data.FixedWrestlerName2()</span>
+                        <span title=@data.FixedWrestlerName2>@data.FixedWrestlerName2</span>
                     </Template>
                 </RadzenGridColumn>
                 <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Country2" Title="Co." Type="string" TextAlign="Radzen.TextAlign.Center" Width="40px">
                     <Template>
-                        <span title=@data.FullCountryName2()>@data.Country2Emoji()</span>
+                        <span title=@data.FullCountryName2>@data.Country2Emoji</span>
                     </Template>
                 </RadzenGridColumn>
                 <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Round" Title="Round" Type="string" Sortable="false" TextAlign="Radzen.TextAlign.Center" Width="100px">

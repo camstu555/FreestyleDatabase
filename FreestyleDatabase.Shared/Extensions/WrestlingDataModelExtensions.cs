@@ -7,7 +7,7 @@ namespace FreestyleDatabase.Shared.Extensions
 {
     public static class WrestlingDataModelExtensions
     {
-        public static string FixedWrestlerName2(this WrestlingDataModel model)
+        public static string GetFixedWrestlerName2(this WrestlingDataModel model)
         {
             try
             {
@@ -23,7 +23,7 @@ namespace FreestyleDatabase.Shared.Extensions
             }
         }
 
-        public static string Country1Emoji(this WrestlingDataModel model)
+        public static string GetCountry1Emoji(this WrestlingDataModel model)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace FreestyleDatabase.Shared.Extensions
             }
         }
 
-        public static string FullCountryName1(this WrestlingDataModel model)
+        public static string GetFullCountryName1(this WrestlingDataModel model)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace FreestyleDatabase.Shared.Extensions
             }
         }
 
-        public static string FullCountryName2(this WrestlingDataModel model)
+        public static string GetFullCountryName2(this WrestlingDataModel model)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace FreestyleDatabase.Shared.Extensions
             }
         }
 
-        public static string FixedWrestlerName1(this WrestlingDataModel model)
+        public static string GetFixedWrestlerName1(this WrestlingDataModel model)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace FreestyleDatabase.Shared.Extensions
             }
         }
 
-        public static string Country2Emoji(this WrestlingDataModel model)
+        public static string GetCountry2Emoji(this WrestlingDataModel model)
         {
             try
             {
@@ -90,6 +90,16 @@ namespace FreestyleDatabase.Shared.Extensions
             {
                 return model.Country2;
             }
+        }
+
+        public static void ApplyMetaData(this WrestlingDataModel model)
+        {
+            model.FixedWrestlerName2 = model.GetFixedWrestlerName2();
+            model.Country1Emoji = model.GetCountry1Emoji();
+            model.FullCountryName1 = model.GetFullCountryName1();
+            model.FullCountryName2 = model.GetFullCountryName2();
+            model.FixedWrestlerName1 = model.GetFixedWrestlerName1();
+            model.Country2Emoji = model.GetCountry2Emoji();
         }
     }
 }

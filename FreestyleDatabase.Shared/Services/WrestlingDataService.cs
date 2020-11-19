@@ -44,7 +44,7 @@ namespace FreestyleDatabase.Shared.Services
             if (emoji != null)
             {
                 results = results
-                    .Where(d => d.Country1Emoji().Contains(emoji, StringComparison.CurrentCultureIgnoreCase) || d.Country2Emoji().Contains(emoji, StringComparison.CurrentCultureIgnoreCase))
+                    .Where(d => d.Country1Emoji.Contains(emoji, StringComparison.CurrentCultureIgnoreCase) || d.Country2Emoji.Contains(emoji, StringComparison.CurrentCultureIgnoreCase))
                     .ToList();
             }
 
@@ -79,12 +79,19 @@ namespace FreestyleDatabase.Shared.Services
             {
                 var data = googleData.Feed.Entry[i];
 
-                results.Add(new WrestlingDataModel
+                DateTime? date = null;
+
+                if (DateTime.TryParse(data.GsxDate.Value, out var parsedDate))
+                {
+                    date = parsedDate;
+                }
+
+                var newData = new WrestlingDataModel
                 {
                     Id = i.ToString(),
                     Country1 = data.GsxCountry.Value,
                     Country2 = data.GsxCountry2.Value,
-                    Date = data.GsxDate.Value,
+                    Date = date,
                     WrestlerName1 = data.GsxName.Value,
                     WrestlerName2 = data.GsxName2.Value,
                     WeightClass = data.GsxWeightClass.Value,
@@ -95,7 +102,11 @@ namespace FreestyleDatabase.Shared.Services
                     Score = data.GsxScore.Value,
                     Video = data.GsxVideo.Value,
                     Brackets = data.GsxBracket.Value,
-                });
+                };
+
+                newData.ApplyMetaData();
+
+                results.Add(newData);
             }
 
             return results;
