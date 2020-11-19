@@ -60,7 +60,7 @@ namespace FreestyleDatabase.AzureFunction
             catch (InvalidOperationException ex)
             {
                 log.LogInformation("An error occured.");
-                log.LogError(ex);
+                log.LogError(ex.Message);
 
                 return new ContentResult
                 {
