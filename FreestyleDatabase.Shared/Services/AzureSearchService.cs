@@ -1,4 +1,5 @@
 ﻿using FreestyleDatabase.Shared.Models;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace FreestyleDatabase.Shared.Services
         private readonly HttpClient httpClient;
         private readonly string Endpoint;
         private readonly string Access;
+        private readonly string QueryAccess;
         private readonly string Version;
 
         public AzureSearchService(HttpClient httpClient)
@@ -22,6 +24,7 @@ namespace FreestyleDatabase.Shared.Services
             this.httpClient = httpClient;
 
             Access = "12FC378B9E1FD7DC6C2C60315F196D3E";
+            QueryAccess = "E20043F515B9473B31A0891E256DDF95";
             Endpoint = "https://freestyle-database.search.windows.net";
             Version = "2020-06-30";
         }
@@ -107,6 +110,20 @@ namespace FreestyleDatabase.Shared.Services
                 .SendAsync(request, cancellationToken);
 
             response.EnsureSuccessStatusCode();
+        }
+
+        public async Task<string> Search(HttpRequest httpRequest, CancellationToken cancellationToken = default)
+        {
+            var query = httpRequest.QueryString.Value.Replace('?', '&');
+            var route = string.Format(RouteTemplate, "/indexes/docs/search") + query;
+
+            var request = new HttpRequestMessage(HttpMethod.Get, route);
+            request.Headers.TryAddWithoutValidation("api-key", QueryAccess);
+
+            var response = await httpClient
+                .SendAsync(request, cancellationToken);
+
+            return await response.Content.ReadAsStringAsync();
         }
 
         private List<object> GetSchemeFromWrestlerModel()

@@ -14,6 +14,18 @@ namespace FreestyleDatabase.AzureFunction
         [FunctionName(nameof(FreestyleDatabase))]
         public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req, ILogger log)
         {
+            if (req.Path.HasValue && req.Path.Value.EndsWith("search"))
+            {
+                var searchResults = await ServiceCollection.AzureSearchService.Search(req);
+
+                return new ContentResult
+                {
+                    Content = searchResults,
+                    ContentType = "application/json",
+                    StatusCode = 200
+                };
+            }
+
             log.LogInformation("Attempting to fetch all wrestlers...");
 
             var wrestlers = await ServiceCollection
