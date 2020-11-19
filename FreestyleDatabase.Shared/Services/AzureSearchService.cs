@@ -121,7 +121,38 @@ namespace FreestyleDatabase.Shared.Services
         public async Task<string> Search(HttpRequest httpRequest, CancellationToken cancellationToken = default)
         {
             var query = httpRequest.QueryString.Value.Replace('?', '&');
-            var route = string.Format(RouteTemplate, $"/indexes/{IndexName}/docs") + query;
+            var route = string.Format(RouteTemplate, $"/indexes/{IndexName}/docs") + "&$count=true" + query;
+
+            var request = new HttpRequestMessage(HttpMethod.Get, route);
+            request.Headers.TryAddWithoutValidation("api-key", QueryAccess);
+
+            var response = await httpClient
+                .SendAsync(request, cancellationToken);
+
+            await response.CaptureFailedOperation();
+
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task<string> AutoComplete(HttpRequest httpRequest, CancellationToken cancellationToken = default)
+        {
+            var query = httpRequest.QueryString.Value.Replace('?', '&');
+            var route = string.Format(RouteTemplate, $"/indexes/{IndexName}/docs/autocomplete") + query;
+
+            var request = new HttpRequestMessage(HttpMethod.Get, route);
+            request.Headers.TryAddWithoutValidation("api-key", QueryAccess);
+
+            var response = await httpClient
+                .SendAsync(request, cancellationToken);
+
+            await response.CaptureFailedOperation();
+
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task<string> Lookup(string documentId, CancellationToken cancellationToken = default)
+        {
+            var route = string.Format(RouteTemplate, $"/indexes/{IndexName}/docs/{documentId}");
 
             var request = new HttpRequestMessage(HttpMethod.Get, route);
             request.Headers.TryAddWithoutValidation("api-key", QueryAccess);
