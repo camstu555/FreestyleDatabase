@@ -13,7 +13,7 @@ namespace FreestyleDatabase.Shared.Services
 {
     public class AzureSearchService
     {
-        private const string WrestlerData = nameof(WrestlerData);
+        private const string IndexName = "wrestling-data";
         private readonly HttpClient httpClient;
         private readonly string Endpoint;
         private readonly string Access;
@@ -34,7 +34,7 @@ namespace FreestyleDatabase.Shared.Services
 
         public async Task<bool> DoesIndexExist(CancellationToken cancellationToken = default)
         {
-            var route = string.Format(RouteTemplate, $"/indexes/{WrestlerData}");
+            var route = string.Format(RouteTemplate, $"/indexes/{IndexName}");
 
             var request = new HttpRequestMessage(HttpMethod.Get, route);
             request.Headers.TryAddWithoutValidation("api-key", Access);
@@ -47,7 +47,7 @@ namespace FreestyleDatabase.Shared.Services
 
         public async Task DeleteIndex(CancellationToken cancellationToken = default)
         {
-            var route = string.Format(RouteTemplate, $"/indexes/{WrestlerData}");
+            var route = string.Format(RouteTemplate, $"/indexes/{IndexName}");
 
             var request = new HttpRequestMessage(HttpMethod.Delete, route);
             request.Headers.TryAddWithoutValidation("api-key", Access);
@@ -67,11 +67,11 @@ namespace FreestyleDatabase.Shared.Services
 
             var payload = new
             {
-                name = WrestlerData,
+                name = IndexName,
                 fields = GetSchemeFromWrestlerModel(),
                 corsOptions = new
                 {
-                    allowedOrigins = "*"
+                    allowedOrigins = new [] { "*" }
                 }
             };
 
