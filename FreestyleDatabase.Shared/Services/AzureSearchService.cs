@@ -95,6 +95,11 @@ namespace FreestyleDatabase.Shared.Services
             var request = new HttpRequestMessage(HttpMethod.Post, route);
             request.Headers.TryAddWithoutValidation("api-key", Access);
 
+            if (wrestlers == null || wrestlers.Count == 0)
+            {
+                return;
+            }
+
             var payload = new
             {
                 value = GetDocumentsFromWrestlerModel(wrestlers)
