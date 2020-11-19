@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace FreestyleDatabase.Shared.Services
 {
     public static class Tournaments
     {
-        public static List<string> events(string year)
-        {
-            List<string> tourney2020 = new List<string>();
-            List<string> tourney2019 = new List<string>();
-            List<string> tourney2018 = new List<string>();
+        private static readonly List<string> tourney2020 = new List<string>();
+        private static readonly List<string> tourney2019 = new List<string>();
+        private static readonly List<string> tourney2018 = new List<string>();
 
+        static Tournaments()
+        {
             tourney2020.Add("2020 FloWrestling Burroughs-Valencia");
             tourney2020.Add("2020 Moscow Grand Prix");
             tourney2020.Add("2020 Iran World Team Wrestle-Offs");
@@ -125,23 +124,24 @@ namespace FreestyleDatabase.Shared.Services
             tourney2018.Add("2018 African Championships");
             tourney2018.Add("2018 Indian Pro League");
             tourney2018.Add("2018 Ivan Yariguin");
+        }
 
+        public static List<string> Events(string year)
+        {
             if (year == "2020")
             {
-                return tourney2020.ToList();
+                return tourney2020;
             }
-            if (year == "2019")
+            else if (year == "2019")
             {
-                return tourney2019.ToList();
+                return tourney2019;
             }
-            if (year == "2018")
+            else if (year == "2018")
             {
-                return tourney2018.ToList();
+                return tourney2018;
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
     }
 }
