@@ -94,12 +94,37 @@ namespace FreestyleDatabase.Shared.Extensions
 
         public static void ApplyMetaData(this WrestlingDataModel model)
         {
-            model.FixedWrestlerName2 = model.GetFixedWrestlerName2();
-            model.Country1Emoji = model.GetCountry1Emoji();
-            model.FullCountryName1 = model.GetFullCountryName1();
-            model.FullCountryName2 = model.GetFullCountryName2();
-            model.FixedWrestlerName1 = model.GetFixedWrestlerName1();
-            model.Country2Emoji = model.GetCountry2Emoji();
+            try
+            {
+                model.FixedWrestlerName2 = model.GetFixedWrestlerName2();
+                model.Country1Emoji = model.GetCountry1Emoji();
+                model.FullCountryName1 = model.GetFullCountryName1();
+                model.FullCountryName2 = model.GetFullCountryName2();
+                model.FixedWrestlerName1 = model.GetFixedWrestlerName1();
+                model.Country2Emoji = model.GetCountry2Emoji();
+
+                model.Brackets = model.Brackets?.Trim();
+                model.Country1 = model.Country1?.Trim();
+                model.Country2 = model.Country2?.Trim();
+                model.FixedWrestlerName1 = model.FixedWrestlerName1?.Trim();
+                model.FixedWrestlerName2 = model.FixedWrestlerName2?.Trim();
+                model.FullCountryName1 = model.FullCountryName1?.Trim();
+                model.FullCountryName2 = model.FullCountryName2?.Trim();
+                model.Location = model.Location?.Trim();
+                model.Result = model.Result?.Trim();
+                model.Result2 = model.Result2?.Trim();
+                model.Round = model.Round?.Trim();
+                model.Score = model.Score?.Trim();
+                model.Venue = model.Venue?.Trim();
+                model.Video = model.Video?.Trim();
+                model.WeightClass = model.WeightClass?.Trim();
+                model.WrestlerName1 = model.WrestlerName1?.Trim();
+                model.WrestlerName2 = model.WrestlerName2?.Trim();
+            }
+            catch
+            {
+                // ignored
+            }
         }
     }
 }
