@@ -22,7 +22,7 @@ namespace FreestyleDatabase.Shared.Models
 
         public string Result2 { get; set; }
 
-        public DateTime? Date { get; set; }
+        public DateTimeOffset? Date { get; set; }
 
         public string Venue { get; set; }
 
