@@ -1,4 +1,5 @@
-﻿using FreestyleDatabase.Shared.Models;
+﻿using FreestyleDatabase.Shared.Extensions;
+using FreestyleDatabase.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
@@ -54,7 +55,7 @@ namespace FreestyleDatabase.Shared.Services
             var response = await httpClient
                 .SendAsync(request, cancellationToken);
 
-            response.EnsureSuccessStatusCode();
+            await response.CaptureFailedOperation();
         }
 
         public async Task CreateIndex(CancellationToken cancellationToken = default)
@@ -84,7 +85,7 @@ namespace FreestyleDatabase.Shared.Services
             var response = await httpClient
                 .SendAsync(request, cancellationToken);
 
-            response.EnsureSuccessStatusCode();
+            await response.CaptureFailedOperation();
         }
 
         public async Task CreateDocuments(List<WrestlingDataModel> wrestlers, CancellationToken cancellationToken = default)
@@ -109,7 +110,7 @@ namespace FreestyleDatabase.Shared.Services
             var response = await httpClient
                 .SendAsync(request, cancellationToken);
 
-            response.EnsureSuccessStatusCode();
+            await response.CaptureFailedOperation();
         }
 
         public async Task<string> Search(HttpRequest httpRequest, CancellationToken cancellationToken = default)
@@ -122,6 +123,8 @@ namespace FreestyleDatabase.Shared.Services
 
             var response = await httpClient
                 .SendAsync(request, cancellationToken);
+
+            await response.CaptureFailedOperation();
 
             return await response.Content.ReadAsStringAsync();
         }
