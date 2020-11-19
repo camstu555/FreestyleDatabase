@@ -79,9 +79,9 @@ namespace FreestyleDatabase.Shared.Services
             {
                 var data = googleData.Feed.Entry[i];
 
-                DateTime? date = null;
+                DateTimeOffset? date = null;
 
-                if (DateTime.TryParse(data.GsxDate.Value, out var parsedDate))
+                if (DateTimeOffset.TryParse(data.GsxDate.Value, out var parsedDate))
                 {
                     date = parsedDate;
                 }

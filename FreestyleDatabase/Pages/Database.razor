@@ -92,7 +92,7 @@ else
                 </RadzenGridColumn>
                 <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Date" Title="Date" Type="DateTime" TextAlign="Radzen.TextAlign.Center" Width="90px">
                     <Template>
-                        @data.Date
+                        @data.Date.Value.DateTime.ToShortDateString()
                     </Template>
                 </RadzenGridColumn>
                 <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Venue" Title="Event" Type="string" TextAlign="Radzen.TextAlign.Center" Width="200px">
