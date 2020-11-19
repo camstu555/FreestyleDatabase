@@ -71,7 +71,7 @@ namespace FreestyleDatabase.Shared.Services
                 fields = GetSchemeFromWrestlerModel(),
                 corsOptions = new
                 {
-                    allowedOrigins = new [] { "*" }
+                    allowedOrigins = new[] { "*" }
                 }
             };
 
@@ -90,7 +90,7 @@ namespace FreestyleDatabase.Shared.Services
 
         public async Task CreateDocuments(List<WrestlingDataModel> wrestlers, CancellationToken cancellationToken = default)
         {
-            var route = string.Format(RouteTemplate, "/indexes/docs/index");
+            var route = string.Format(RouteTemplate, $"/indexes/{IndexName}/docs/index");
 
             var request = new HttpRequestMessage(HttpMethod.Post, route);
             request.Headers.TryAddWithoutValidation("api-key", Access);
@@ -121,7 +121,7 @@ namespace FreestyleDatabase.Shared.Services
         public async Task<string> Search(HttpRequest httpRequest, CancellationToken cancellationToken = default)
         {
             var query = httpRequest.QueryString.Value.Replace('?', '&');
-            var route = string.Format(RouteTemplate, "/indexes/docs/search") + query;
+            var route = string.Format(RouteTemplate, $"/indexes/{IndexName}/docs") + query;
 
             var request = new HttpRequestMessage(HttpMethod.Get, route);
             request.Headers.TryAddWithoutValidation("api-key", QueryAccess);
