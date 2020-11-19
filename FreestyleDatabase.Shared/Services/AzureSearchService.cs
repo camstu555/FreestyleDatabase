@@ -150,6 +150,22 @@ namespace FreestyleDatabase.Shared.Services
             return await response.Content.ReadAsStringAsync();
         }
 
+        public async Task<string> Suggest(HttpRequest httpRequest, CancellationToken cancellationToken = default)
+        {
+            var query = httpRequest.QueryString.Value.Replace('?', '&');
+            var route = string.Format(RouteTemplate, $"/indexes/{IndexName}/docs/suggest") + query;
+
+            var request = new HttpRequestMessage(HttpMethod.Get, route);
+            request.Headers.TryAddWithoutValidation("api-key", QueryAccess);
+
+            var response = await httpClient
+                .SendAsync(request, cancellationToken);
+
+            await response.CaptureFailedOperation();
+
+            return await response.Content.ReadAsStringAsync();
+        }
+
         public async Task<string> Lookup(string documentId, CancellationToken cancellationToken = default)
         {
             var route = string.Format(RouteTemplate, $"/indexes/{IndexName}/docs/{documentId}");
