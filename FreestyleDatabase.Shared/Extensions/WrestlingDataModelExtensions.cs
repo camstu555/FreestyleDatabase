@@ -30,7 +30,7 @@ namespace FreestyleDatabase.Shared.Extensions
         {
             if (string.IsNullOrEmpty(model.WrestlerImage1))
             {
-                model.WrestlerImage1 = $"https://frestyledb.azurewebsites.net/api/FreeStyleImageFetcher?name={HttpUtility.UrlEncode(model.WrestlerName1)}&type=bytes";
+                model.WrestlerImage1 = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher?name={HttpUtility.UrlEncode(model.WrestlerName1)}&type=bytes";
             }
 
             return model.WrestlerImage1;
@@ -40,7 +40,7 @@ namespace FreestyleDatabase.Shared.Extensions
         {
             if (string.IsNullOrEmpty(model.WrestlerImage2))
             {
-                model.WrestlerImage2 = $"https://frestyledb.azurewebsites.net/api/FreeStyleImageFetcher?name={HttpUtility.UrlEncode(model.WrestlerName2)}&type=bytes";
+                model.WrestlerImage2 = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher?name={HttpUtility.UrlEncode(model.WrestlerName2)}&type=bytes";
             }
 
             return model.WrestlerImage2;
