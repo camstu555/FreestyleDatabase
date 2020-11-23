@@ -4,6 +4,14 @@ namespace FreestyleDatabase.Shared.Models
 {
     public class WrestlingDataModel
     {
+        public string Href
+        {
+            get
+            {
+                return $"https://freestyledb.azurewebsites.net/api/FreeStyleLookup?id={Id}";
+            }
+        }
+
         public string Id { get; set; }
 
         public string Country1 { get; set; }

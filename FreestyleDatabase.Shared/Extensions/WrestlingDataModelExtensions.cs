@@ -1,7 +1,9 @@
 ﻿using FreestyleDatabase.Shared.Models;
 using FreestyleDatabase.Shared.Services;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
+using System.Web;
 
 namespace FreestyleDatabase.Shared.Extensions
 {
@@ -27,7 +29,7 @@ namespace FreestyleDatabase.Shared.Extensions
         {
             if (string.IsNullOrEmpty(model.WrestlerImage1))
             {
-                model.WrestlerImage1 = $"https://frestyledb.azurewebsites.net/api/FreeStyleImageFetcher?name={model.WrestlerName1}&type=bytes";
+                model.WrestlerImage1 = $"https://frestyledb.azurewebsites.net/api/FreeStyleImageFetcher?name={HttpUtility.UrlEncode(model.WrestlerName1)}&type=bytes";
             }
 
             return model.WrestlerImage1;
@@ -37,7 +39,7 @@ namespace FreestyleDatabase.Shared.Extensions
         {
             if (string.IsNullOrEmpty(model.WrestlerImage2))
             {
-                model.WrestlerImage2 = $"https://frestyledb.azurewebsites.net/api/FreeStyleImageFetcher?name={model.WrestlerName2}&type=bytes";
+                model.WrestlerImage2 = $"https://frestyledb.azurewebsites.net/api/FreeStyleImageFetcher?name={HttpUtility.UrlEncode(model.WrestlerName2)}&type=bytes";
             }
 
             return model.WrestlerImage2;
@@ -130,7 +132,7 @@ namespace FreestyleDatabase.Shared.Extensions
                 model.Result = model.Result?.Trim();
                 model.Result2 = model.Result2?.Trim();
                 model.Round = model.Round?.Trim();
-                model.Score = model.Score?.Trim();
+                model.Score = model.Score?.Trim()?.Replace(" - ", "-");
                 model.Venue = model.Venue?.Trim();
                 model.Video = model.Video?.Trim();
                 model.WeightClass = model.WeightClass?.Trim();
@@ -144,6 +146,17 @@ namespace FreestyleDatabase.Shared.Extensions
             {
                 // ignored
             }
+        }
+
+        public static string AppendToJson(this WrestlingAggregatesModel wrestlingAggregatesModel, string json)
+        {
+            var asJson = JObject.Parse(json);
+
+            asJson.Add(wrestlingAggregatesModel);
+
+            json = asJson.ToString();
+
+            return json;
         }
     }
 }
