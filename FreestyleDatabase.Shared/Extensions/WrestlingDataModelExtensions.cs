@@ -1,5 +1,6 @@
 ﻿using FreestyleDatabase.Shared.Models;
 using FreestyleDatabase.Shared.Services;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
@@ -151,8 +152,10 @@ namespace FreestyleDatabase.Shared.Extensions
         public static string AppendToJson(this WrestlingAggregatesModel wrestlingAggregatesModel, string json)
         {
             var asJson = JObject.Parse(json);
+            var aggrAsJson = JsonConvert.SerializeObject(wrestlingAggregatesModel);
+            var aggrAsObj = JObject.Parse(aggrAsJson);
 
-            asJson.Add(wrestlingAggregatesModel);
+            asJson.Add(aggrAsObj);
 
             json = asJson.ToString();
 
