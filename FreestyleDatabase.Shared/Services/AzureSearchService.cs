@@ -225,7 +225,7 @@ namespace FreestyleDatabase.Shared.Services
 
             foreach (var prop in type.GetProperties())
             {
-                if (!prop.CanWrite || !prop.CanRead)
+                if (!prop.CanRead)
                 {
                     continue;
                 }
