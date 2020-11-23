@@ -23,6 +23,26 @@ namespace FreestyleDatabase.Shared.Extensions
             }
         }
 
+        public static string GetImageOrDefaultWrestler1(this WrestlingDataModel model)
+        {
+            if (string.IsNullOrEmpty(model.WrestlerImage1))
+            {
+                model.WrestlerImage1 = $"https://frestyledb.azurewebsites.net/api/FreeStyleImageFetcher?name={model.WrestlerName1}&type=bytes";
+            }
+
+            return model.WrestlerImage1;
+        }
+
+        public static string GetImageOrDefaultWrestler2(this WrestlingDataModel model)
+        {
+            if (string.IsNullOrEmpty(model.WrestlerImage2))
+            {
+                model.WrestlerImage2 = $"https://frestyledb.azurewebsites.net/api/FreeStyleImageFetcher?name={model.WrestlerName2}&type=bytes";
+            }
+
+            return model.WrestlerImage2;
+        }
+
         public static string GetCountry1Emoji(this WrestlingDataModel model)
         {
             try
@@ -96,18 +116,14 @@ namespace FreestyleDatabase.Shared.Extensions
         {
             try
             {
-                model.FixedWrestlerName2 = model.GetFixedWrestlerName2();
                 model.Country1Emoji = model.GetCountry1Emoji();
                 model.FullCountryName1 = model.GetFullCountryName1();
                 model.FullCountryName2 = model.GetFullCountryName2();
-                model.FixedWrestlerName1 = model.GetFixedWrestlerName1();
                 model.Country2Emoji = model.GetCountry2Emoji();
 
                 model.Brackets = model.Brackets?.Trim();
                 model.Country1 = model.Country1?.Trim();
                 model.Country2 = model.Country2?.Trim();
-                model.FixedWrestlerName1 = model.FixedWrestlerName1?.Trim();
-                model.FixedWrestlerName2 = model.FixedWrestlerName2?.Trim();
                 model.FullCountryName1 = model.FullCountryName1?.Trim();
                 model.FullCountryName2 = model.FullCountryName2?.Trim();
                 model.Location = model.Location?.Trim();
@@ -118,8 +134,11 @@ namespace FreestyleDatabase.Shared.Extensions
                 model.Venue = model.Venue?.Trim();
                 model.Video = model.Video?.Trim();
                 model.WeightClass = model.WeightClass?.Trim();
-                model.WrestlerName1 = model.WrestlerName1?.Trim();
-                model.WrestlerName2 = model.WrestlerName2?.Trim();
+                model.WrestlerName1 = model.GetFixedWrestlerName1()?.Trim();
+                model.WrestlerName2 = model.GetFixedWrestlerName2()?.Trim();
+
+                model.WrestlerImage2 = model.GetImageOrDefaultWrestler2()?.Trim();
+                model.WrestlerImage1 = model.GetImageOrDefaultWrestler1()?.Trim();
             }
             catch
             {

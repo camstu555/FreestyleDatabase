@@ -5,6 +5,8 @@ namespace FreestyleDatabase.AzureFunction
 {
     public static class ServiceCollection
     {
+        public static BingImageSearchService BingImageSearchService = new BingImageSearchService(HttpClient);
+
         public static HttpClient HttpClient => new HttpClient();
 
         public static GoogleSheetService GoogleSheetService => new GoogleSheetService(HttpClient);

@@ -12,6 +12,8 @@ namespace FreestyleDatabase.Shared.Models
 
         public string WrestlerName1 { get; set; }
 
+        public string WrestlerImage1 { get; set; }
+
         public string Result { get; set; }
 
         public string Score { get; set; }
@@ -19,6 +21,8 @@ namespace FreestyleDatabase.Shared.Models
         public string Country2 { get; set; }
 
         public string WrestlerName2 { get; set; }
+
+        public string WrestlerImage2 { get; set; }
 
         public string Result2 { get; set; }
 
@@ -34,15 +38,11 @@ namespace FreestyleDatabase.Shared.Models
 
         public string Brackets { get; set; }
 
-        public string FixedWrestlerName2 { get; set; }
-
         public string Country1Emoji { get; set; }
 
         public string FullCountryName1 { get; set; }
 
         public string FullCountryName2 { get; set; }
-
-        public string FixedWrestlerName1 { get; set; }
 
         public string Country2Emoji { get; set; }
     }
