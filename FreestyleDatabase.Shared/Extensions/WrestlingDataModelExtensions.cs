@@ -155,7 +155,7 @@ namespace FreestyleDatabase.Shared.Extensions
             var aggrAsJson = JsonConvert.SerializeObject(wrestlingAggregatesModel);
             var aggrAsObj = JObject.Parse(aggrAsJson);
 
-            asJson.Add(aggrAsObj);
+            asJson.Merge(aggrAsObj);
 
             json = asJson.ToString();
 
