@@ -32,7 +32,7 @@ namespace FreestyleDatabase.Shared.Extensions
                 if (!String.IsNullOrEmpty(model.Score))
                     {
                         string[] scores = model.Score.Split('-');
-                        var score = scores[0].ToString();
+                var score = scores[0];
                         var intScore = int.Parse(score, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite);
                         return intScore;
                     }
@@ -45,7 +45,7 @@ namespace FreestyleDatabase.Shared.Extensions
             if (!String.IsNullOrEmpty(model.Score))
             {
                 string[] scores = model.Score.Split('-');
-                var score = scores[1].ToString();
+                var score = scores[1];
                 var intScore = int.Parse(score, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite);
                 return intScore;
             }
