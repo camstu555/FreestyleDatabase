@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace FreestyleDatabase.Shared.Models
 {
@@ -25,6 +26,28 @@ namespace FreestyleDatabase.Shared.Models
         public string Result { get; set; }
 
         public string Score { get; set; }
+
+        public int WreslterName1Score
+        {
+            get
+            {
+                string[] scores = Score.Split('-');
+                var score = scores[0].ToString();
+                var intScore = int.Parse(score, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite);
+                return intScore;
+            }
+        }
+
+        public int WreslterName2Score
+        {
+            get
+            {
+                string[] scores = Score.Split('-');
+                var score = scores[1].ToString();
+                var intScore = int.Parse(score, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite);
+                return intScore;
+            }
+        }
 
         public string Country2 { get; set; }
 
