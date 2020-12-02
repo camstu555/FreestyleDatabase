@@ -27,27 +27,9 @@ namespace FreestyleDatabase.Shared.Models
 
         public string Score { get; set; }
 
-        public int WreslterName1Score
-        {
-            get
-            {
-                string[] scores = Score.Split('-');
-                var score = scores[0].ToString();
-                var intScore = int.Parse(score, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite);
-                return intScore;
-            }
-        }
+        public int WreslterName1Score { get; set; }
 
-        public int WreslterName2Score
-        {
-            get
-            {
-                string[] scores = Score.Split('-');
-                var score = scores[1].ToString();
-                var intScore = int.Parse(score, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite);
-                return intScore;
-            }
-        }
+        public int WreslterName2Score { get; set; }
 
         public string Country2 { get; set; }
 

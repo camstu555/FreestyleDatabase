@@ -3,6 +3,7 @@ using FreestyleDatabase.Shared.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -24,6 +25,32 @@ namespace FreestyleDatabase.Shared.Extensions
             {
                 return ex.Message;
             }
+        }
+
+        public static int GetWrestlerName1Score(this WrestlingDataModel model)
+            {
+                if (!String.IsNullOrEmpty(model.Score))
+                    {
+                        string[] scores = model.Score.Split('-');
+                        var score = scores[0].ToString();
+                        var intScore = int.Parse(score, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite);
+                        return intScore;
+                    }
+
+                return 0;
+            }
+
+        public static int GetWrestlerName2Score(this WrestlingDataModel model)
+        {
+            if (!String.IsNullOrEmpty(model.Score))
+            {
+                string[] scores = model.Score.Split('-');
+                var score = scores[1].ToString();
+                var intScore = int.Parse(score, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite);
+                return intScore;
+            }
+
+            return 0;
         }
 
         public static string GetImageOrDefaultWrestler1(this WrestlingDataModel model)
@@ -123,7 +150,8 @@ namespace FreestyleDatabase.Shared.Extensions
                 model.FullCountryName1 = model.GetFullCountryName1();
                 model.FullCountryName2 = model.GetFullCountryName2();
                 model.Country2Emoji = model.GetCountry2Emoji();
-
+                model.WreslterName1Score = model.GetWrestlerName1Score();
+                model.WreslterName2Score = model.GetWrestlerName2Score();
                 model.Brackets = model.Brackets?.Trim();
                 model.Country1 = model.Country1?.Trim();
                 model.Country2 = model.Country2?.Trim();
