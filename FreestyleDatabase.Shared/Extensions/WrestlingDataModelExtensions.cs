@@ -32,8 +32,7 @@ namespace FreestyleDatabase.Shared.Extensions
                 if (!String.IsNullOrEmpty(model.Score))
                     {
                         string[] scores = model.Score.Split('-');
-                        var score = scores[0].Trim();
-                        var intScore = Int16.Parse(score);
+                        var intScore = int.Parse(scores[0]);
                         return intScore;
                     }
 
@@ -41,19 +40,19 @@ namespace FreestyleDatabase.Shared.Extensions
             }
 
         public static int GetWrestlerName2Score(this WrestlingDataModel model)
-        {
-            if (!String.IsNullOrEmpty(model.Score))
+       
             {
-                string[] scores = model.Score.Split('-');
-                var score = scores[1].Trim();
-                var intScore = Int16.Parse(score);
-                return intScore;
+                if (!String.IsNullOrEmpty(model.Score))
+                {
+                    string[] scores = model.Score.Split('-');
+                    var intScore = int.Parse(scores[1]);
+                    return intScore;
+                }
+
+                return 0;
             }
 
-            return 0;
-        }
-
-        public static string GetImageOrDefaultWrestler1(this WrestlingDataModel model)
+            public static string GetImageOrDefaultWrestler1(this WrestlingDataModel model)
         {
             if (string.IsNullOrEmpty(model.WrestlerImage1))
             {
