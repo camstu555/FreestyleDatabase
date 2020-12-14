@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace FreestyleDatabase.Shared.Models
 {
@@ -8,7 +6,9 @@ namespace FreestyleDatabase.Shared.Models
     {
         public WrestlingAggregatesModel()
         {
-            MostRecentMatches = new SearchCollectionResponseModel<WrestlingDataModel>();
+            GoldMedalMatches = new List<string>();
+            SilverMedalMatches = new List<string>();
+            BronzeMedalMatches = new List<string>();
         }
 
         public string WrestlerImageUrl { get; set; }
@@ -23,13 +23,13 @@ namespace FreestyleDatabase.Shared.Models
         public int Losses { get; set; }
         //count of WrestlerName2
 
-        public List<string> GoldMedalMatches { get; set; }
+        public List<string> GoldMedalMatches { get; private set; }
         //returns WrestlerName1 and Round = Gold
 
-        public List<string> SilverMedalMatches { get; set; }
+        public List<string> SilverMedalMatches { get; private set; }
         //returns WrestlerName2 and Round = Gold
 
-        public List<string> BronzeMedalMatches { get; set; }
+        public List<string> BronzeMedalMatches { get; private set; }
         //returns WrestlerName1 and Round = Bronze
 
         public int Pins { get; set; }
@@ -51,7 +51,7 @@ namespace FreestyleDatabase.Shared.Models
         //if (WrestlerName2 = search) add left of hyphen
         //divide by count of total matches for that wrestler
 
-        public SearchCollectionResponseModel<WrestlingDataModel> MostRecentMatches { get; private set; }
+        public SearchCollectionResponseModel<WrestlingDataModel> MostRecentMatches { get; set; }
         //returns most recent 10 matches where WrestlerName1 or WrestlerName2 = search
     }
 }

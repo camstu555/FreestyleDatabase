@@ -42,10 +42,6 @@ namespace FreestyleDatabase.Shared.Services
                 Wins = 20,
                 AverageDefensivePointsPerMatch = 25,
                 AverageOffensivePointsPerMatch = 14,
-                BronzeMedalMatches = new List<string> { "0000000000000000", "0000000000000001" },
-                GoldMedalMatches = new List<string> { "0000000000000000", },
-                SilverMedalMatches = new List<string> { "0000000000000000", "0000000000000001", "0000000000000002" },
-                //MostRecentMatches = new List<string> { "0000000000000000", "0000000000000001", "0000000000000003", "0000000000000004" },
                 Pins = 12,
                 Points = 240,
                 Techs = 1000
