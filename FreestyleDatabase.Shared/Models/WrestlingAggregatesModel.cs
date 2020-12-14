@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FreestyleDatabase.Shared.Models
 {
@@ -82,5 +83,7 @@ namespace FreestyleDatabase.Shared.Models
         public string WrestlerCountry { get; set; }
 
         public string WrestlerCountryEmoji { get; set; }
+
+        public DateTimeOffset? OldestMatchDate { get; set; }
     }
 }

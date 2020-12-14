@@ -74,6 +74,7 @@ namespace FreestyleDatabase.Shared.Services
                 result.MostRecentMatches.Items.Add(recentMatch);
             }
 
+            result.OldestMatchDate = wrestlerResults.Items.OrderBy(x => x.Date).FirstOrDefault()?.Date;
             result.Wins = wrestlerResults.Items.Count(x => x.WrestlerId1.Equals(wrestlerId));
             result.Losses = wrestlerResults.Items.Count(x => x.WrestlerId2.Equals(wrestlerId));
             result.Pins = wrestlerResults.Items.Count(x => x.WrestlerId1.Equals(wrestlerId) && x.Result.Equals("VFA", StringComparison.OrdinalIgnoreCase));
