@@ -28,59 +28,56 @@ namespace FreestyleDatabase.Shared.Extensions
 
         public static int GetWrestlerName1Score(this WrestlingDataModel model)
         {
-            if (!string.IsNullOrEmpty(model.Score) && model.Score.Contains("-"))
+            try
             {
-                var cleanedScore = model.Score
-                    .Replace(" - ", "-")
-                    .Replace(" -", "-")
-                    .Replace("- ", "-")
-                    .Trim()
-                    .ToString();
-
-                var scores = cleanedScore
-                    .Split('-', StringSplitOptions.RemoveEmptyEntries);
-
-                if (scores.Length == 0)
+                if (!string.IsNullOrEmpty(model.Score) && model.Score.Contains("-"))
                 {
-                    return 0;
+                    var scores = NormalizeScore(model.Score);
+
+                    if (scores.Length == 0)
+                    {
+                        return 0;
+                    }
+
+                    if (scores.Length > 1)
+                    {
+                        return Convert.ToInt32(scores[0]);
+                    }
                 }
 
-                if (scores.Length > 1)
-                {
-                    return Convert.ToInt32(scores[0]);
-                }
+                return 0;
             }
-
-            return 0;
+            catch (Exception)
+            {
+                return 0;
+            }
         }
 
         public static int GetWrestlerName2Score(this WrestlingDataModel model)
-
         {
-            if (!string.IsNullOrEmpty(model.Score) && model.Score.Contains("-"))
+            try
             {
-                var cleanedScore = model.Score
-                    .Replace(" - ", "-")
-                    .Replace(" -", "-")
-                    .Replace("- ", "-")
-                    .Trim()
-                    .ToString();
-
-                var scores = cleanedScore
-                    .Split('-', StringSplitOptions.RemoveEmptyEntries);
-
-                if (scores.Length == 0)
+                if (!string.IsNullOrEmpty(model.Score) && model.Score.Contains("-"))
                 {
-                    return 0;
+                    var scores = NormalizeScore(model.Score);
+
+                    if (scores.Length == 0)
+                    {
+                        return 0;
+                    }
+
+                    if (scores.Length > 2)
+                    {
+                        return Convert.ToInt32(scores[1]);
+                    }
                 }
 
-                if (scores.Length > 2)
-                {
-                    return Convert.ToInt32(scores[1]);
-                }
+                return 0;
             }
-
-            return 0;
+            catch (Exception)
+            {
+                return 0;
+            }
         }
 
         public static string GetImageOrDefaultWrestler1(this WrestlingDataModel model)
@@ -218,6 +215,21 @@ namespace FreestyleDatabase.Shared.Extensions
             json = asJson.ToString();
 
             return json;
+        }
+
+        private static string[] NormalizeScore(string scoreString)
+        {
+            var cleanedScore = scoreString
+                    .Replace(" - ", "-")
+                    .Replace(" -", "-")
+                    .Replace("- ", "-")
+                    .Trim()
+                    .ToString();
+
+            var scores = cleanedScore
+                .Split('-', StringSplitOptions.RemoveEmptyEntries);
+
+            return scores;
         }
     }
 }
