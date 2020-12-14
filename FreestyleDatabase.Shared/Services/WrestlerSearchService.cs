@@ -105,7 +105,7 @@ namespace FreestyleDatabase.Shared.Services
         public async Task<WrestlingAggregatesModel> GetWrestlerDetailsByName(string wrestlerName, int recentMatchCount = 10)
         {
             var results = await SearchWrestlers(
-                filter: $"{nameof(WrestlingDataModel.WrestlerName1)} eq '{wrestlerName}' or WrestlerName2 eq '{nameof(WrestlingDataModel.WrestlerName2)}'",
+                filter: $"search.ismatch('{wrestlerName}','{nameof(WrestlingDataModel.WrestlerName1)}') or search.ismatch('{wrestlerName}','{nameof(WrestlingDataModel.WrestlerName2)}')",
                 top: 1
             );
 
