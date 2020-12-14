@@ -91,6 +91,34 @@ namespace FreestyleDatabase.Shared.Services
             return result;
         }
 
+        public async Task<SearchCollectionResponseModel<WrestlingAutoCompleteModel>> GetAutoComplete(string wrestlerName)
+        {
+            var route = string.Format(baseAddress, "FreeStyleAutoComplete") + $"?search={Uri.EscapeDataString(wrestlerName)}&suggesterName=ac";
+
+            var request = new HttpRequestMessage(HttpMethod.Get, route);
+            var response = await httpClient.SendAsync(request);
+            var json = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<SearchCollectionResponseModel<WrestlingAutoCompleteModel>>(json);
+        }
+
+        public async Task<WrestlingAggregatesModel> GetWrestlerDetailsByName(string wrestlerName, int recentMatchCount = 10)
+        {
+            var results = await SearchWrestlers(
+                filter: $"{nameof(WrestlingDataModel.WrestlerName1)} eq '{wrestlerName}' or WrestlerName2 eq '{nameof(WrestlingDataModel.WrestlerName2)}'",
+                top: 1
+            );
+
+            var single = results.Items.FirstOrDefault();
+
+            if (single.WrestlerName1.Equals(wrestlerName, StringComparison.OrdinalIgnoreCase))
+            {
+                return await GetWrestlerDetails(single.WrestlerId1, recentMatchCount);
+            }
+
+            return await GetWrestlerDetails(single.WrestlerId2, recentMatchCount);
+        }
+
         private HttpRequestMessage CreateRequest(string service, string search = null, int? top = null, int? skip = null, string filter = null, string orderBy = null)
         {
             var route = string.Format(baseAddress, service);
