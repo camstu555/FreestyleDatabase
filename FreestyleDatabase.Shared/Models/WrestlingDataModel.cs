@@ -58,5 +58,9 @@ namespace FreestyleDatabase.Shared.Models
         public string FullCountryName2 { get; set; }
 
         public string Country2Emoji { get; set; }
+
+        public string WreslterName1Id { get; set; }
+
+        public string WreslterName2Id { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FreestyleDatabase.Shared.Models;
+using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -14,14 +16,15 @@ namespace FreestyleDatabase.Shared.Services
             this.httpClient = httpClient;
         }
 
-        public async Task<string> SearchWrestlers(string search = null, int? top = null, int? skip = null)
+        public async Task<SearchCollectionResponseModel<WrestlingDataModel>> SearchWrestlers(string search = null, int? top = null, int? skip = null)
         {
             var service = "FreeStylesearch";
             var request = CreateRequest(service, search, top, skip);
 
             var response = await httpClient.SendAsync(request);
+            var json = await response.Content.ReadAsStringAsync();
 
-            return await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<SearchCollectionResponseModel<WrestlingDataModel>>(json);
         }
 
         private HttpRequestMessage CreateRequest(string service, string search = null, int? top = null, int? skip = null)

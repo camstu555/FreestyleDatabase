@@ -66,7 +66,7 @@ namespace FreestyleDatabase.Shared.Extensions
                         return 0;
                     }
 
-                    if (scores.Length > 2)
+                    if (scores.Length > 1)
                     {
                         return Convert.ToInt32(scores[1]);
                     }
@@ -169,6 +169,30 @@ namespace FreestyleDatabase.Shared.Extensions
             }
         }
 
+        public static string GetWrestlerName1Id(this WrestlingDataModel model)
+        {
+            if (string.IsNullOrEmpty(model.WrestlerName1))
+            {
+                return string.Empty;
+            }
+
+            var normalize = model.WrestlerName1.Trim().ToUpper().RemoveWhitespace();
+
+            return GetStringSha256Hash(normalize);
+        }
+
+        public static string GetWrestlerName2Id(this WrestlingDataModel model)
+        {
+            if (string.IsNullOrEmpty(model.WrestlerName2))
+            {
+                return string.Empty;
+            }
+
+            var normalize = model.WrestlerName2.Trim().ToUpper().RemoveWhitespace();
+
+            return GetStringSha256Hash(normalize);
+        }
+
         public static void ApplyMetaData(this WrestlingDataModel model)
         {
             try
@@ -193,7 +217,9 @@ namespace FreestyleDatabase.Shared.Extensions
                 model.Video = model.Video?.Trim();
                 model.WeightClass = model.WeightClass?.Trim();
                 model.WrestlerName1 = model.GetFixedWrestlerName1()?.Trim();
+                model.WreslterName1Id = model.GetWrestlerName1Id();
                 model.WrestlerName2 = model.GetFixedWrestlerName2()?.Trim();
+                model.WreslterName2Id = model.GetWrestlerName2Id();
 
                 model.WrestlerImage2 = model.GetImageOrDefaultWrestler2()?.Trim();
                 model.WrestlerImage1 = model.GetImageOrDefaultWrestler1()?.Trim();
@@ -215,6 +241,27 @@ namespace FreestyleDatabase.Shared.Extensions
             json = asJson.ToString();
 
             return json;
+        }
+
+        public static string RemoveWhitespace(this string input)
+        {
+            return new string(input.ToCharArray()
+                .Where(c => !Char.IsWhiteSpace(c))
+                .ToArray());
+        }
+
+        private static string GetStringSha256Hash(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return string.Empty;
+            }
+
+            using var sha = new System.Security.Cryptography.SHA256Managed();
+
+            var textData = System.Text.Encoding.UTF8.GetBytes(text);
+            var hash = sha.ComputeHash(textData);
+            return BitConverter.ToString(hash).Replace("-", string.Empty);
         }
 
         private static string[] NormalizeScore(string scoreString)
