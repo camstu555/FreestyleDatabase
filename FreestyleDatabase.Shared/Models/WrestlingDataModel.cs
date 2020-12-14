@@ -59,8 +59,8 @@ namespace FreestyleDatabase.Shared.Models
 
         public string Country2Emoji { get; set; }
 
-        public string WreslterName1Id { get; set; }
+        public string WreslterId1 { get; set; }
 
-        public string WreslterName2Id { get; set; }
+        public string WreslterId2 { get; set; }
     }
 }
