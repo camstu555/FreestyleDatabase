@@ -66,6 +66,11 @@ namespace FreestyleDatabase.Shared.Services
 
             foreach (var recentMatch in recentMatches)
             {
+                if (result.MostRecentMatches == null)
+                {
+                    result.MostRecentMatches = new SearchCollectionResponseModel<WrestlingDataModel>();
+                }
+
                 result.MostRecentMatches.Items.Add(recentMatch);
             }
 
