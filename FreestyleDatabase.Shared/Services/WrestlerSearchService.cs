@@ -50,16 +50,21 @@ namespace FreestyleDatabase.Shared.Services
             }
 
             result.WrestlerId = wrestlerId;
+            result.WrestlerWeight = firstResult.WeightClass;
 
             if (isWrestler1)
             {
                 result.WrestlerName = firstResult.WrestlerName1;
                 result.WrestlerImageUrl = firstResult.WrestlerImage1;
+                result.WrestlerCountry = firstResult.Country1;
+                result.WrestlerCountryEmoji = firstResult.Country1Emoji;
             }
             else
             {
                 result.WrestlerName = firstResult.WrestlerName2;
                 result.WrestlerImageUrl = firstResult.WrestlerImage2;
+                result.WrestlerCountry = firstResult.Country2;
+                result.WrestlerCountryEmoji = firstResult.Country2Emoji;
             }
 
             var recentMatches = wrestlerResults.Items.Take(recentMatchCount).ToList();
