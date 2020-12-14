@@ -21,6 +21,7 @@ namespace FreestyleDatabase
             builder.Services.AddScoped<AzureSearchService>();
             builder.Services.AddScoped<WrestlingDataService>();
             builder.Services.AddScoped<QueryParameterService>();
+            builder.Services.AddScoped<WrestlerSearchService>();
 
             await builder.Build().RunAsync();
         }

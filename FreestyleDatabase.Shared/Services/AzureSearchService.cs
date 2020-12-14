@@ -242,7 +242,7 @@ namespace FreestyleDatabase.Shared.Services
                             ? "Edm.Int32"
                             : "Edm.String",
                     key = prop.Name.Equals("id", StringComparison.OrdinalIgnoreCase),
-                    searchable = !isDate,
+                    searchable = !isDate && !isInt,
                     filterable = true,
                     sortable = true,
                     facetable = true,
