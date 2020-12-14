@@ -3,7 +3,6 @@ using FreestyleDatabase.Shared.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -28,31 +27,63 @@ namespace FreestyleDatabase.Shared.Extensions
         }
 
         public static int GetWrestlerName1Score(this WrestlingDataModel model)
+        {
+            if (!string.IsNullOrEmpty(model.Score) && model.Score.Contains("-"))
             {
-                if (!String.IsNullOrEmpty(model.Score))
-                    {
-                        string[] scores = model.Score.Split('-');
-                        var intScore = int.Parse(scores[0]);
-                        return intScore;
-                    }
+                var cleanedScore = model.Score
+                    .Replace(" - ", "-")
+                    .Replace(" -", "-")
+                    .Replace("- ", "-")
+                    .Trim()
+                    .ToString();
 
-                return 0;
-            }
+                var scores = cleanedScore
+                    .Split('-', StringSplitOptions.RemoveEmptyEntries);
 
-        public static int GetWrestlerName2Score(this WrestlingDataModel model)
-       
-            {
-                if (!String.IsNullOrEmpty(model.Score))
+                if (scores.Length == 0)
                 {
-                    string[] scores = model.Score.Split('-');
-                    var intScore = int.Parse(scores[1]);
-                    return intScore;
+                    return 0;
                 }
 
-                return 0;
+                if (scores.Length > 1)
+                {
+                    return Convert.ToInt32(scores[0]);
+                }
             }
 
-            public static string GetImageOrDefaultWrestler1(this WrestlingDataModel model)
+            return 0;
+        }
+
+        public static int GetWrestlerName2Score(this WrestlingDataModel model)
+
+        {
+            if (!string.IsNullOrEmpty(model.Score) && model.Score.Contains("-"))
+            {
+                var cleanedScore = model.Score
+                    .Replace(" - ", "-")
+                    .Replace(" -", "-")
+                    .Replace("- ", "-")
+                    .Trim()
+                    .ToString();
+
+                var scores = cleanedScore
+                    .Split('-', StringSplitOptions.RemoveEmptyEntries);
+
+                if (scores.Length == 0)
+                {
+                    return 0;
+                }
+
+                if (scores.Length > 2)
+                {
+                    return Convert.ToInt32(scores[1]);
+                }
+            }
+
+            return 0;
+        }
+
+        public static string GetImageOrDefaultWrestler1(this WrestlingDataModel model)
         {
             if (string.IsNullOrEmpty(model.WrestlerImage1))
             {
