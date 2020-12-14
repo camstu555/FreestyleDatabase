@@ -218,9 +218,9 @@ namespace FreestyleDatabase.Shared.Extensions
                 model.Video = model.Video?.Trim();
                 model.WeightClass = model.WeightClass?.Trim();
                 model.WrestlerName1 = model.GetFixedWrestlerName1()?.Trim();
-                model.WreslterId1 = model.GetWrestlerName1Id();
+                model.WrestlerId1 = model.GetWrestlerName1Id();
                 model.WrestlerName2 = model.GetFixedWrestlerName2()?.Trim();
-                model.WreslterId2 = model.GetWrestlerName2Id();
+                model.WrestlerId2 = model.GetWrestlerName2Id();
 
                 model.WrestlerImage2 = model.GetImageOrDefaultWrestler2()?.Trim();
                 model.WrestlerImage1 = model.GetImageOrDefaultWrestler1()?.Trim();
