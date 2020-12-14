@@ -36,20 +36,20 @@ namespace FreestyleDatabase.Shared.Services
             );
         }
 
-        public async Task<WrestlingAggregatesModel> GetWrestlerDetails(string wresterId, int recentMatchCount = 10)
+        public async Task<WrestlingAggregatesModel> GetWrestlerDetails(string wrestlerId, int recentMatchCount = 10)
         {
-            var wrestlerResults = await GetAllWrestlerMatches(wresterId);
+            var wrestlerResults = await GetAllWrestlerMatches(wrestlerId);
             var result = new WrestlingAggregatesModel();
 
             var firstResult = wrestlerResults.Items.FirstOrDefault();
             var isWrestler1 = false;
 
-            if (firstResult.WrestlerId1.Equals(wresterId, StringComparison.OrdinalIgnoreCase))
+            if (firstResult.WrestlerId1.Equals(wrestlerId, StringComparison.OrdinalIgnoreCase))
             {
                 isWrestler1 = true;
             }
 
-            result.WrestlerId = wresterId;
+            result.WrestlerId = wrestlerId;
 
             if (isWrestler1)
             {
@@ -69,20 +69,18 @@ namespace FreestyleDatabase.Shared.Services
                 result.MostRecentMatches.Items.Add(recentMatch);
             }
 
-            result.Wins = wrestlerResults.Items.Count(x => x.WrestlerId1.Equals(wresterId));
-            result.Losses = wrestlerResults.Items.Count(x => x.WrestlerId2.Equals(wresterId));
-            result.Pins = wrestlerResults.Items.Count(x => x.WrestlerId1.Equals(wresterId) && x.Result.Equals("VFA", StringComparison.OrdinalIgnoreCase));
-            result.Techs = wrestlerResults.Items.Count(x => x.WrestlerId1.Equals(wresterId) && (x.Result.Equals("VSU", StringComparison.OrdinalIgnoreCase) || x.Result.Equals("VSU1", StringComparison.OrdinalIgnoreCase)));
-            result.Points = wrestlerResults.Items.Count(x => x.WrestlerId1.Equals(wresterId) && (x.Result.Equals("VPO", StringComparison.OrdinalIgnoreCase) || x.Result.Equals("VPO1", StringComparison.OrdinalIgnoreCase)));
+            result.Wins = wrestlerResults.Items.Count(x => x.WrestlerId1.Equals(wrestlerId));
+            result.Losses = wrestlerResults.Items.Count(x => x.WrestlerId2.Equals(wrestlerId));
+            result.Pins = wrestlerResults.Items.Count(x => x.WrestlerId1.Equals(wrestlerId) && x.Result.Equals("VFA", StringComparison.OrdinalIgnoreCase));
+            result.Techs = wrestlerResults.Items.Count(x => x.WrestlerId1.Equals(wrestlerId) && (x.Result.Equals("VSU", StringComparison.OrdinalIgnoreCase) || x.Result.Equals("VSU1", StringComparison.OrdinalIgnoreCase)));
+            result.Points = wrestlerResults.Items.Count(x => x.WrestlerId1.Equals(wrestlerId) && (x.Result.Equals("VPO", StringComparison.OrdinalIgnoreCase) || x.Result.Equals("VPO1", StringComparison.OrdinalIgnoreCase)));
 
-            // TODO: NEED CAM!!!
-            result.GoldMedalMatches.AddRange(wrestlerResults.Items.Where(x => x.Round == "huh?").Select(x => x.Venue));
-            result.SilverMedalMatches.AddRange(wrestlerResults.Items.Where(x => x.Round == "huh?").Select(x => x.Venue));
-            result.BronzeMedalMatches.AddRange(wrestlerResults.Items.Where(x => x.Round == "huh?").Select(x => x.Venue));
+            result.GoldMedalMatches.AddRange(wrestlerResults.Items.Where(x => x.WrestlerId1.Equals(wrestlerId) && x.Round.Equals("Gold", StringComparison.OrdinalIgnoreCase)).Select(x => x.Venue));
+            result.SilverMedalMatches.AddRange(wrestlerResults.Items.Where(x => x.WrestlerId2.Equals(wrestlerId) && x.Round.Equals("Gold", StringComparison.OrdinalIgnoreCase)).Select(x => x.Venue));
+            result.BronzeMedalMatches.AddRange(wrestlerResults.Items.Where(x => x.WrestlerId1.Equals(wrestlerId) && x.Round.Equals("Bronze", StringComparison.OrdinalIgnoreCase)).Select(x => x.Venue));
 
-            // TODO: NEED CAM!!!
-            result.AverageDefensivePointsPerMatch = 0;
-            result.AverageOffensivePointsPerMatch = 0;
+            result.AverageDefensivePointsPerMatch = wrestlerResults.Items.Sum(x => x.WrestlerId2.Equals(wrestlerId) ? x.WreslterName1Score : x.WreslterName2Score) / (result.Wins + result.Losses);
+            result.AverageOffensivePointsPerMatch = wrestlerResults.Items.Sum(x => x.WrestlerId1.Equals(wrestlerId) ? x.WreslterName1Score : x.WreslterName2Score) / (result.Wins + result.Losses);
 
             return result;
         }
