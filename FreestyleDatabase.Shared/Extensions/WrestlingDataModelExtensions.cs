@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 
 namespace FreestyleDatabase.Shared.Extensions
@@ -246,7 +247,7 @@ namespace FreestyleDatabase.Shared.Extensions
         public static string RemoveWhitespace(this string input)
         {
             return new string(input.ToCharArray()
-                .Where(c => !Char.IsWhiteSpace(c))
+                .Where(c => !char.IsWhiteSpace(c))
                 .ToArray());
         }
 
@@ -257,7 +258,7 @@ namespace FreestyleDatabase.Shared.Extensions
                 return string.Empty;
             }
 
-            using var sha = new System.Security.Cryptography.SHA256Managed();
+            using var sha = SHA1.Create();
 
             var textData = System.Text.Encoding.UTF8.GetBytes(text);
             var hash = sha.ComputeHash(textData);
