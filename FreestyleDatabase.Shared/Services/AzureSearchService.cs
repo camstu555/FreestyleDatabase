@@ -231,11 +231,16 @@ namespace FreestyleDatabase.Shared.Services
                 }
 
                 var isDate = prop.Name.Equals("date", StringComparison.OrdinalIgnoreCase);
+                var isInt = prop.Name.Equals("WreslterName1Score", StringComparison.OrdinalIgnoreCase) || prop.Name.Equals("WreslterName2Score", StringComparison.OrdinalIgnoreCase);
 
                 result.Add(new
                 {
                     name = prop.Name,
-                    type = isDate ? "Edm.DateTimeOffset" : "Edm.String",
+                    type = isDate
+                        ? "Edm.DateTimeOffset"
+                        : isInt
+                            ? "Edm.Int32"
+                            : "Edm.String",
                     key = prop.Name.Equals("id", StringComparison.OrdinalIgnoreCase),
                     searchable = !isDate,
                     filterable = true,
