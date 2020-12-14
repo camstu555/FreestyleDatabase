@@ -1,5 +1,7 @@
-﻿@page "/Champions/{id}"
+﻿@using Blazored.Typeahead  
+@page "/Champions/{id}"
 @inject WrestlerSearchService Http
+@inject NavigationManager Nav 
 
 @if (result != null)
 {
@@ -9,102 +11,114 @@
             <div class="col-md-12 text-center">
                 <br />
                 <br />
-                <div class="active-cyan">
-                    <input class="form-control"
-                           type="text"
-                           placeholder="Search"
-                           aria-label="Search" />
-                </div>
-                <br />
-                <br />
-                <img src="https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher?name=Jordan%20Burroughs&type=bytes"
-                     width="300px"
-                     class="img-thumbnail"
-                     style="display:inline"
-                     alt="Jordan Burroughs" />
-                <h1>@result.WrestlerName</h1>
-                <h2>get weight class | country  emoji</h2>
-                <h2>@result.Wins Wins | @result.Losses Losses (since 1/1/2018)</h2>
-            </div>
-        </div>
-        <hr />
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card box-shadow text-center">
-                    <h5 class="card-header">
-                        Best Wins
-                    </h5>
-                    <div class="card-body">
-                        @if (result.GoldMedalMatches.Count > 0)
-                        {
-                            foreach (var tournament in result.GoldMedalMatches)
-                            {
-                                <h5>Gold medal at @tournament</h5>
-                            }
-                        }
-                        @if (result.SilverMedalMatches.Count > 0)
-                        {
-                            foreach (var tournament in result.SilverMedalMatches)
-                            {
-                                <h5>Silver Medal at @tournament</h5>
-                            }
-                        }
-                        @if (result.SilverMedalMatches.Count > 0)
-                        {
-                            foreach (var tournament in result.BronzeMedalMatches)
-                            {
-                                <h5>Bronze Medal at @tournament</h5>
-                            }
-                        }
+                <BlazoredTypeahead SearchMethod="@SearchFilms"
+                                   Debounce="500"
+                                   TValue="WrestlingAutoCompleteModel"
+                                   TItem="WrestlingAutoCompleteModel"
+                                   ValueChanged="@SelectedResultChange">
+                    <SelectedTemplate>
+                        @context.Text
+                    </SelectedTemplate>
+                    <ResultTemplate>
+                        @context.Text
+                    </ResultTemplate>
+                    <NotFoundTemplate>
+                        Sorry, there weren't any search results.
+                    </NotFoundTemplate>
+                </BlazoredTypeahead>
 
-                    </div>
-                </div>
             </div>
-            <div class="col-md-6">
-                <div class="card box-shadow text-center">
-                    <h5 class="card-header">
-                        By The Numbers
-                    </h5>
-                    <div class="card-body">
-                        <h5>Pins: @result.Pins</h5>
-                        <h5>Techs: @result.Techs</h5>
-                        <h5>Decisions: @result.Points</h5>
-                        <h5>Average Points Scored: @result.AverageOffensivePointsPerMatch</h5>
-                        <h5>Average Points Given Up: @result.AverageDefensivePointsPerMatch</h5>
-                    </div>
+            <br />
+            <br />
+            <img src="@result.WrestlerImageUrl"
+                 width="300px"
+                 class="img-thumbnail"
+                 style="display:inline"
+                 alt="@result.WrestlerName" />
+            <h1>@result.WrestlerName</h1>
+            <h2>@result.WrestlerWeight KG | @result.WrestlerCountry  @result.WrestlerCountryEmoji</h2>
+            <h2>@result.Wins Wins | @result.Losses Losses ( since @result.OldestMatchDate.Value.Date.ToShortDateString() )</h2>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card box-shadow text-center">
+                <h5 class="card-header">
+                    Best Wins
+                </h5>
+                <div class="card-body">
+                    @if (result.GoldMedalMatches.Count > 0)
+                    {
+                        foreach (var tournament in result.GoldMedalMatches)
+                        {
+                            <h5>Gold medal at @tournament</h5>
+                        }
+                    }
+                    @if (result.SilverMedalMatches.Count > 0)
+                    {
+                        foreach (var tournament in result.SilverMedalMatches)
+                        {
+                            <h5>Silver Medal at @tournament</h5>
+                        }
+                    }
+                    @if (result.SilverMedalMatches.Count > 0)
+                    {
+                        foreach (var tournament in result.BronzeMedalMatches)
+                        {
+                            <h5>Bronze Medal at @tournament</h5>
+                        }
+                    }
+
                 </div>
             </div>
         </div>
-        <hr />
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h3>Most Recent Results</h3>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>
-                                    W/L
-                                </th>
-                                <th>
-                                    Opponent
-                                </th>
-                                <th>
-                                    Country
-                                </th>
-                                <th>
-                                    Score
-                                </th>
-                                <th>
-                                    Tournament
-                                </th>
-                                <th>
-                                    Date
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach(var match in result.MostRecentMatches.Items) {
+        <div class="col-md-6">
+            <div class="card box-shadow text-center">
+                <h5 class="card-header">
+                    By The Numbers
+                </h5>
+                <div class="card-body">
+                    <h5>Pins: @result.Pins</h5>
+                    <h5>Techs: @result.Techs</h5>
+                    <h5>Decisions: @result.Points</h5>
+                    <h5>Average Points Scored: @result.AverageOffensivePointsPerMatch</h5>
+                    <h5>Average Points Given Up: @result.AverageDefensivePointsPerMatch</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3>Most Recent Results</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                W/L
+                            </th>
+                            <th>
+                                Opponent
+                            </th>
+                            <th>
+                                Country
+                            </th>
+                            <th>
+                                Score
+                            </th>
+                            <th>
+                                Tournament
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var match in result.MostRecentMatches.Items)
+                        {
                             <tr>
                                 <td>
                                     @if (match.WrestlerId1.Equals(Id))
@@ -121,10 +135,11 @@
                                     {
                                         @match.WrestlerName2
                                     }
-                                    else {
+                                    else
+                                    {
                                         @match.WrestlerName1
                                     }
-                               
+
                                 </td>
                                 <td>
                                     @if (match.WrestlerId1.Equals(Id))
@@ -143,13 +158,12 @@
                                     @match.Venue
                                 </td>
                                 <td>
-                                    @match.Date
+                                    @match.Date.Value.Date.ToShortDateString()
                                 </td>
                             </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -161,10 +175,24 @@
     [Parameter]
     public string Id { get; set; }
     public WrestlingAggregatesModel result;
+    public WrestlingAutoCompleteModel SelectedFilm;
+
+    private async Task SelectedResultChange(WrestlingAutoCompleteModel result)
+    {
+        var wrestler = await Http.GetWrestlerDetailsByName(result.Text);
+        Nav.NavigateTo("Champions/" + wrestler.WrestlerId);
+        
+    }
 
     protected override async Task OnInitializedAsync()
     {
         result = await Http.GetWrestlerDetails(Id);
+    }
+
+    private async Task<IEnumerable<WrestlingAutoCompleteModel>> SearchFilms(string searchText)
+    {
+        var response = await Http.GetAutoComplete(searchText);
+        return response.Items;
     }
 
 }

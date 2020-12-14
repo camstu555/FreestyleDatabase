@@ -11,6 +11,7 @@
 		<PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
 		<PackageReference Include="Radzen.Blazor" Version="2.18.4" />
 		<PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+		<PackageReference Include="Blazored.Typeahead" Version="4.4.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Shared\" />
