@@ -234,7 +234,7 @@ namespace FreestyleDatabase.Shared.Services
                     type = isDate
                         ? "Edm.DateTimeOffset"
                         : isInt
-                            ? "Edm.Int32"
+                            ? "Edm.Double"
                             : "Edm.String",
                     key = prop.Name.Equals("id", StringComparison.OrdinalIgnoreCase),
                     searchable = !isDate && !isInt,
