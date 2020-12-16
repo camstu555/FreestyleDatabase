@@ -1,4 +1,4 @@
-﻿@using Blazored.Typeahead
+@using Blazored.Typeahead
 @page "/Champions/{id}"
 @inject WrestlerSearchService Http
 @inject NavigationManager Nav
@@ -8,33 +8,29 @@
     <div class="container-fluid">
         <div class="bg mx-3">
             <div class="row">
-                <div class="col-md-12 text-center">
-                    <br />
-                    <br />
-                    <BlazoredTypeahead SearchMethod="@SearchFilms"
-                                       Debounce="500"
-                                       @bind-Value="SelectedFilm">
-                        <SelectedTemplate>
-                            @context.Text
-                        </SelectedTemplate>
-                        <ResultTemplate>
-                            @context.Text
-                        </ResultTemplate>
-                        <NotFoundTemplate>
-                            Sorry, there weren't any search results.
-                        </NotFoundTemplate>
-                    </BlazoredTypeahead>
-                </div>
+
+                <BlazoredTypeahead SearchMethod="@SearchWrestlers" @bind-Value="@SelectedWrestler" Debounce="500">
+                    <SelectedTemplate>
+                        @context.Text
+                    </SelectedTemplate>
+                    <ResultTemplate>
+                        @context.Text
+                    </ResultTemplate>
+                    <NotFoundTemplate>
+                        Sorry, there weren't any search results.
+                    </NotFoundTemplate>
+                </BlazoredTypeahead>
+
                 <br />
                 <br />
-                <img src="@result.WrestlerImageUrl"
-                     width="300px"
-                     class="img-thumbnail"
-                     style="display:inline"
-                     alt="@result.WrestlerName" />
+
+                <img src="@result.WrestlerImageUrl" width="300" class="img-thumbnail" style="display: inline" alt="@result.WrestlerName" />
+
                 <h1>@result.WrestlerName</h1>
-                <h2>@result.WrestlerWeight KG | @result.WrestlerCountry  @result.WrestlerCountryEmoji</h2>
-                <h2>@result.Wins Wins | @result.Losses Losses ( since @result.OldestMatchDate.Value.Date.ToShortDateString() )</h2>
+                <h2>@result.WrestlerWeight KG | @result.WrestlerCountry @result.WrestlerCountryEmoji</h2>
+                <h2>@result.Wins Wins - @result.Losses Losses</h2>
+                <h4>(since @result.OldestMatchDate.Value.Date.ToShortDateString())</h4>
+
             </div>
         </div>
         <hr />
@@ -169,7 +165,9 @@
 
     [Parameter]
     public string Id { get; set; }
+
     public WrestlingAggregatesModel result;
+
     public WrestlingAutoCompleteModel SelectedFilm;
 
     private async Task SelectedResultChange(WrestlingAutoCompleteModel result)
@@ -179,12 +177,14 @@
 
     }
 
+    public WrestlingAutoCompleteModel SelectedWrestler;
+
     protected override async Task OnInitializedAsync()
     {
         result = await Http.GetWrestlerDetails(Id);
     }
 
-    private async Task<IEnumerable<WrestlingAutoCompleteModel>> SearchFilms(string searchText)
+    private async Task<IEnumerable<WrestlingAutoCompleteModel>> SearchWrestlers(string searchText)
     {
         var response = await Http.GetAutoComplete(searchText);
         return response.Items;

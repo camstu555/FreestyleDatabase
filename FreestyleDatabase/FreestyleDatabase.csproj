@@ -9,7 +9,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Build" Version="3.2.1" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.1" PrivateAssets="all" />
 		<PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
-		<PackageReference Include="Radzen.Blazor" Version="2.18.4" />
+		<PackageReference Include="Radzen.Blazor" Version="2.18.5" />
 		<PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
 		<PackageReference Include="Blazored.Typeahead" Version="4.4.1" />
 	</ItemGroup>
