@@ -9,7 +9,7 @@
         <div class="bg mx-3">
             <div class="row">
 
-                <BlazoredTypeahead SearchMethod="@SearchWrestlers" @bind-Value="@SelectedWrestler" Debounce="500">
+                <BlazoredTypeahead SearchMethod="@SearchWrestlers" @bind-Value="@selectedWrestler" Debounce="500">
                     <SelectedTemplate>
                         @context.Text
                     </SelectedTemplate>
@@ -166,18 +166,16 @@
     [Parameter]
     public string Id { get; set; }
 
-    public WrestlingAggregatesModel result;
 
-    public WrestlingAutoCompleteModel SelectedFilm;
+    public WrestlingAutoCompleteModel selectedWrestler;
+    public WrestlingAggregatesModel result;
 
     private async Task SelectedResultChange(WrestlingAutoCompleteModel result)
     {
         var wrestler = await Http.GetWrestlerDetailsByName(result.Text);
+
         Nav.NavigateTo("Champions/" + wrestler.WrestlerId);
-
     }
-
-    public WrestlingAutoCompleteModel SelectedWrestler;
 
     protected override async Task OnInitializedAsync()
     {
