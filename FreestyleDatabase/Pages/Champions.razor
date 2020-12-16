@@ -9,12 +9,20 @@
             <div class="col-md-12 text-center">
                 <br />
                 <br />
-                <div class="active-cyan">
-                    <input class="form-control"
-                           type="text"
-                           placeholder="Search"
-                           aria-label="Search" />
-                </div>
+                <BlazoredTypeahead SearchMethod="@SearchWrestlers"
+                                   @bind-Value="@SelectedWrestler"
+                                   Debounce="500">
+                    <SelectedTemplate>
+                        @context.Text
+                    </SelectedTemplate>
+                    <ResultTemplate>
+                        @context.Text
+                    </ResultTemplate>
+                    <NotFoundTemplate>
+                        Sorry, there weren't any search results.
+                    </NotFoundTemplate>
+                </BlazoredTypeahead>
+
                 <br />
                 <br />
                 <img src="@result.WrestlerImageUrl"
@@ -105,48 +113,50 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach(var match in result.MostRecentMatches.Items) {
-                            <tr>
-                                <td>
-                                    @if (match.WrestlerId1.Equals(Id))
-                                    {
-                                        @:W
-                                    }
-                                    else
-                                    {
-                                        @:L
-                                    }
-                                </td>
-                                <td>
-                                    @if (match.WrestlerId1.Equals(Id))
-                                    {
-                                        @match.WrestlerName2
-                                    }
-                                    else {
-                                        @match.WrestlerName1
-                                    }
-                               
-                                </td>
-                                <td>
-                                    @if (match.WrestlerId1.Equals(Id))
-                                    {
-                                        @match.Country2Emoji
-                                    }
-                                    else
-                                    {
-                                        @match.Country1Emoji
-                                    }
-                                </td>
-                                <td>
-                                    @match.Result,  @match.Score
-                                </td>
-                                <td>
-                                    @match.Venue
-                                </td>
-                                <td>
-                                    @match.Date.Value.Date.ToShortDateString()
-                                </td>
-                            </tr>
+                            @foreach (var match in result.MostRecentMatches.Items)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (match.WrestlerId1.Equals(Id))
+                                        {
+                                            @:W
+                                        }
+                                        else
+                                        {
+                                            @:L
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (match.WrestlerId1.Equals(Id))
+                                        {
+                                            @match.WrestlerName2
+                                        }
+                                        else
+                                        {
+                                            @match.WrestlerName1
+                                        }
+
+                                    </td>
+                                    <td>
+                                        @if (match.WrestlerId1.Equals(Id))
+                                        {
+                                            @match.Country2Emoji
+                                        }
+                                        else
+                                        {
+                                            @match.Country1Emoji
+                                        }
+                                    </td>
+                                    <td>
+                                        @match.Result,  @match.Score
+                                    </td>
+                                    <td>
+                                        @match.Venue
+                                    </td>
+                                    <td>
+                                        @match.Date.Value.Date.ToShortDateString()
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -162,10 +172,17 @@
     [Parameter]
     public string Id { get; set; }
     public WrestlingAggregatesModel result;
+    public WrestlingAutoCompleteModel SelectedWrestler;
 
     protected override async Task OnInitializedAsync()
     {
         result = await Http.GetWrestlerDetails(Id);
+    }
+
+    private async Task<IEnumerable<WrestlingAutoCompleteModel>> SearchWrestlers(string searchText)
+    {
+        var response = await Http.GetAutoComplete(searchText);
+        return response.Items;
     }
 
 }
