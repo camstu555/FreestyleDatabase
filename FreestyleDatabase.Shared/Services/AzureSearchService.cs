@@ -207,8 +207,7 @@ namespace FreestyleDatabase.Shared.Services
                     searchMode = "analyzingInfixMatching",
                     sourceFields = new [] {
                         nameof(WrestlingDataModel.WrestlerName1),
-                        nameof(WrestlingDataModel.WrestlerName2),
-                        nameof(WrestlingDataModel.Venue)
+                        nameof(WrestlingDataModel.WrestlerName2)
                     }
                 }
             };
