@@ -24,6 +24,11 @@
                 <br />
                 <br />
 
+                @if (selectedWrestler != null)
+                {
+                    <h1>@selectedWrestler.Text</h1>
+                }
+
                 <img src="@result.WrestlerImageUrl" width="300" class="img-thumbnail" style="display: inline" alt="@result.WrestlerName" />
 
                 <h1>@result.WrestlerName</h1>

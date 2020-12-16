@@ -93,7 +93,7 @@ namespace FreestyleDatabase.Shared.Services
 
         public async Task<SearchCollectionResponseModel<WrestlingAutoCompleteModel>> GetAutoComplete(string wrestlerName)
         {
-            var route = string.Format(baseAddress, "FreeStyleAutoComplete") + $"?search={Uri.EscapeDataString(wrestlerName)}&suggesterName=ac&autocompleteMode=twoTerms&fuzzy=true";
+            var route = string.Format(baseAddress, "FreeStyleAutoComplete") + $"?search={Uri.EscapeDataString(wrestlerName)}&suggesterName=ac&autocompleteMode=twoTerms";
 
             var request = new HttpRequestMessage(HttpMethod.Get, route);
             var response = await httpClient.SendAsync(request);
