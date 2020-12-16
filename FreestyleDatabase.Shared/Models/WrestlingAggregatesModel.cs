@@ -64,14 +64,14 @@ namespace FreestyleDatabase.Shared.Models
         /// if (WrestlerName2 = search) add right of hyphen
         /// divide by count of total matches for that wrestler
         /// </summary>
-        public int AverageOffensivePointsPerMatch { get; set; }
+        public double AverageOffensivePointsPerMatch { get; set; }
 
         /// <summary>
         /// if (WrestlerName1 = search) add right of hyphen
         /// if (WrestlerName2 = search) add left of hyphen
         /// divide by count of total matches for that wrestler
         /// </summary>
-        public int AverageDefensivePointsPerMatch { get; set; }
+        public double AverageDefensivePointsPerMatch { get; set; }
 
         /// <summary>
         ///  returns most recent 10 matches where WrestlerName1 or WrestlerName2 = search
