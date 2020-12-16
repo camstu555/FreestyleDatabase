@@ -8,29 +8,34 @@
     <div class="container-fluid">
         <div class="bg mx-3">
             <div class="row">
+                <div class="col-12">
+                    <BlazoredTypeahead TValue="WrestlingAutoCompleteModel"
+                                       TItem="WrestlingAutoCompleteModel"
+                                       Value="selectedWrestler"
+                                       ValueChanged="SelectedResultChanged"
+                                       ValueExpression="@(() => selectedWrestler)"
+                                       placeholder="Search by name...">
+                        <SelectedTemplate>
+                            @context.Text
+                        </SelectedTemplate>
+                        <ResultTemplate>
+                            @context.Text
+                        </ResultTemplate>
+                        <NotFoundTemplate>
+                            Sorry, there weren't any search results.
+                        </NotFoundTemplate>
+                    </BlazoredTypeahead>
 
-                <BlazoredTypeahead SearchMethod="@SearchWrestlers" @bind-Value="@selectedWrestler" Debounce="500">
-                    <SelectedTemplate>
-                        @context.Text
-                    </SelectedTemplate>
-                    <ResultTemplate>
-                        @context.Text
-                    </ResultTemplate>
-                    <NotFoundTemplate>
-                        Sorry, there weren't any search results.
-                    </NotFoundTemplate>
-                </BlazoredTypeahead>
+                    <br />
+                    <br />
 
-                <br />
-                <br />
+                    <img src="@result.WrestlerImageUrl" width="300" class="img-thumbnail" style="display: inline" alt="@result.WrestlerName" />
 
-                <img src="@result.WrestlerImageUrl" width="300" class="img-thumbnail" style="display: inline" alt="@result.WrestlerName" />
-
-                <h1>@result.WrestlerName</h1>
-                <h2>@result.WrestlerWeight KG | @result.WrestlerCountry @result.WrestlerCountryEmoji</h2>
-                <h2>@result.Wins Wins - @result.Losses Losses</h2>
-                <h4>(since @result.OldestMatchDate.Value.Date.ToShortDateString())</h4>
-
+                    <h1>@result.WrestlerName</h1>
+                    <h2>@result.WrestlerWeight KG | @result.WrestlerCountry @result.WrestlerCountryEmoji</h2>
+                    <h2>@result.Wins Wins - @result.Losses Losses</h2>
+                    <h4>(since @result.OldestMatchDate.Value.Date.ToShortDateString())</h4>
+                </div>
             </div>
         </div>
         <hr />
@@ -166,11 +171,10 @@
     [Parameter]
     public string Id { get; set; }
 
-
     public WrestlingAutoCompleteModel selectedWrestler;
     public WrestlingAggregatesModel result;
 
-    private async Task SelectedResultChange(WrestlingAutoCompleteModel result)
+    private async Task SelectedResultChanged(WrestlingAutoCompleteModel result)
     {
         var wrestler = await Http.GetWrestlerDetailsByName(result.Text);
 
