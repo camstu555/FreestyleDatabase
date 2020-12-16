@@ -27,9 +27,9 @@ namespace FreestyleDatabase.Shared.Models
 
         public string Score { get; set; }
 
-        public int WreslterName1Score { get; set; }
+        public double WreslterName1Score { get; set; }
 
-        public int WreslterName2Score { get; set; }
+        public double WreslterName2Score { get; set; }
 
         public string Country2 { get; set; }
 

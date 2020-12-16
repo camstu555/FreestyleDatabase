@@ -27,7 +27,7 @@ namespace FreestyleDatabase.Shared.Extensions
             }
         }
 
-        public static int GetWrestlerName1Score(this WrestlingDataModel model)
+        public static double GetWrestlerName1Score(this WrestlingDataModel model)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace FreestyleDatabase.Shared.Extensions
             }
         }
 
-        public static int GetWrestlerName2Score(this WrestlingDataModel model)
+        public static double GetWrestlerName2Score(this WrestlingDataModel model)
         {
             try
             {

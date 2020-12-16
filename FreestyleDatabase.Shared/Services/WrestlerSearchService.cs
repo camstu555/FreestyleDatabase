@@ -85,8 +85,8 @@ namespace FreestyleDatabase.Shared.Services
             result.SilverMedalMatches.AddRange(wrestlerResults.Items.Where(x => x.WrestlerId2.Equals(wrestlerId) && x.Round.Equals("Gold", StringComparison.OrdinalIgnoreCase)).Select(x => x.Venue));
             result.BronzeMedalMatches.AddRange(wrestlerResults.Items.Where(x => x.WrestlerId1.Equals(wrestlerId) && x.Round.Equals("Bronze", StringComparison.OrdinalIgnoreCase)).Select(x => x.Venue));
 
-            result.AverageDefensivePointsPerMatch = wrestlerResults.Items.Sum(x => x.WrestlerId2.Equals(wrestlerId) ? x.WreslterName1Score : x.WreslterName2Score) / (result.Wins + result.Losses);
-            result.AverageOffensivePointsPerMatch = wrestlerResults.Items.Sum(x => x.WrestlerId1.Equals(wrestlerId) ? x.WreslterName1Score : x.WreslterName2Score) / (result.Wins + result.Losses);
+            result.AverageDefensivePointsPerMatch = Math.Round(wrestlerResults.Items.Sum(x => x.WrestlerId2.Equals(wrestlerId) ? x.WreslterName1Score : x.WreslterName2Score) / (result.Wins + result.Losses), 2);
+            result.AverageOffensivePointsPerMatch = Math.Round(wrestlerResults.Items.Sum(x => x.WrestlerId1.Equals(wrestlerId) ? x.WreslterName1Score : x.WreslterName2Score) / (result.Wins + result.Losses), 2);
 
             return result;
         }
