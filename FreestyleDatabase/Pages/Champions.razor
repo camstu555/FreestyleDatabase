@@ -9,12 +9,18 @@
         <div class="bg mx-3">
             <div class="col-md-12 text-center">
                 <div class="row">
-                    <BlazoredTypeahead SearchMethod="@SearchWrestlers" @bind-Value="@selectedWrestler" Debounce="500">
+                    <BlazoredTypeahead SearchMethod="SearchWrestlers"
+                                       TItem="WrestlingAutoCompleteModel"
+                                       TValue="WrestlingAutoCompleteModel"
+                                       Value="selectedWrestler"
+                                       ValueChanged="@SelectedResultChanged"
+                                       ValueExpression="@(() => selectedWrestler)"
+                                       placeholder="Search by name...">
                         <SelectedTemplate>
-                            @context.QueryPlusText
+                            @context.Text
                         </SelectedTemplate>
                         <ResultTemplate>
-                            @context.QueryPlusText
+                            @context.Text
                         </ResultTemplate>
                         <NotFoundTemplate>
                             Sorry, there weren't any search results.
@@ -23,11 +29,6 @@
                 </div>
                 <br />
                 <br />
-
-                @if (selectedWrestler != null)
-                {
-                    <h1>@selectedWrestler.QueryPlusText</h1>
-                }
 
                 <img src="@result.WrestlerImageUrl" width="300" class="img-thumbnail" style="display: inline" alt="@result.WrestlerName" />
 
@@ -95,16 +96,15 @@
                                 <th>
                                     Date
                                 </th>
-                                <th>
+                                <th style="width: 60px;">
                                     Video
-                                </th>
-                                <th>
-                                    Result
                                 </th>
                                 <th>
                                     Opponent
                                 </th>
-
+                                <th>
+                                    Result
+                                </th>
                                 <th>
                                     Round
                                 </th>
@@ -116,50 +116,50 @@
                         <tbody>
                             @foreach (var match in result.MostRecentMatches.Items)
                             {
-                            <tr>
-                                <td>
-                                    @match.Date.Value.Date.ToShortDateString()
-                                </td>
-                                <td>
-                                    @if (match.Video != "")
-                                    {
-                                        <a href="@match.Video" target="_blank">
-                                            <span class="oi oi-media-play"></span>
-                                        </a>
-                                    }
-                                </td>
-                                <td>
-                                    @if (match.WrestlerId1.Equals(Id))
-                                    {
-                                        @:Won @if (@match.Result != "")
-                                        {@match.Result}, @if (@match.Score != "")
-                                        {@match.Score}
-                                    }
-                                    else
-                                    {
-                                        @:Loss @if (@match.Result != "")
-                                        {@match.Result}, @if (@match.Score != "")
-                                        {@match.Score}
-                                    }
-                                </td>
-                                <td>
-                                    @if (match.WrestlerId1.Equals(Id))
-                                    {
-                                    <span title=@match.FullCountryName2>@match.Country2Emoji </span><a href="Champions/@match.WrestlerId2" @onclick="@(e => LinkNavigation(match.WrestlerId2))" alt="@match.WrestlerName2">@match.WrestlerName2</a>
-                                    }
-                                    else
-                                    {
-                                <span title=@match.FullCountryName1>@match.Country1Emoji </span><a href="Champions/@match.WrestlerId1" @onclick="@(e => LinkNavigation(match.WrestlerId1))" alt="@match.WrestlerName1">@match.WrestlerName1</a>
-                                    }
-                                </td>
-                                <td>
-                                    @match.Round
-                                </td>
-                                <td>
-                                    @match.Venue
-                                </td>
+                                <tr class="@(match.WrestlerId1.Equals(Id) ? "table-success" : "table-danger")">
+                                    <td>
+                                        @match.Date.Value.Date.ToShortDateString()
+                                    </td>
+                                    <td>
+                                        @if (match.Video != "")
+                                        {
+                                            <a href="@match.Video" target="_blank">
+                                                <span class="oi oi-media-play"></span>
+                                            </a>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (match.WrestlerId1.Equals(Id))
+                                        {
+                                            <a href="Champions/@match.WrestlerId2" @onclick="@(e => LinkNavigation(match.WrestlerId2))" alt="@match.WrestlerName2">@match.WrestlerName2</a><span title=@match.FullCountryName2>&nbsp; @match.Country2Emoji </span>
+                                        }
+                                        else
+                                        {
+                                            <a href="Champions/@match.WrestlerId1" @onclick="@(e => LinkNavigation(match.WrestlerId1))" alt="@match.WrestlerName1">@match.WrestlerName1</a><span title=@match.FullCountryName1>&nbsp; @match.Country1Emoji </span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (match.WrestlerId1.Equals(Id))
+                                        {
+                                            @:Won @if (@match.Result != "")
+                                            {@match.Result}, @if (@match.Score != "")
+            {@match.Score}
+                                        }
+                                        else
+                                        {
+                                            @:Loss @if (@match.Result != "")
+                                            {@match.Result}, @if (@match.Score != "")
+            {@match.Score}
+                                        }
+                                    </td>
+                                    <td>
+                                        @match.Round
+                                    </td>
+                                    <td>
+                                        @match.Venue
+                                    </td>
 
-                            </tr>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -169,19 +169,20 @@
     </div>
 }
 
-@code {
+    @code {
 
-    [Parameter]
-    public string Id { get; set; }
+        [Parameter]
+        public string Id { get; set; }
 
-    public WrestlingAutoCompleteModel selectedWrestler;
+public WrestlingAutoCompleteModel selectedWrestler;
     public WrestlingAggregatesModel result;
 
     private async Task SelectedResultChanged(WrestlingAutoCompleteModel result)
     {
+
         var wrestler = await Http.GetWrestlerDetailsByName(result.Text);
 
-        Nav.NavigateTo("Champions/" + wrestler.WrestlerId);
+        Nav.NavigateTo("Champions/" + wrestler.WrestlerId, true);
     }
 
     protected override async Task OnInitializedAsync()
@@ -200,4 +201,4 @@
         Nav.NavigateTo("Champions/" + id, true);
     }
 
-}
+    }
