@@ -67,7 +67,7 @@ namespace FreestyleDatabase.Shared.Services
                 result.WrestlerCountryEmoji = firstResult.Country2Emoji;
             }
 
-            var recentMatches = wrestlerResults.Items.Take(recentMatchCount).ToList();
+            var recentMatches = wrestlerResults.Items.OrderByDescending(x => x.Date).Take(recentMatchCount).ToList();
 
             foreach (var recentMatch in recentMatches)
             {
