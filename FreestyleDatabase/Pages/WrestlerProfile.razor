@@ -1,7 +1,9 @@
 @using Blazored.Typeahead
-@page "/Champions/{id}"
+@page  "/WrestlerProfile"
+@page "/WrestlerProfile/{id}"
 @inject WrestlerSearchService Http
 @inject NavigationManager Nav
+
 
 @if (result != null)
 {
@@ -26,9 +28,12 @@
                             Sorry, there weren't any search results.
                         </NotFoundTemplate>
                     </BlazoredTypeahead>
+
                 </div>
+
                 <br />
                 <br />
+
 
                 <img src="@result.WrestlerImageUrl" width="300" class="img-thumbnail" style="display: inline" alt="@result.WrestlerName" />
 
@@ -131,11 +136,11 @@
                                     <td>
                                         @if (match.WrestlerId1.Equals(Id))
                                         {
-                                            <a href="Champions/@match.WrestlerId2" @onclick="@(e => LinkNavigation(match.WrestlerId2))" alt="@match.WrestlerName2">@match.WrestlerName2</a><span title=@match.FullCountryName2>&nbsp; @match.Country2Emoji </span>
+                                            <a href="WrestlerProfile/@match.WrestlerId2" @onclick="@(e => LinkNavigation(match.WrestlerId2))" alt="@match.WrestlerName2">@match.WrestlerName2</a><span title=@match.FullCountryName2>&nbsp; @match.Country2Emoji </span>
                                         }
                                         else
                                         {
-                                            <a href="Champions/@match.WrestlerId1" @onclick="@(e => LinkNavigation(match.WrestlerId1))" alt="@match.WrestlerName1">@match.WrestlerName1</a><span title=@match.FullCountryName1>&nbsp; @match.Country1Emoji </span>
+                                            <a href="WrestlerProfile/@match.WrestlerId1" @onclick="@(e => LinkNavigation(match.WrestlerId1))" alt="@match.WrestlerName1">@match.WrestlerName1</a><span title=@match.FullCountryName1>&nbsp; @match.Country1Emoji </span>
                                         }
                                     </td>
                                     <td>
@@ -143,13 +148,13 @@
                                         {
                                             @:Won @if (@match.Result != "")
                                             {@match.Result}, @if (@match.Score != "")
-            {@match.Score}
+                                            {@match.Score}
                                         }
                                         else
                                         {
                                             @:Loss @if (@match.Result != "")
                                             {@match.Result}, @if (@match.Score != "")
-            {@match.Score}
+                                            {@match.Score}
                                         }
                                     </td>
                                     <td>
@@ -164,17 +169,18 @@
                         </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
     </div>
 }
 
-    @code {
+@code {
 
-        [Parameter]
-        public string Id { get; set; }
+    [Parameter]
+    public string Id { get; set; }
 
-public WrestlingAutoCompleteModel selectedWrestler;
+    public WrestlingAutoCompleteModel selectedWrestler;
     public WrestlingAggregatesModel result;
 
     private async Task SelectedResultChanged(WrestlingAutoCompleteModel result)
@@ -182,7 +188,7 @@ public WrestlingAutoCompleteModel selectedWrestler;
 
         var wrestler = await Http.GetWrestlerDetailsByName(result.Text);
 
-        Nav.NavigateTo("Champions/" + wrestler.WrestlerId, true);
+        Nav.NavigateTo("WrestlerProfile/" + wrestler.WrestlerId, true);
     }
 
     protected override async Task OnInitializedAsync()
@@ -198,7 +204,7 @@ public WrestlingAutoCompleteModel selectedWrestler;
 
     public void LinkNavigation(string id)
     {
-        Nav.NavigateTo("Champions/" + id, true);
+        Nav.NavigateTo("WrestlerProfile/" + id, true);
     }
 
-    }
+}
