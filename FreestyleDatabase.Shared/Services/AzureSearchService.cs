@@ -243,7 +243,7 @@ namespace FreestyleDatabase.Shared.Services
                     sortable = true,
                     facetable = true,
                     retrievable = true,
-                    analyzer = isName ? "keyword" : null
+                    analyzer = "keyword"
                 });
             }
 
