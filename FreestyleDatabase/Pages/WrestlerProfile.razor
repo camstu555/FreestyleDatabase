@@ -1,10 +1,8 @@
 @implements IDisposable
-@using Blazored.Typeahead
-@page  "/WrestlerProfile"
+@page "/WrestlerProfile"
 @page "/WrestlerProfile/{id}"
 @inject WrestlerSearchService Http
 @inject NavigationManager Nav
-
 
 @if (result != null)
 {
@@ -29,15 +27,10 @@
                             Sorry, there weren't any search results.
                         </NotFoundTemplate>
                     </BlazoredTypeahead>
-
                 </div>
-
                 <br />
                 <br />
-
-
                 <img src="@result.WrestlerImageUrl" width="300" class="img-thumbnail" style="display: inline" alt="@result.WrestlerName" />
-
                 <h1>@result.WrestlerName</h1>
                 <h2>@result.WrestlerWeight KG | @result.WrestlerCountry @result.WrestlerCountryEmoji</h2>
                 <h2>@result.Wins Wins - @result.Losses Losses</h2>
@@ -164,7 +157,6 @@
                                     <td>
                                         @match.Venue
                                     </td>
-
                                 </tr>
                             }
                         </tbody>
@@ -182,6 +174,7 @@
     public string Id { get; set; }
 
     public WrestlingAutoCompleteModel selectedWrestler;
+
     public WrestlingAggregatesModel result;
 
     private async Task SelectedResultChanged(WrestlingAutoCompleteModel result)
@@ -198,7 +191,7 @@
         Nav.LocationChanged += LocationChanged;
     }
 
-    void LocationChanged(object sender, LocationChangedEventArgs e)
+    private void LocationChanged(object sender, LocationChangedEventArgs e)
     {
         base.InvokeAsync(async () =>
         {
@@ -209,7 +202,7 @@
 
     }
 
-    void IDisposable.Dispose()
+    private void Dispose()
     {
         Nav.LocationChanged -= LocationChanged;
     }
