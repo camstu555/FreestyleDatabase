@@ -77,7 +77,7 @@ namespace FreestyleDatabase.Shared.Services
 
             var response = await request.Content.ReadAsStringAsync();
             var json = JsonConvert.DeserializeObject<BingResult>(response);
-            var result = json.Value.FirstOrDefault();
+            var result = json.Value.First();
 
             cache[wrestlerName] = result;
 
