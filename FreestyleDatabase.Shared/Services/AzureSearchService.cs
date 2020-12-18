@@ -227,6 +227,7 @@ namespace FreestyleDatabase.Shared.Services
 
                 var isDate = prop.Name.Equals("date", StringComparison.OrdinalIgnoreCase);
                 var isInt = prop.Name.Equals("WreslterName1Score", StringComparison.OrdinalIgnoreCase) || prop.Name.Equals("WreslterName2Score", StringComparison.OrdinalIgnoreCase);
+                var isName = prop.Name.Equals("WreslterName1", StringComparison.OrdinalIgnoreCase) || prop.Name.Equals("WreslterName2", StringComparison.OrdinalIgnoreCase);
 
                 result.Add(new
                 {
@@ -241,7 +242,8 @@ namespace FreestyleDatabase.Shared.Services
                     filterable = true,
                     sortable = true,
                     facetable = true,
-                    retrievable = true
+                    retrievable = true,
+                    analyzer = isName ? "keyword" : null
                 });
             }
 

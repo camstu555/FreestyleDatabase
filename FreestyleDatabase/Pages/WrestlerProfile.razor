@@ -1,3 +1,4 @@
+@implements IDisposable
 @using Blazored.Typeahead
 @page  "/WrestlerProfile"
 @page "/WrestlerProfile/{id}"
@@ -188,12 +189,29 @@
 
         var wrestler = await Http.GetWrestlerDetailsByName(result.Text);
 
-        Nav.NavigateTo("WrestlerProfile/" + wrestler.WrestlerId, true);
+        Nav.NavigateTo("WrestlerProfile/" + wrestler.WrestlerId);
     }
 
     protected override async Task OnInitializedAsync()
     {
         result = await Http.GetWrestlerDetails(Id);
+        Nav.LocationChanged += LocationChanged;
+    }
+
+    void LocationChanged(object sender, LocationChangedEventArgs e)
+    {
+        base.InvokeAsync(async () =>
+        {
+            await Task.Delay(1);
+            result = await Http.GetWrestlerDetails(Id);
+            StateHasChanged();
+        });
+
+    }
+
+    void IDisposable.Dispose()
+    {
+        Nav.LocationChanged -= LocationChanged;
     }
 
     private async Task<IEnumerable<WrestlingAutoCompleteModel>> SearchWrestlers(string searchText)
@@ -204,7 +222,7 @@
 
     public void LinkNavigation(string id)
     {
-        Nav.NavigateTo("WrestlerProfile/" + id, true);
+        Nav.NavigateTo("WrestlerProfile/" + id);
     }
 
 }
