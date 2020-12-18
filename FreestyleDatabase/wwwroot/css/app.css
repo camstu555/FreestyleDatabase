@@ -187,6 +187,7 @@ html, body {
 body {
     min-height: 100%;
     background-color: var(--black);
+    font-family: 'Source Sans Pro', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 ol, ul, li {
@@ -209,7 +210,6 @@ i.h1, i.h2, i.h3, i.h4, i.h5, i.h6 {
 }
 
 p, a, span, strong, small, ul, li, ol {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--primary);
     text-decoration: none;
 }
