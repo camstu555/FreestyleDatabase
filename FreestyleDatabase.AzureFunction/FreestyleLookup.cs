@@ -1,3 +1,4 @@
+using FreestyleDatabase.Shared.Extensions;
 using FreestyleDatabase.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,6 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
-using FreestyleDatabase.Shared.Extensions;
 
 namespace FreestyleDatabase.AzureFunction
 {
