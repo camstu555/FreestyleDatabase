@@ -202,7 +202,7 @@
 
     }
 
-    private void Dispose()
+    void IDisposable.Dispose()
     {
         Nav.LocationChanged -= LocationChanged;
     }
