@@ -14,5 +14,7 @@ namespace FreestyleDatabase.AzureFunction
         public static WrestlingDataService WrestlingDataService => new WrestlingDataService(GoogleSheetService);
 
         public static AzureSearchService AzureSearchService => new AzureSearchService(HttpClient);
+
+        public static WrestlerSearchService WrestlerSearchService => new WrestlerSearchService(HttpClient);
     }
 }

@@ -32,22 +32,6 @@ namespace FreestyleDatabase.Shared.Services
 
         private string RouteTemplate => Endpoint + "{0}" + $"?api-version={Version}";
 
-        public async Task<WrestlingAggregatesModel> GetWrestlerMetaData(string wrestlerId)
-        {
-            await Task.Delay(250);
-
-            return new WrestlingAggregatesModel
-            {
-                Losses = 1,
-                Wins = 20,
-                AverageDefensivePointsPerMatch = 25,
-                AverageOffensivePointsPerMatch = 14,
-                Pins = 12,
-                Points = 240,
-                Techs = 1000
-            };
-        }
-
         public async Task<bool> DoesIndexExist(CancellationToken cancellationToken = default)
         {
             var route = string.Format(RouteTemplate, $"/indexes/{IndexName}");
@@ -119,7 +103,7 @@ namespace FreestyleDatabase.Shared.Services
 
             var payload = new
             {
-                value = GetDocumentsFromWrestlerModel(wrestlers)
+                value = wrestlers
             };
 
             var payloadAsJson = JsonConvert
@@ -227,7 +211,7 @@ namespace FreestyleDatabase.Shared.Services
 
                 var isDate = prop.Name.Equals("date", StringComparison.OrdinalIgnoreCase);
                 var isInt = prop.Name.Equals("WreslterName1Score", StringComparison.OrdinalIgnoreCase) || prop.Name.Equals("WreslterName2Score", StringComparison.OrdinalIgnoreCase);
-                var isName = prop.Name.Equals("WreslterName1", StringComparison.OrdinalIgnoreCase) || prop.Name.Equals("WreslterName2", StringComparison.OrdinalIgnoreCase);
+                //var isName = prop.Name.Equals("WreslterName1", StringComparison.OrdinalIgnoreCase) || prop.Name.Equals("WreslterName2", StringComparison.OrdinalIgnoreCase);
 
                 result.Add(new
                 {
@@ -247,11 +231,6 @@ namespace FreestyleDatabase.Shared.Services
             }
 
             return result;
-        }
-
-        private List<WrestlingDataModel> GetDocumentsFromWrestlerModel(List<WrestlingDataModel> wrestlers)
-        {
-            return wrestlers;
         }
     }
 }

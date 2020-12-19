@@ -2,31 +2,31 @@
  * Fonts
  */
 @font-face {
-  font-family: "suprregular";
-  src: url("fonts/supr-webfont.woff2") format("woff2"), url("fonts/supr-webfont.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
+    font-family: "suprregular";
+    src: url("fonts/supr-webfont.woff2") format("woff2"), url("fonts/supr-webfont.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: "supritalic";
-  src: url("fonts/supr-italic-webfont.woff2") format("woff2"), url("fonts/supr-italic-webfont.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
+    font-family: "supritalic";
+    src: url("fonts/supr-italic-webfont.woff2") format("woff2"), url("fonts/supr-italic-webfont.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
 }
 
 /*
  * Images/Sprites
  */
 .logo {
-  display: block;
-  background: url("images/logo.png") no-repeat;
-  overflow: hidden;
-  text-indent: -9999px;
-  text-align: left;
-  height: 108px;
-  width: 480px;
-  cursor: pointer;
+    display: block;
+    background: url("images/logo.png") no-repeat;
+    overflow: hidden;
+    text-indent: -9999px;
+    text-align: left;
+    height: 108px;
+    width: 480px;
+    cursor: pointer;
 }
 
 .spritelogo,
@@ -44,129 +44,129 @@
 .spriteplay-hover,
 .spriteplay,
 .spritesilver-0-25x {
-  display: inline-block;
-  background: url("images/sprites.png") no-repeat;
-  overflow: hidden;
-  text-indent: -9999px;
-  text-align: left;
+    display: inline-block;
+    background: url("images/sprites.png") no-repeat;
+    overflow: hidden;
+    text-indent: -9999px;
+    text-align: left;
 }
 
 .spritelogo {
-  background-position: -0px -0px;
-  width: 960px;
-  height: 216px;
+    background-position: -0px -0px;
+    width: 960px;
+    height: 216px;
 }
 
 .spritelogo-0-75x {
-  background-position: -0px -216px;
-  width: 720px;
-  height: 162px;
+    background-position: -0px -216px;
+    width: 720px;
+    height: 162px;
 }
 
 .spritelogo-0-5x {
-  background-position: -0px -378px;
-  width: 480px;
-  height: 108px;
+    background-position: -0px -378px;
+    width: 480px;
+    height: 108px;
 }
 
 .spritebronze {
-  background-position: -480px -378px;
-  width: 256px;
-  height: 256px;
+    background-position: -480px -378px;
+    width: 256px;
+    height: 256px;
 }
 
 .spritegold {
-  background-position: -0px -486px;
-  width: 256px;
-  height: 256px;
+    background-position: -0px -486px;
+    width: 256px;
+    height: 256px;
 }
 
 .spritesilver {
-  background-position: -256px -634px;
-  width: 256px;
-  height: 256px;
+    background-position: -256px -634px;
+    width: 256px;
+    height: 256px;
 }
 
 .spritelogo-0-25x {
-  background-position: -720px -216px;
-  width: 240px;
-  height: 54px;
+    background-position: -720px -216px;
+    width: 240px;
+    height: 54px;
 }
 
 .spritebronze-0-5x {
-  background-position: -736px -378px;
-  width: 128px;
-  height: 128px;
+    background-position: -736px -378px;
+    width: 128px;
+    height: 128px;
 }
 
 .spritegold-0-5x {
-  background-position: -256px -486px;
-  width: 128px;
-  height: 128px;
+    background-position: -256px -486px;
+    width: 128px;
+    height: 128px;
 }
 
 .spritesilver-0-5x {
-  background-position: -736px -506px;
-  width: 128px;
-  height: 128px;
+    background-position: -736px -506px;
+    width: 128px;
+    height: 128px;
 }
 
 .spritebronze-0-25x {
-  background-position: -720px -270px;
-  width: 64px;
-  height: 64px;
+    background-position: -720px -270px;
+    width: 64px;
+    height: 64px;
 }
 
 .spritegold-0-25x {
-  background-position: -784px -270px;
-  width: 64px;
-  height: 64px;
+    background-position: -784px -270px;
+    width: 64px;
+    height: 64px;
 }
 
 .spriteplay:hover,
 .spriteplay:active {
-  background-position: -848px -270px;
-  width: 64px;
-  height: 64px;
+    background-position: -848px -270px;
+    width: 64px;
+    height: 64px;
 }
 
 .spriteplay {
-  background-position: -864px -378px;
-  width: 64px;
-  height: 64px;
+    background-position: -864px -378px;
+    width: 64px;
+    height: 64px;
 }
 
 .spritesilver-0-25x {
-  background-position: -864px -442px;
-  width: 64px;
-  height: 64px;
+    background-position: -864px -442px;
+    width: 64px;
+    height: 64px;
 }
 
 /*
  * Colors
  */
 :root {
-  --primary: #eff1f3;
-  --primary-alt: #909aa5;
-  --secondary: #df0000;
-  --secondary-alt: #880000;
-  --tertiary: #222931;
-  --tertiary-alt: #030303;
-  --black: #010101;
-  --white: #eceeef;
-  --gray: #25252a;
+    --primary: #eff1f3;
+    --primary-alt: #909aa5;
+    --secondary: #df0000;
+    --secondary-alt: #880000;
+    --tertiary: #222931;
+    --tertiary-alt: #030303;
+    --black: #010101;
+    --white: #eceeef;
+    --gray: #25252a;
 }
 
 .gradient-primary {
-  background-image: linear-gradient(to, bottom, var(--primary), var(--primary-alt));
+    background-image: linear-gradient(to, bottom, var(--primary), var(--primary-alt));
 }
 
 .gradient-secondary {
-  background-image: linear-gradient(to, bottom, var(--secondary), var(--secondary-alt));
+    background-image: linear-gradient(to, bottom, var(--secondary), var(--secondary-alt));
 }
 
 .gradient-tertiary {
-  background-image: linear-gradient(to, bottom, var(--tertiary), var(--tertiary-alt));
+    background-image: linear-gradient(to, bottom, var(--tertiary), var(--tertiary-alt));
 }
 
 /*
@@ -188,12 +188,12 @@ body {
     min-height: 100%;
     background-color: var(--black);
     font-family: 'Source Sans Pro', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: calc(0.75em + 1vmin);
+    line-height: 120%;
 }
 
 ol, ul, li {
     list-style: none;
-    margin: 0;
-    padding: 0;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -202,16 +202,36 @@ h1, h2, h3, h4, h5, h6,
     text-transform: uppercase;
 }
 
-em.h1, em.h2, em.h3, em.h4, em.h5, em.h6,
-i.h1, i.h2, i.h3, i.h4, i.h5, i.h6 {
-    font-family: "supritalic", Tahoma, Geneva, Verdana, sans-serif;
-    text-transform: uppercase;
+    h1 em, h2 em, h3 em, h4 em, h5 em, h6 em,
+    h1 i, h2 i, h3 i, h4 i, h5 i, h6 i,
+    em.h1, em.h2, em.h3, em.h4, em.h5, em.h6,
+    i.h1, i.h2, i.h3, i.h4, i.h5, i.h6 {
+        font-family: "supritalic", Tahoma, Geneva, Verdana, sans-serif;
+        text-transform: uppercase;
+        font-style: italic;
+    }
+
+p, a, span, strong, small, ul, li, ol, em,
+h1, h2, h3, h4, h5, h6 {
+    padding: 0;
+    margin: 0;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+em, i {
     font-style: italic;
 }
 
-p, a, span, strong, small, ul, li, ol {
-    color: var(--primary);
-    text-decoration: none;
+strong, b {
+    font-weight: bold;
+}
+
+div, article, area, form, header, footer, aside, nav {
+    padding: 0;
+    margin: 0;
+    display: block;
+    position: relative;
 }
 
 a {
@@ -219,10 +239,10 @@ a {
     text-decoration: none;
 }
 
-a:hover,
-a:visited,
-a:active {
-    color: var(--secondary-alt);
-    text-decoration: none;
-    cursor: pointer;
-}
+    a:hover,
+    a:visited,
+    a:active {
+        color: var(--secondary-alt);
+        text-decoration: none;
+        cursor: pointer;
+    }

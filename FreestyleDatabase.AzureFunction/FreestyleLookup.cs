@@ -1,5 +1,3 @@
-using FreestyleDatabase.Shared.Extensions;
-using FreestyleDatabase.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -19,22 +17,32 @@ namespace FreestyleDatabase.AzureFunction
             {
                 log.LogInformation("Attempting to look up a wrestler...");
 
-                var matchId = req.Query["id"].Count > 0
-                    ? req.Query["id"].ToString() :
-                    "0000000000000000";
+                var wrestlerId = req.Query["id"];
+                var wrestlerName = req.Query["name"];
+                var matchCount = req.Query["count"];
 
-                var searchResults = await ServiceCollection.AzureSearchService.Lookup(matchId);
-
-                WrestlingAggregatesModel metaData = await ServiceCollection.AzureSearchService.GetWrestlerMetaData(matchId);
-
-                searchResults = metaData.AppendToJson(searchResults);
-
-                return new ContentResult
+                if (string.IsNullOrEmpty(matchCount))
                 {
-                    Content = searchResults,
-                    ContentType = "application/json",
-                    StatusCode = 200
-                };
+                    matchCount = "10";
+                }
+
+                if (string.IsNullOrEmpty(wrestlerId) && string.IsNullOrEmpty(wrestlerName))
+                {
+                    return new NotFoundResult();
+                }
+
+                if (!string.IsNullOrEmpty(wrestlerName))
+                {
+                    var searchResults = await ServiceCollection.WrestlerSearchService.GetWrestlerDetailsByName(wrestlerName, Convert.ToInt32(matchCount));
+
+                    return new ObjectResult(searchResults);
+                }
+                else
+                {
+                    var searchResults = await ServiceCollection.WrestlerSearchService.GetWrestlerDetails(wrestlerId, Convert.ToInt32(matchCount));
+
+                    return new ObjectResult(searchResults);
+                }
             }
             catch (InvalidOperationException ex)
             {
