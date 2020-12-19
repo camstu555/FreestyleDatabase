@@ -13,7 +13,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Shared\" />
-		<Folder Include="Pages\" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\FreestyleDatabase.Shared\FreestyleDatabase.Shared.csproj" />

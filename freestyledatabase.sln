@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreestyleDatabase", "Freest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreestyleDatabase.AzureFunction", "FreestyleDatabase.AzureFunction\FreestyleDatabase.AzureFunction.csproj", "{94883A0F-3B3E-46D2-8A6D-8DCF589D3BCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreestyleDatabase.Shared", "FreestyleDatabase.Shared\FreestyleDatabase.Shared.csproj", "{83DE6600-94F2-49C6-8E9E-D79703B12F7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreestyleDatabase.Shared", "FreestyleDatabase.Shared\FreestyleDatabase.Shared.csproj", "{83DE6600-94F2-49C6-8E9E-D79703B12F7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
