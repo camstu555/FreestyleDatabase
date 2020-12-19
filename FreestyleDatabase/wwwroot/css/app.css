@@ -190,6 +190,10 @@ body {
   font-family: "Source Sans Pro", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+fast-design-system-provider {
+    min-height: 100%;
+}
+
 ol,
 ul,
 li {
