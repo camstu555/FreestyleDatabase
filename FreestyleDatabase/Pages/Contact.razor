@@ -5,13 +5,13 @@
 <form action="https://formspree.io/f/mleonpko" method="post">
     <div class="form-group">
         <label for="Email">Email address</label>
-        <input type="email" class="form-control" id="Email1" aria-describedby="emailHelp" placeholder="Enter email" name="email" required>
+        <fast-text-field placeholder="Enter Email" required appearance="outline" type="email" name="email"></fast-text-field>
         <small id="emailHelp" class="form-text text-muted">We promise we won't spam you</small>
     </div>
     <div class="form-group">
         <label for="Textarea">Feedback / Questions ?</label>
-        <textarea class="form-control" id="Textarea1" rows="3" name="body" required></textarea>
+        <fast-text-area appearance="outline" name="body" rows="3"></fast-text-area>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <fast-button appearance="neutral" type="submit">Submit</fast-button>
 </form>
