@@ -1,18 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="BlazorTransitionableRoute" Version="2.0.0" />
 		<PackageReference Include="Radzen.Blazor" Version="2.18.6" />
 		<PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
 		<PackageReference Include="Blazored.Typeahead" Version="4.4.1" />
-
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.1" PrivateAssets="all" />
 		<PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
-	</ItemGroup>
-	<ItemGroup>
-		<Folder Include="Shared\" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\FreestyleDatabase.Shared\FreestyleDatabase.Shared.csproj" />

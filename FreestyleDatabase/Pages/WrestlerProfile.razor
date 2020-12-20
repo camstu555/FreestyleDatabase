@@ -3,163 +3,163 @@
 
 @if (result != null)
 {
-<div class="container-fluid">
-    <div class="bg mx-3">
-        <div class="col-md-12 text-center">
-            <div class="row">
-                <BlazoredTypeahead SearchMethod="SearchWrestlers"
-                                   TItem="WrestlingAutoCompleteModel"
-                                   TValue="WrestlingAutoCompleteModel"
-                                   Value="selectedWrestler"
-                                   ValueChanged="@SelectedResultChanged"
-                                   ValueExpression="@(() => selectedWrestler)"
-                                   placeholder="Search by name...">
-                    <SelectedTemplate>
-                        @context.Text
-                    </SelectedTemplate>
-                    <ResultTemplate>
-                        @context.Text
-                    </ResultTemplate>
-                    <NotFoundTemplate>
-                        Sorry, there weren't any search results.
-                    </NotFoundTemplate>
-                </BlazoredTypeahead>
-            </div>
-            <br />
-            <br />
-            <img src="@result.WrestlerImageUrl" width="300" class="img-thumbnail" style="display: inline" alt="@result.WrestlerName" />
-            <h1>@result.WrestlerName</h1>
-            <h2>@result.WrestlerWeight KG | @result.WrestlerCountry @result.WrestlerCountryEmoji</h2>
-            <h2>@result.Wins Wins - @result.Losses Losses</h2>
-            <h4>(since @result.OldestMatchDate.Value.Date.ToShortDateString())</h4>
-        </div>
-    </div>
-    <hr />
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card box-shadow text-center">
-                <h5 class="card-header">
-                    Best Wins
-                </h5>
-                <div class="card-body">
-                    @if (result.GoldMedalMatches.Count > 0)
-                {
-                    foreach (var tournament in result.GoldMedalMatches)
-                    {
-                    <h5>Gold medal at @tournament</h5>
-                    }
-                }
-                    @if (result.SilverMedalMatches.Count > 0)
-                {
-                    foreach (var tournament in result.SilverMedalMatches)
-                    {
-                    <h5>Silver Medal at @tournament</h5>
-                    }
-                }
-                    @if (result.SilverMedalMatches.Count > 0)
-                {
-                    foreach (var tournament in result.BronzeMedalMatches)
-                    {
-                    <h5>Bronze Medal at @tournament</h5>
-                    }
-                }
+    <div class="container-fluid">
+        <div class="bg mx-3">
+            <div class="col-md-12 text-center">
+                <div class="row">
+                    <BlazoredTypeahead SearchMethod="SearchWrestlers"
+                                       TItem="WrestlingAutoCompleteModel"
+                                       TValue="WrestlingAutoCompleteModel"
+                                       Value="selectedWrestler"
+                                       ValueChanged="@SelectedResultChanged"
+                                       ValueExpression="@(() => selectedWrestler)"
+                                       placeholder="Search by name...">
+                        <SelectedTemplate>
+                            @context.Text
+                        </SelectedTemplate>
+                        <ResultTemplate>
+                            @context.Text
+                        </ResultTemplate>
+                        <NotFoundTemplate>
+                            Sorry, there weren't any search results.
+                        </NotFoundTemplate>
+                    </BlazoredTypeahead>
                 </div>
+                <br />
+                <br />
+                <img src="@result.WrestlerImageUrl" width="300" class="img-thumbnail" style="display: inline" alt="@result.WrestlerName" />
+                <h1>@result.WrestlerName</h1>
+                <h2>@result.WrestlerWeight KG | @result.WrestlerCountry @result.WrestlerCountryEmoji</h2>
+                <h2>@result.Wins Wins - @result.Losses Losses</h2>
+                <h4>(since @result.OldestMatchDate.Value.Date.ToShortDateString())</h4>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card box-shadow text-center">
-                <h5 class="card-header">
-                    By The Numbers
-                </h5>
-                <div class="card-body">
-                    <h5>Pins: @result.Pins</h5>
-                    <h5>Techs: @result.Techs</h5>
-                    <h5>Decisions: @result.Points</h5>
-                    <h5>Average Points Scored: @result.AverageOffensivePointsPerMatch</h5>
-                    <h5>Average Points Given Up: @result.AverageDefensivePointsPerMatch</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-    <hr />
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <h3>Most Recent Results</h3>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                Date
-                            </th>
-                            <th style="width: 60px;">
-                                Video
-                            </th>
-                            <th>
-                                Opponent
-                            </th>
-                            <th>
-                                Result
-                            </th>
-                            <th>
-                                Round
-                            </th>
-                            <th>
-                                Tournament
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var match in result.MostRecentMatches.Items)
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card box-shadow text-center">
+                    <h5 class="card-header">
+                        Best Wins
+                    </h5>
+                    <div class="card-body">
+                        @if (result.GoldMedalMatches.Count > 0)
                         {
-                        <tr class="@(match.WrestlerId1.Equals(Id) ? "table-success" : "table-danger")">
-                            <td>
-                                @match.Date.Value.Date.ToShortDateString()
-                            </td>
-                            <td>
-                                @if (match.Video != "")
-                                            {
-                                <a href="@match.Video" target="_blank">
-                                    <span class="oi oi-media-play"></span>
-                                </a>
-                                            }
-                            </td>
-                            <td>
-                                @if (match.WrestlerId1.Equals(Id))
-                                    {
-                                <a href="WrestlerProfile/@match.WrestlerId2" @onclick="@(e => LinkNavigation(match.WrestlerId2))" alt="@match.WrestlerName2">@match.WrestlerName2</a><span title=@match.FullCountryName2>&nbsp; @match.Country2Emoji </span>
-                                    }
-                                    else
-                                    {
-                                <a href="WrestlerProfile/@match.WrestlerId1" @onclick="@(e => LinkNavigation(match.WrestlerId1))" alt="@match.WrestlerName1">@match.WrestlerName1</a><span title=@match.FullCountryName1>&nbsp; @match.Country1Emoji </span>
-                                    }
-                            </td>
-                            <td>
-                                @if (match.WrestlerId1.Equals(Id))
-                                    {
-                                @:Won @if (@match.Result != "")
-                                        {@match.Result}, @if (@match.Score != "")
-                                        {@match.Score}
-                                    }
-                                    else
-                                    {
-                                        @:Loss @if (@match.Result != "")
-                                        {@match.Result}, @if (@match.Score != "")
-                                        {@match.Score}
-                                    }
-                            </td>
-                            <td>
-                                @match.Round
-                            </td>
-                            <td>
-                                @match.Venue
-                            </td>
-                        </tr>
+                            foreach (var tournament in result.GoldMedalMatches)
+                            {
+                                <h5>Gold medal at @tournament</h5>
+                            }
                         }
-                    </tbody>
-                </table>
+                        @if (result.SilverMedalMatches.Count > 0)
+                        {
+                            foreach (var tournament in result.SilverMedalMatches)
+                            {
+                                <h5>Silver Medal at @tournament</h5>
+                            }
+                        }
+                        @if (result.SilverMedalMatches.Count > 0)
+                        {
+                            foreach (var tournament in result.BronzeMedalMatches)
+                            {
+                                <h5>Bronze Medal at @tournament</h5>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card box-shadow text-center">
+                    <h5 class="card-header">
+                        By The Numbers
+                    </h5>
+                    <div class="card-body">
+                        <h5>Pins: @result.Pins</h5>
+                        <h5>Techs: @result.Techs</h5>
+                        <h5>Decisions: @result.Points</h5>
+                        <h5>Average Points Scored: @result.AverageOffensivePointsPerMatch</h5>
+                        <h5>Average Points Given Up: @result.AverageDefensivePointsPerMatch</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3>Most Recent Results</h3>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Date
+                                </th>
+                                <th style="width: 60px;">
+                                    Video
+                                </th>
+                                <th>
+                                    Opponent
+                                </th>
+                                <th>
+                                    Result
+                                </th>
+                                <th>
+                                    Round
+                                </th>
+                                <th>
+                                    Tournament
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var match in result.MostRecentMatches.Items)
+                            {
+                                <tr class="@(match.WrestlerId1.Equals(Id) ? "table-success" : "table-danger")">
+                                    <td>
+                                        @match.Date.Value.Date.ToShortDateString()
+                                    </td>
+                                    <td>
+                                        @if (match.Video != "")
+                                        {
+                                            <a href="@match.Video" target="_blank">
+                                                <span class="oi oi-media-play"></span>
+                                            </a>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (match.WrestlerId1.Equals(Id))
+                                        {
+                                            <a href="WrestlerProfile/@match.WrestlerId2" @onclick="@(e => LinkNavigation(match.WrestlerId2))" alt="@match.WrestlerName2">@match.WrestlerName2</a><span title=@match.FullCountryName2>&nbsp; @match.Country2Emoji </span>
+                                        }
+                                        else
+                                        {
+                                            <a href="WrestlerProfile/@match.WrestlerId1" @onclick="@(e => LinkNavigation(match.WrestlerId1))" alt="@match.WrestlerName1">@match.WrestlerName1</a><span title=@match.FullCountryName1>&nbsp; @match.Country1Emoji </span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (match.WrestlerId1.Equals(Id))
+                                        {
+                                            @:Won @if (@match.Result != "")
+                                            {@match.Result}, @if (@match.Score != "")
+                                            {@match.Score}
+                                        }
+                                        else
+                                        {
+                                            @:Loss @if (@match.Result != "")
+                                            {@match.Result}, @if (@match.Score != "")
+                                            {@match.Score}
+                                        }
+                                    </td>
+                                    <td>
+                                        @match.Round
+                                    </td>
+                                    <td>
+                                        @match.Venue
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 }

@@ -163,17 +163,17 @@ else
     protected override async Task OnInitializedAsync()
     {
 
-        text = Query["name"];
-        tournament = Query["year"];
-        tournament = Query["event"];
-        if (string.IsNullOrEmpty(text))
-        {
-            wrestlingData = await Http.GetWrestlerDataAsync();
-        }
-        else
-        {
-            wrestlingData = await Http.SearchWrestlerDataAsync(text, country, emoji, weight, tournament);
-        }
+        //text = Query["name"];
+        //tournament = Query["year"];
+        //tournament = Query["event"];
+        //if (string.IsNullOrEmpty(text))
+        //{
+        //    wrestlingData = await Http.GetWrestlerDataAsync();
+        //}
+        //else
+        //{
+        //    wrestlingData = await Http.SearchWrestlerDataAsync(text, country, emoji, weight, tournament);
+        //}
 
     }
 

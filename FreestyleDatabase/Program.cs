@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using BlazorTransitionableRoute;
 
 namespace FreestyleDatabase
 {
@@ -26,7 +27,9 @@ namespace FreestyleDatabase
             builder.Services.AddScoped<AzureSearchService>();
             builder.Services.AddScoped<WrestlingDataService>();
             builder.Services.AddScoped<QueryParameterService>();
-            builder.Services.AddScoped<WrestlerSearchService>();
+            builder.Services.AddScoped<WrestlerSearchService>(); 
+            builder.Services.AddScoped<IRouteTransitionInvoker, DefaultRouteTransitionInvoker>();
+
 
             await builder.Build().RunAsync();
         }

@@ -1,0 +1,12 @@
+﻿.toploader {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 4px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.toploader__progress {
+    margin: 0;
+}

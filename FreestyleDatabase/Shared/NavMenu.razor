@@ -1,33 +1,10 @@
-﻿@code {
-    bool collapseNavMenu = true;
+﻿<a class="logo" href="#">FreestyleRankings.org</a>
 
-    string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
-
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow">
-
-    <a class="logo" href="#">FreestyleRankings.org</a>
-    <fast-button>ldsajfklajsdlfkjasldkjflkasjdlkfjasdf</fast-button>
-    <div class="@NavMenuCssClass navbar-collapse d-sm-inline-flex flex-sm-row-reverse" @onclick="ToggleNavMenu">
-        <ul class="navbar-nav flex-grow-1">
-            <li class="nav-item">
-                <a class="nav-link" href="Database"> <span class="oi oi-list-rich" aria-hidden="true"></span> International Database <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="Rankings"> <span class="oi oi-graph" aria-hidden="true"></span> Rankings</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="WrestlerProfile"> <span class="oi oi-badge" aria-hidden="true"></span> Wrestler Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="Contact"> <span class="oi oi-envelope-closed" aria-hidden="true"></span> Contact</a>
-            </li>
-        </ul>
-    </div>
+<nav>
+    <ul>
+        <li class="nav-item">
+            <NavLink href="/Rankings" class="nav-link">Rankings</NavLink>
+        </li>
+    </ul>
 </nav>
