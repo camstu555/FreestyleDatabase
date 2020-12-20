@@ -1,17 +1,9 @@
 ﻿.nav-item {
     display: block;
-    width: 80px;
     height: 80px;
     overflow: hidden;
-}
-
-a.nav-link {
-    display: block;
-    width: 80px;
-    height: 80px;
-    overflow: hidden;
-    background: red;
-    color: white;
+    padding-left: 50px;
+    margin-bottom: 20px;
 }
 
 nav {
@@ -21,4 +13,5 @@ nav {
     height: 100%;
     display: flex;
     align-items: center;
+    z-index: 3;
 }
