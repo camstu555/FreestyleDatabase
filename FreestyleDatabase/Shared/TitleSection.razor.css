@@ -1,0 +1,23 @@
+﻿h3 {
+    overflow: hidden;
+}
+
+    h3 .title {
+        float: left;
+        font-size: 2em;
+    }
+
+    h3 .line {
+        float: left;
+        height: 4px;
+        width: 200px;
+        margin-left: 20px;
+        background: var(--secondary);
+        margin-top: 24px
+    }
+
+h2 {
+    letter-spacing: 4px;
+    font-size: 7em;
+    margin-bottom: 40px;
+}

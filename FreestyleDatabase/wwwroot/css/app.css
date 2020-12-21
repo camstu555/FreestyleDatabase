@@ -154,6 +154,7 @@
     --black: #181818;
     --white: #eceeef;
     --gray: #25252a;
+    --light-gray: #434343;
 }
 
 .gradient-primary {
@@ -355,27 +356,34 @@ fast-design-system-provider {
 
 .layer-1 {
     background-image: url('images/smoke-top-right-bg.png');
-    background-position: top right;
+    background-position: top center;
 }
 
 .layer-2 {
     background-image: url('images/smoke-center-bottom-bg.png');
-    background-position: center bottom;
+    background-position: bottom center;
 }
 
 .logo {
     margin: 30px 0 0 50px;
+    position: fixed;
+    top: 0;
+    transition: all 150ms linear;
 }
 
-a.nav-link {
-    display: block;
-    height: 80px;
-    line-height: 80px;
-    font-size: 2em;
-    padding: 0 20px;
-    color: var(--gray);
-    position: relative;
-}
+    .logo:hover {
+        opacity: .4;
+    }
+
+    a.nav-link {
+        display: block;
+        height: 80px;
+        line-height: 80px;
+        font-size: 2em;
+        padding: 0 20px;
+        color: var(--light-gray);
+        position: relative;
+    }
 
     a.nav-link.active {
         background: var(--secondary);
@@ -395,6 +403,9 @@ a.nav-link {
     width: calc(100% - 205px);
     margin-left: 205px;
     padding-left: 120px;
-    display: flex;
-    align-items: center;
+    padding-top: 200px;
+}
+
+.transition {
+    width: calc(100% - 205px);
 }
