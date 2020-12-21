@@ -1,0 +1,109 @@
+﻿@if (Matches.Count == 0)
+{
+    <h2>No recent matches</h2>
+}
+else
+{
+
+    <h3 class="recent-matches-title">Ten Most Recent Matches</h3>
+
+    <div class="recent-matches">
+        <div class="recent-matches__meta">
+            <div class="recent-matches__meta-box">
+                <h2>@Wins</h2>
+                <h3>Recent<br />Wins</h3>
+            </div>
+            <div class="recent-matches__meta-box">
+                <h2>@Losses</h2>
+                <h3>Recent<br />Losses</h3>
+            </div>
+        </div>
+        <div class="recent-matches__data">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <div>Date</div>
+                        </th>
+                        <th>
+                            <div>Video</div>
+                        </th>
+                        <th>
+                            <div>Opponent</div>
+                        </th>
+                        <th>
+                            <div>Result</div>
+                        </th>
+                        <th>
+                            <div>Round</div>
+                        </th>
+                        <th>
+                            <div>Tournament</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var match in Matches)
+                    {
+                        <tr class="@(match.WrestlerId1.Equals(CurrentWrestlerId) ? "table-success" : "table-danger")">
+                            <td>
+                                <div>
+                                    @match.Date.Value.Date.ToShortDateString()
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    @if (match.Video != "")
+                                    {
+                                        <a href="@match.Video" target="_blank">
+                                            <span class="spriteplay"></span>
+                                        </a>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    @if (match.WrestlerId1.Equals(CurrentWrestlerId))
+                                    {
+                                        <a href="WrestlerProfile/@match.WrestlerId2" alt="@match.WrestlerName2">@match.WrestlerName2</a><span title=@match.FullCountryName2>&nbsp; @match.Country2Emoji </span>
+                                    }
+                                    else
+                                    {
+                                        <a href="WrestlerProfile/@match.WrestlerId1" alt="@match.WrestlerName1">@match.WrestlerName1</a><span title=@match.FullCountryName1>&nbsp; @match.Country1Emoji </span>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    @if (match.WrestlerId1.Equals(CurrentWrestlerId))
+                                    {
+                                        @:Won @if (@match.Result != "")
+                                        {@match.Result}, @if (@match.Score != "")
+                                        {@match.Score}
+                                    }
+                                    else
+                                    {
+                                        @:Loss @if (@match.Result != "")
+                                        {@match.Result}, @if (@match.Score != "")
+                                        {@match.Score}
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    @match.Round
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    @match.Venue
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+}

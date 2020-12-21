@@ -1,0 +1,21 @@
+﻿@if (GoldMedalMatches.Count > 0)
+{
+    foreach (var tournament in GoldMedalMatches)
+    {
+        <MetalSection Type="Gold" Name="@tournament" />
+    }
+}
+@if (SilverMedalMatches.Count > 0)
+{
+    foreach (var tournament in SilverMedalMatches)
+    {
+        <MetalSection Type="Silver" Name="@tournament" />
+    }
+}
+@if (BronzeMedalMatches.Count > 0)
+{
+    foreach (var tournament in BronzeMedalMatches)
+    {
+        <MetalSection Type="Bronze" Name="@tournament" />
+    }
+}

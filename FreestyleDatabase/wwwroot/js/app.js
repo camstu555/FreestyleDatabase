@@ -27,6 +27,15 @@
                 transitionOut.classList.remove('transition-out');
                 transitionIn.classList.remove('transition-in');
             }
+        },
+        staggerMetals: function () {
+            console.log("stafg");
+            gsap.from(".metal", {
+                y: 100,
+                delay: .25,
+                opacity: 0,
+                stagger: 0.05
+            });
         }
     }
 }).call(this);

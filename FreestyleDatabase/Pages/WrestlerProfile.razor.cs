@@ -7,11 +7,24 @@ using System.Threading.Tasks;
 
 namespace FreestyleDatabase.Pages
 {
-    public partial class WrestlerProfile
+    partial class WrestlerProfile
     {
         public WrestlingAutoCompleteModel selectedWrestler;
 
         public WrestlingAggregatesModel result;
+
+        public string SubTitle
+        {
+            get
+            {
+                if (result == null)
+                {
+                    return string.Empty;
+                }
+
+                return $"{result.WrestlerWeight} KG <em style='color: var(--secondary)'>|</em> {result.WrestlerCountry}";
+            }
+        }
 
         [Parameter]
         public string Id { get; set; }
@@ -21,11 +34,6 @@ namespace FreestyleDatabase.Pages
 
         [Inject]
         private NavigationManager Nav { get; set; }
-
-        public void LinkNavigation(string id)
-        {
-            Nav.NavigateTo("WrestlerProfile/" + id);
-        }
 
         public void Dispose()
         {

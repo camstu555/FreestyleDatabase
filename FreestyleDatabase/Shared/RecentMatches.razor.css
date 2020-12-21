@@ -1,0 +1,58 @@
+﻿.recent-matches-title {
+    font-size: 2em;
+    margin: 20px 0;
+}
+
+.recent-matches {
+    width: 100%;
+    overflow: hidden;
+}
+
+.recent-matches__meta,
+.recent-matches__data {
+    float: left;
+}
+
+.recent-matches__meta {
+    width: 20%;
+    margin-right: 20px;
+}
+
+.recent-matches__data {
+    width: calc(80% - 20px);
+}
+
+.recent-matches__meta-box {
+    margin: 20px 0;
+}
+
+.recent-matches__meta-box h2 {
+    font-size: 3em;
+    color: var(--secondary);
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.recent-matches__meta-box h3 {
+    display: inline-block;
+}
+
+.recent-matches__data table {
+    width: 100%;
+    vertical-align: middle;
+    padding: 0;
+    margin: 0;
+}
+    .recent-matches__data table td,
+    .recent-matches__data table th,
+    .recent-matches__data table tr {
+        vertical-align: middle;
+        padding: 0;
+        margin: 0;
+    }
+
+    .recent-matches__data table td div {
+        background: rgba(0, 0, 0, .8);
+        height: 80px;
+        line-height: 80px;
+    }

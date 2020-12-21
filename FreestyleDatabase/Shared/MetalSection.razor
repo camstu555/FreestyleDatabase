@@ -1,0 +1,23 @@
+﻿<div class="metal">
+    @if (Type == "Gold")
+    {
+        <div class="metal__gold">
+            <div class="spritegold-0-5x"></div>
+            <span class="h6">@Name</span>
+        </div>
+    }
+    else if (Type == "Silver")
+    {
+        <div class="metal__silver">
+            <div class="spritesilver-0-5x"></div>
+            <span class="h6">@Name</span>
+        </div>
+    }
+    else
+    {
+        <div class="metal__bronze">
+            <div class="spritebronze-0-5x"></div>
+            <span class="h6">@Name</span>
+        </div>
+    }
+</div>

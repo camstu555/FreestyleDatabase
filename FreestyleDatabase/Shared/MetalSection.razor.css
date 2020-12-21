@@ -1,0 +1,44 @@
+﻿.metal {
+    display: inline-block;
+    width: 140px;
+    height: 140px;
+    background: rgba(0, 0, 0, .8);
+    overflow: hidden;
+    margin-right: 20px;
+    border-top: 2px solid var(--secondary);
+    /*opacity: 0;
+    transform: translate(0px, 400px);*/
+}
+
+    .metal > div {
+        display: block;
+        height: 100%;
+        width: 100%;
+    }
+
+        .metal > div > div {
+            position: absolute;
+            right: -15px;
+        }
+
+.h6 {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 10px;
+    color: var(--black);
+    font-size: 1.4em;
+}
+
+.metal__gold .h6 {
+    background: #ffd700a3;
+    text-shadow: 0 0 3px gold;
+}
+.metal__silver .h6 {
+    background: #c0c0c0bf;
+    text-shadow: 0 0 3px silver;
+}
+.metal__bronze .h6 {
+    background: #b8860b78;
+    text-shadow: 0 0 3px darkgoldenrod;
+}
