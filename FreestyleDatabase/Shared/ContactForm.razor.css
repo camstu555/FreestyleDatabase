@@ -2,3 +2,13 @@
     display: block;
     font-size: 1.8em;
 }
+
+fast-text-area, fast-text-field {
+    width: 420px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+fast-button {
+    display: block;
+}

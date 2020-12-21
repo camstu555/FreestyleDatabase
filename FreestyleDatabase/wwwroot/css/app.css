@@ -157,6 +157,10 @@
     --light-gray: #434343;
 }
 
+:not(:defined) {
+    visibility: hidden;
+}
+
 .gradient-primary {
     background-image: linear-gradient(to, bottom, var(--primary), var(--primary-alt));
 }
@@ -407,5 +411,6 @@ fast-design-system-provider {
 }
 
 .transition {
+    position: absolute;
     width: calc(100% - 205px);
 }

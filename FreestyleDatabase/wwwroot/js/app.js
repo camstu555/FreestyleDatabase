@@ -15,4 +15,18 @@
             layer.style.transform = translate3d;
         }
     });
+
+    window.yourJsInterop = {
+        transitionFunction: function (back) {
+            let transitionIn = document.getElementsByClassName('transition-in')[0];
+            let transitionOut = document.getElementsByClassName('transition-out')[0];
+
+            let direction = back ? "out" : "in";
+
+            if (transitionIn && transitionOut) {
+                transitionOut.classList.remove('transition-out');
+                transitionIn.classList.remove('transition-in');
+            }
+        }
+    }
 }).call(this);
