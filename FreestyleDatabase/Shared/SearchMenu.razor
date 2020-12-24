@@ -8,7 +8,23 @@
             </svg>
         </button>
         Search
-        <fast-text-field placeholder="search" size="50"></fast-text-field>
+        <BlazoredTypeahead SearchMethod="SearchWrestlers"
+                           TItem="WrestlingAutoCompleteModel"
+                           TValue="WrestlingAutoCompleteModel"
+                           Value="selectedWrestler"
+                           ValueChanged="@SelectedResultChanged"
+                           ValueExpression="@(() => selectedWrestler)"
+                           placeholder="Search by name...">
+            <SelectedTemplate>
+                @context.Text
+            </SelectedTemplate>
+            <ResultTemplate>
+                @context.Text
+            </ResultTemplate>
+            <NotFoundTemplate>
+                Sorry, there weren't any search results.
+            </NotFoundTemplate>
+        </BlazoredTypeahead>
     </p>
 </div>
 
