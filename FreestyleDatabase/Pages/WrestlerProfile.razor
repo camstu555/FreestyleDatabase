@@ -3,55 +3,17 @@
 
 @if (result != null)
 {
-    @*<BlazoredTypeahead SearchMethod="SearchWrestlers"
-                           TItem="WrestlingAutoCompleteModel"
-                           TValue="WrestlingAutoCompleteModel"
-                           Value="selectedWrestler"
-                           ValueChanged="@SelectedResultChanged"
-                           ValueExpression="@(() => selectedWrestler)"
-                           placeholder="Search by name...">
-            <SelectedTemplate>
-                @context.Text
-            </SelectedTemplate>
-            <ResultTemplate>
-                @context.Text
-            </ResultTemplate>
-            <NotFoundTemplate>
-                Sorry, there weren't any search results.
-            </NotFoundTemplate>
-        </BlazoredTypeahead>*@
+   
 
     <TitleSection Title="@SubTitle" SubTitle="@result.WrestlerName" NoMargins="true" />
     <MetalArea GoldMedalMatches="result.GoldMedalMatches" SilverMedalMatches="result.SilverMedalMatches" BronzeMedalMatches="result.BronzeMedalMatches" />
     <RecentMatches CurrentWrestlerId="@Id" Matches="@result.MostRecentMatches.Items" />
-
-    @*
-            NOTE: These will appear in the SearchMenu and take over the search context (so... it'll be floating details on the right panel)
-            <fast-card style="width: 300px;">
-            <img src="@result.WrestlerImageUrl" width="100%" />
-            <div style="padding: 0 10px 10px; color: var(--neutral-foreground-rest)">
-                <ul>
-                    <li>@result.Wins Wins</li>
-                    <li>@result.Losses Losses</li>
-                    <li>(since @result.OldestMatchDate.Value.Date.ToShortDateString())</li>
-                </ul>
-            </div>
-        </fast-card>
-        <fast-card>
-            <h5 class="card-header">
-                Best Wins
-            </h5>
-        </fast-card>
-        <fast-card appearance="outline">
-            <h5 class="card-header">
-                By The Numbers
-            </h5>
-            <h5>Pins: @result.Pins</h5>
-            <h5>Techs: @result.Techs</h5>
-            <h5>Decisions: @result.Points</h5>
-            <h5>Average Points Scored: @result.AverageOffensivePointsPerMatch</h5>
-            <h5>Average Points Given Up: @result.AverageDefensivePointsPerMatch</h5>
-        </fast-card>*@
+    <ByTheNumbers Image="@result.WrestlerImageUrl"
+                  Wins="@result.Wins" Losses="@result.Losses"
+                  Since="@result.OldestMatchDate"
+                  Pins="@result.Pins" Techs="@result.Techs" Points="@result.Points"
+                  OffPts="@result.AverageOffensivePointsPerMatch"
+                  DefPts="@result.AverageDefensivePointsPerMatch"/>
 }
 else
 {

@@ -1,0 +1,22 @@
+﻿<div class="byTheNumbers">
+    <fast-card style="width: 300px;">
+        <img src="@Image" width="100%" />
+        <div style="padding: 0 10px 10px; color: var(--neutral-foreground-rest)">
+            <ul>
+                <li>@Wins Wins</li>
+                <li>@Losses Losses</li>
+                <li>(since @Since.Value.Date.ToShortDateString())</li>
+            </ul>
+        </div>
+    </fast-card>
+    <fast-card appearance="outline">
+        <h5 class="card-header">
+            By The Numbers
+        </h5>
+        <h5>Pins: @Pins</h5>
+        <h5>Techs: @Techs</h5>
+        <h5>Decisions: @Points</h5>
+        <h5>Average Points Scored: @OffPts</h5>
+        <h5>Average Points Given Up: @DefPts</h5>
+    </fast-card>
+</div>
