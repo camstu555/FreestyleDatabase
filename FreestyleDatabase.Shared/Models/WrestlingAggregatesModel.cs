@@ -66,6 +66,8 @@ namespace FreestyleDatabase.Shared.Models
         /// </summary>
         public double AverageOffensivePointsPerMatch { get; set; }
 
+        public double BonusRate { get; set; }
+
         /// <summary>
         /// if (WrestlerName1 = search) add right of hyphen
         /// if (WrestlerName2 = search) add left of hyphen

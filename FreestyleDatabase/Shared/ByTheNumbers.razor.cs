@@ -31,6 +31,9 @@ namespace FreestyleDatabase.Shared
         public int Points { get; set; } = 0;
 
         [Parameter]
+        public double Bonus { get; set; } = 0.0;
+
+        [Parameter]
         public double OffPts { get; set; } = 0.0;
 
         [Parameter]

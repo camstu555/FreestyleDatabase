@@ -88,6 +88,7 @@ namespace FreestyleDatabase.Shared.Services
             result.AverageDefensivePointsPerMatch = Math.Round(wrestlerResults.Items.Sum(x => x.WrestlerId2.Equals(wrestlerId) ? x.WreslterName1Score : x.WreslterName2Score) / (result.Wins + result.Losses), 2);
             result.AverageOffensivePointsPerMatch = Math.Round(wrestlerResults.Items.Sum(x => x.WrestlerId1.Equals(wrestlerId) ? x.WreslterName1Score : x.WreslterName2Score) / (result.Wins + result.Losses), 2);
 
+            result.BonusRate = (double)(result.Pins + result.Techs) / (double)(result.Wins + result.Losses);
             return result;
         }
 
