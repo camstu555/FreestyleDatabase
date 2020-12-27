@@ -8,3 +8,14 @@
     z-index: 999;
     padding: 10px;
 }
+
+h2 {
+    font-size: 3em;
+    color: var(--secondary);
+    display: inline-block;
+    margin-right: 20px;
+}
+
+h3 {
+    display: inline-block;
+}
