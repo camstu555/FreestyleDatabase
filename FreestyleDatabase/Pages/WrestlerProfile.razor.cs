@@ -50,7 +50,7 @@ namespace FreestyleDatabase.Pages
         {
             var wrestler = await Http.GetWrestlerDetailsByName(result.Text);
 
-            Nav.NavigateTo("WrestlerProfile/" + wrestler.WrestlerId);
+            Nav.NavigateTo("wrestler/" + wrestler.WrestlerId);
         }
 
         private void LocationChanged(object sender, LocationChangedEventArgs e)

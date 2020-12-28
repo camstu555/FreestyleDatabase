@@ -88,7 +88,6 @@ namespace FreestyleDatabase.Shared.Services
 
                 var newData = new WrestlingDataModel
                 {
-                    Id = i.ToString().PadLeft(16, '0'),
                     Country1 = data.GsxCountry.Value,
                     Country2 = data.GsxCountry2.Value,
                     Date = date,

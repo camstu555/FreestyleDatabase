@@ -65,11 +65,11 @@ else
                                 <div>
                                     @if (match.WrestlerId1.Equals(CurrentWrestlerId))
                                     {
-                                        <a href="WrestlerProfile/@match.WrestlerId2" alt="@match.WrestlerName2">@match.WrestlerName2</a><span title=@match.FullCountryName2>&nbsp; @match.Country2Emoji </span>
+                                        <a href="/wrestler/@match.WrestlerId2" alt="@match.WrestlerName2">@match.WrestlerName2</a><span title=@match.FullCountryName2>&nbsp; @match.Country2Emoji </span>
                                     }
                                     else
                                     {
-                                        <a href="WrestlerProfile/@match.WrestlerId1" alt="@match.WrestlerName1">@match.WrestlerName1</a><span title=@match.FullCountryName1>&nbsp; @match.Country1Emoji </span>
+                                        <a href="/wrestler/@match.WrestlerId1" alt="@match.WrestlerName1">@match.WrestlerName1</a><span title=@match.FullCountryName1>&nbsp; @match.Country1Emoji </span>
                                     }
                                 </div>
                             </td>

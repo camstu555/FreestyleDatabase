@@ -2,9 +2,11 @@
 using FreestyleDatabase.Shared.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Slugify;
 using System;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 
 namespace FreestyleDatabase.Shared.Extensions
@@ -177,9 +179,23 @@ namespace FreestyleDatabase.Shared.Extensions
                 return string.Empty;
             }
 
-            var normalize = model.WrestlerName1.Trim().ToUpper().RemoveWhitespace();
+            var helper = new SlugHelper();
 
-            return GetStringSha256Hash(normalize);
+            return helper.GenerateSlug($"{model.WrestlerName2}").ToLower();
+        }
+
+        public static string GetMatchId(this WrestlingDataModel model)
+        {
+            if (!model.Date.HasValue)
+            {
+                model.Date = DateTimeOffset.MinValue;
+            }
+
+            var helper = new SlugHelper();
+
+            var normalize = model.Date.Value.Date.ToShortDateString();
+
+            return helper.GenerateSlug($"{normalize}-{model.WrestlerName1}-vs-{model.WrestlerImage2}-round-{model.Round ?? "0"}").ToLower();
         }
 
         public static string GetWrestlerName2Id(this WrestlingDataModel model)
@@ -189,9 +205,9 @@ namespace FreestyleDatabase.Shared.Extensions
                 return string.Empty;
             }
 
-            var normalize = model.WrestlerName2.Trim().ToUpper().RemoveWhitespace();
+            var helper = new SlugHelper();
 
-            return GetStringSha256Hash(normalize);
+            return helper.GenerateSlug($"{model.WrestlerName2}").ToLower();
         }
 
         public static void ApplyMetaData(this WrestlingDataModel model)
@@ -224,6 +240,10 @@ namespace FreestyleDatabase.Shared.Extensions
 
                 model.WrestlerImage2 = model.GetImageOrDefaultWrestler2()?.Trim();
                 model.WrestlerImage1 = model.GetImageOrDefaultWrestler1()?.Trim();
+
+                var helper = new SlugHelper();
+
+                model.Id = helper.GenerateSlug($"{model.Date.Value.Date.Ticks}-{model.WrestlerName1}-vs-{model.WrestlerImage2}");
             }
             catch
             {
@@ -251,18 +271,22 @@ namespace FreestyleDatabase.Shared.Extensions
                 .ToArray());
         }
 
-        private static string GetStringSha256Hash(string text)
+        public static string CreateMD5Hash(string input)
         {
-            if (string.IsNullOrEmpty(text))
+            // Step 1, calculate MD5 hash from input
+            var md5 = MD5.Create();
+            var inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+            var hashBytes = md5.ComputeHash(inputBytes);
+
+            // Step 2, convert byte array to hex string
+            var sb = new StringBuilder();
+
+            for (var i = 0; i < hashBytes.Length; i++)
             {
-                return string.Empty;
+                sb.Append(hashBytes[i].ToString("X2"));
             }
 
-            using var sha = SHA1.Create();
-
-            var textData = System.Text.Encoding.UTF8.GetBytes(text);
-            var hash = sha.ComputeHash(textData);
-            return BitConverter.ToString(hash).Replace("-", string.Empty);
+            return sb.ToString();
         }
 
         private static string[] NormalizeScore(string scoreString)
