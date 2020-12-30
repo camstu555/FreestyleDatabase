@@ -19,3 +19,7 @@ h2 {
 h3 {
     display: inline-block;
 }
+
+img {
+    filter: grayscale(100%);
+}
