@@ -9,7 +9,6 @@ namespace FreestyleDatabase.Shared
 {
     partial class SearchMenu
     {
-
         public WrestlingAutoCompleteModel selectedWrestler;
 
         public WrestlingAggregatesModel result;
@@ -56,6 +55,5 @@ namespace FreestyleDatabase.Shared
             var response = await Http.GetAutoComplete(searchText);
             return response.Items;
         }
-
     }
 }

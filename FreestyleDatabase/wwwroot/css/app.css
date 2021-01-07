@@ -378,15 +378,15 @@ fast-design-system-provider {
         opacity: .4;
     }
 
-    a.nav-link {
-        display: block;
-        height: 80px;
-        line-height: 80px;
-        font-size: 2em;
-        padding: 0 20px;
-        color: var(--light-gray);
-        position: relative;
-    }
+a.nav-link {
+    display: block;
+    height: 80px;
+    line-height: 80px;
+    font-size: 2em;
+    padding: 0 20px;
+    color: var(--light-gray);
+    position: relative;
+}
 
     a.nav-link.active {
         background: var(--secondary);

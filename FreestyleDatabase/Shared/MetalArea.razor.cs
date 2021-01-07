@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FreestyleDatabase.Shared
@@ -34,6 +32,5 @@ namespace FreestyleDatabase.Shared
         {
             await Js.InvokeVoidAsync("window.yourJsInterop.staggerMetals");
         }
-
     }
 }

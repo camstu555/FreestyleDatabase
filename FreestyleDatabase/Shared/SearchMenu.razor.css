@@ -18,10 +18,10 @@
         display: inline
     }
 
-.searchMenu:hover {
-    transform: translateX(-673px);
-    transition: transform 1s;
-}
+    .searchMenu:hover {
+        transform: translateX(-673px);
+        transition: transform 1s;
+    }
 
 .hamburgerMenuButton {
     background-color: transparent;

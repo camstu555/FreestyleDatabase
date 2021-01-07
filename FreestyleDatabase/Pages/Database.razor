@@ -3,180 +3,180 @@
 @inject QueryParameterService Query
 @inject WrestlingDataService Http
 
-    <TitleSection Title="Database" SubTitle="Everyone everywhere" />
+<TitleSection Title="Database" SubTitle="Everyone everywhere" />
 
-    @if (wrestlingData == null)
+@if (wrestlingData == null)
+{
+    <div class="spinner"></div>
+    <p>Hang tight we are loading over 15,000 matches for you!</p>
+}
+else
+{
+    if (password != realPassword)
     {
-        <div class="spinner"></div>
-        <p>Hang tight we are loading over 15,000 matches for you!</p>
+        <RadzenPassword Placeholder="Enter password..." @bind-Value="@password" Change="OnChange" />
     }
-    else
+
+    if (password == realPassword)
     {
-        if (password != realPassword)
+
+        <RadzenTextBox Placeholder="Wrestler Name" @bind-Value="@text" Change="OnChange" />
+        <br />
+        <RadzenDropDown Placeholder="Weight Class" AllowClear="true" TValue="string"
+                        Data="@(wrestlingData.Select(name => name.WeightClass).Distinct())"
+                        TextProperty="WeightClass" ValueProperty="WeightClass" @bind-Value="@weight" Change="OnChange" />
+
+        <br />
+        <RadzenTextBox Placeholder="Country" @bind-Value="@country" Change="OnChange" />
+        <br />
+        <RadzenTextBox Placeholder="Year or Tournament" @bind-Value="@tournament" Change="OnChange" />
+        <br />
+        @*<button class="btn btn-primary" @onclick="clearFilter">Clear</button>*@
+        <br />
+        <br />
+
+        @if (text != "")
+
         {
-            <RadzenPassword Placeholder="Enter password..." @bind-Value="@password" Change="OnChange" />
+            <h3>Search Opponents</h3>
+
+            <RadzenTextBox Placeholder="Wrestler Name" @bind-Value="@opponent" Change="OnChange" />
+            var wins = wrestlingData.Where(name => name.WrestlerName1.Contains(text, StringComparison.CurrentCultureIgnoreCase)).Count();
+            var losses = wrestlingData.Where(name => name.WrestlerName2.Contains(text, StringComparison.CurrentCultureIgnoreCase)).Count();
+            <h1>Wins: @wins</h1>
+            <h1>Loses: @losses</h1>
+
         }
 
-        if (password == realPassword)
-        {
+        <h1>@wrestlingData.Count() Total Matches</h1>
 
-            <RadzenTextBox Placeholder="Wrestler Name" @bind-Value="@text" Change="OnChange" />
-            <br />
-            <RadzenDropDown Placeholder="Weight Class" AllowClear="true" TValue="string"
-                            Data="@(wrestlingData.Select(name => name.WeightClass).Distinct())"
-                            TextProperty="WeightClass" ValueProperty="WeightClass" @bind-Value="@weight" Change="OnChange" />
+        <RadzenGrid AllowSorting="true" AllowPaging="true" AllowFiltering="false" Data="@wrestlingData" TItem="WrestlingDataModel" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Responsive="false" PageSize="100" PageNumbersCount="25">
+            <Columns>
+                <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="WeightClass" Title="Wt." Type="string" TextAlign="Radzen.TextAlign.Center" Width="50px">
+                    <Template>
+                        @data.WeightClass
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Country1" Title="Co." Type="string" Width="40px" TextAlign="Radzen.TextAlign.Center">
+                    <Template>
+                        <span title=@data.FullCountryName1>@data.Country1Emoji</span>
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="WrestlerName1" Title="Name" Type="string" TextAlign="Radzen.TextAlign.Center">
+                    <Template>
+                        <span title=@data.WrestlerName1><strong>@data.WrestlerName1</strong></span>
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Result" Title="Result" Type="string" Filterable="false" Sortable="false" TextAlign="Radzen.TextAlign.Center" Width="60px">
+                    <Template>
+                        @data.Result
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Score" Title="Score" Type="string" Filterable="false" Sortable="false" TextAlign="Radzen.TextAlign.Center" Width="60px">
+                    <Template>
+                        @data.Score
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="WrestlerName2" Title="Name" Type="string" TextAlign="Radzen.TextAlign.Center">
+                    <Template>
+                        <span title=@data.WrestlerName2>@data.WrestlerName2</span>
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Country2" Title="Co." Type="string" TextAlign="Radzen.TextAlign.Center" Width="40px">
+                    <Template>
+                        <span title=@data.FullCountryName2>@data.Country2Emoji</span>
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Round" Title="Round" Type="string" Sortable="false" TextAlign="Radzen.TextAlign.Center" Width="100px">
+                    <Template>
+                        @data.Round
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Date" Title="Date" Type="DateTime" TextAlign="Radzen.TextAlign.Center" Width="90px">
+                    <Template>
+                        @data.Date.Value.DateTime.ToShortDateString()
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Venue" Title="Event" Type="string" TextAlign="Radzen.TextAlign.Center" Width="200px">
+                    <Template>
+                        @if (data.Brackets != "")
+                        {
 
-            <br />
-            <RadzenTextBox Placeholder="Country" @bind-Value="@country" Change="OnChange" />
-            <br />
-            <RadzenTextBox Placeholder="Year or Tournament" @bind-Value="@tournament" Change="OnChange" />
-            <br />
-            @*<button class="btn btn-primary" @onclick="clearFilter">Clear</button>*@
-            <br />
-            <br />
-
-            @if (text != "")
-
-            {
-                <h3>Search Opponents</h3>
-
-                <RadzenTextBox Placeholder="Wrestler Name" @bind-Value="@opponent" Change="OnChange" />
-                var wins = wrestlingData.Where(name => name.WrestlerName1.Contains(text, StringComparison.CurrentCultureIgnoreCase)).Count();
-                var losses = wrestlingData.Where(name => name.WrestlerName2.Contains(text, StringComparison.CurrentCultureIgnoreCase)).Count();
-                <h1>Wins: @wins</h1>
-                <h1>Loses: @losses</h1>
-
-            }
-
-            <h1>@wrestlingData.Count() Total Matches</h1>
-
-            <RadzenGrid AllowSorting="true" AllowPaging="true" AllowFiltering="false" Data="@wrestlingData" TItem="WrestlingDataModel" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Responsive="false" PageSize="100" PageNumbersCount="25">
-                <Columns>
-                    <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="WeightClass" Title="Wt." Type="string" TextAlign="Radzen.TextAlign.Center" Width="50px">
-                        <Template>
-                            @data.WeightClass
-                        </Template>
-                    </RadzenGridColumn>
-                    <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Country1" Title="Co." Type="string" Width="40px" TextAlign="Radzen.TextAlign.Center">
-                        <Template>
-                            <span title=@data.FullCountryName1>@data.Country1Emoji</span>
-                        </Template>
-                    </RadzenGridColumn>
-                    <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="WrestlerName1" Title="Name" Type="string" TextAlign="Radzen.TextAlign.Center">
-                        <Template>
-                            <span title=@data.WrestlerName1><strong>@data.WrestlerName1</strong></span>
-                        </Template>
-                    </RadzenGridColumn>
-                    <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Result" Title="Result" Type="string" Filterable="false" Sortable="false" TextAlign="Radzen.TextAlign.Center" Width="60px">
-                        <Template>
-                            @data.Result
-                        </Template>
-                    </RadzenGridColumn>
-                    <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Score" Title="Score" Type="string" Filterable="false" Sortable="false" TextAlign="Radzen.TextAlign.Center" Width="60px">
-                        <Template>
-                            @data.Score
-                        </Template>
-                    </RadzenGridColumn>
-                    <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="WrestlerName2" Title="Name" Type="string" TextAlign="Radzen.TextAlign.Center">
-                        <Template>
-                            <span title=@data.WrestlerName2>@data.WrestlerName2</span>
-                        </Template>
-                    </RadzenGridColumn>
-                    <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Country2" Title="Co." Type="string" TextAlign="Radzen.TextAlign.Center" Width="40px">
-                        <Template>
-                            <span title=@data.FullCountryName2>@data.Country2Emoji</span>
-                        </Template>
-                    </RadzenGridColumn>
-                    <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Round" Title="Round" Type="string" Sortable="false" TextAlign="Radzen.TextAlign.Center" Width="100px">
-                        <Template>
-                            @data.Round
-                        </Template>
-                    </RadzenGridColumn>
-                    <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Date" Title="Date" Type="DateTime" TextAlign="Radzen.TextAlign.Center" Width="90px">
-                        <Template>
-                            @data.Date.Value.DateTime.ToShortDateString()
-                        </Template>
-                    </RadzenGridColumn>
-                    <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Venue" Title="Event" Type="string" TextAlign="Radzen.TextAlign.Center" Width="200px">
-                        <Template>
-                            @if (data.Brackets != "")
-                            {
-
-                                <span title="Brackets - @data.Venue">
-                                    <a href="@data.Brackets" target="_blank">
-                                        @data.Venue
-                                    </a>
-                                </span>
-                            }
-                            else
-                            {
-                                <span title=@data.Venue>
+                            <span title="Brackets - @data.Venue">
+                                <a href="@data.Brackets" target="_blank">
                                     @data.Venue
-                                </span>
-                            }
-                        </Template>
-                    </RadzenGridColumn>
-                    <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Venue" Title="City" Type="string" TextAlign="Radzen.TextAlign.Center" Width="180px">
-                        <Template>
-                            <span title=@data.Location>@data.Location</span>
-                        </Template>
-                    </RadzenGridColumn>
-                    <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Video" Title="Video" Type="string" TextAlign="Radzen.TextAlign.Center" Filterable="false" Sortable="false" Width="65px">
-                        <Template Context="data">
-                            @if (data.Video == "")
-                            {
-
-                            }
-                            else
-                            {
-                                <a href="@data.Video" target="_blank">
-                                    <span class="oi oi-media-play"></span>
                                 </a>
+                            </span>
+                        }
+                        else
+                        {
+                            <span title=@data.Venue>
+                                @data.Venue
+                            </span>
+                        }
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Venue" Title="City" Type="string" TextAlign="Radzen.TextAlign.Center" Width="180px">
+                    <Template>
+                        <span title=@data.Location>@data.Location</span>
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="WrestlingDataModel" Context="data" Property="Video" Title="Video" Type="string" TextAlign="Radzen.TextAlign.Center" Filterable="false" Sortable="false" Width="65px">
+                    <Template Context="data">
+                        @if (data.Video == "")
+                        {
 
-                            }
-                        </Template>
-                    </RadzenGridColumn>
-                </Columns>
-            </RadzenGrid>
-        }
-        <br />
-        <br />
-        <br />
+                        }
+                        else
+                        {
+                            <a href="@data.Video" target="_blank">
+                                <span class="oi oi-media-play"></span>
+                            </a>
+
+                        }
+                    </Template>
+                </RadzenGridColumn>
+            </Columns>
+        </RadzenGrid>
+    }
+    <br />
+    <br />
+    <br />
+}
+
+@code {
+    public string text;
+    public string weight;
+    public string country;
+    public string emoji;
+    public string tournament;
+    public string password;
+    public string opponent;
+    public string realPassword = "YazdaniTheGreatest";
+
+    public async Task OnChange()
+    {
+        wrestlingData = await Http.SearchWrestlerDataAsync(text, country, emoji, weight, tournament, opponent);
+        this.StateHasChanged();
     }
 
-    @code {
-        public string text;
-        public string weight;
-        public string country;
-        public string emoji;
-        public string tournament;
-        public string password;
-        public string opponent;
-        public string realPassword = "YazdaniTheGreatest";
+    private List<WrestlingDataModel> wrestlingData;
 
-        public async Task OnChange()
-        {
-            wrestlingData = await Http.SearchWrestlerDataAsync(text, country, emoji, weight, tournament, opponent);
-            this.StateHasChanged();
-        }
+    protected override async Task OnInitializedAsync()
+    {
 
-        private List<WrestlingDataModel> wrestlingData;
-
-        protected override async Task OnInitializedAsync()
-        {
-
-            //text = Query["name"];
-            //tournament = Query["year"];
-            //tournament = Query["event"];
-            //if (string.IsNullOrEmpty(text))
-            //{
-            //    wrestlingData = await Http.GetWrestlerDataAsync();
-            //}
-            //else
-            //{
-            //    wrestlingData = await Http.SearchWrestlerDataAsync(text, country, emoji, weight, tournament);
-            //}
-
-        }
+        //text = Query["name"];
+        //tournament = Query["year"];
+        //tournament = Query["event"];
+        //if (string.IsNullOrEmpty(text))
+        //{
+        //    wrestlingData = await Http.GetWrestlerDataAsync();
+        //}
+        //else
+        //{
+        //    wrestlingData = await Http.SearchWrestlerDataAsync(text, country, emoji, weight, tournament);
+        //}
 
     }
+
+}

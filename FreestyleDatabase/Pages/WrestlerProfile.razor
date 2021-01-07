@@ -3,7 +3,6 @@
 
 @if (result != null)
 {
-   
 
     <TitleSection Title="@SubTitle" SubTitle="@result.WrestlerName" NoMargins="true" />
     <MetalArea GoldMedalMatches="result.GoldMedalMatches" SilverMedalMatches="result.SilverMedalMatches" BronzeMedalMatches="result.BronzeMedalMatches" />
@@ -15,7 +14,7 @@
                   OffPts="@result.AverageOffensivePointsPerMatch"
                   DefPts="@result.AverageDefensivePointsPerMatch"
                   Bonus="@result.BonusRate" />
-                  
+
 }
 else
 {

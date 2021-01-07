@@ -34,10 +34,12 @@
     background: #ffd700a3;
     text-shadow: 0 0 3px gold;
 }
+
 .metal__silver .h6 {
     background: #c0c0c0bf;
     text-shadow: 0 0 3px silver;
 }
+
 .metal__bronze .h6 {
     background: #b8860b78;
     text-shadow: 0 0 3px darkgoldenrod;
