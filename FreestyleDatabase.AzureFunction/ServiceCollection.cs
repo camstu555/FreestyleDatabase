@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Text;
 
 namespace FreestyleDatabase.AzureFunction
 {
@@ -78,6 +79,32 @@ namespace FreestyleDatabase.AzureFunction
             var data = JsonConvert.SerializeObject(wrestlingAggregatesModel);
 
             return data.ToResponse();
+        }
+
+        public static HttpResponseData ToResponse(this byte[] imageByes, string contentType)
+        {
+            var data = new StringBuilder();
+
+            foreach (byte b in imageByes)
+            {
+                data.AppendFormat("{0:2x}", b);
+            };
+
+            var response = new HttpResponseData(HttpStatusCode.OK, data.ToString());
+
+            if (response.Headers == null)
+            {
+                response.Headers = new Dictionary<string, string>
+                {
+                    { "content-type", contentType }
+                };
+            }
+            else
+            {
+                response.Headers.Add("content-type", contentType);
+            }
+
+            return response;
         }
     }
 }
