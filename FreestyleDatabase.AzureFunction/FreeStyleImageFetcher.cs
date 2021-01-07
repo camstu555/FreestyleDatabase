@@ -16,13 +16,25 @@ namespace FreestyleDatabase.AzureFunction
         {
             Console.WriteLine("Attempting to look up a wrestler image...");
 
-            var wrestlerName = req.Query["name"];
-            var type = req.Query["type"] ?? "json";
-
-            Console.WriteLine($"Searching for '{wrestlerName}'");
-
             try
             {
+                var wrestlerName = "NCAA Wrestling Wallpaper";
+
+                if (req.Query.ContainsKey("name"))
+                {
+                    wrestlerName = req.Query["name"];
+                }
+
+                var type = "json";
+
+                if (req.Query.ContainsKey("type"))
+                {
+                    type = req.Query["type"];
+                }
+
+
+                Console.WriteLine($"Searching for '{wrestlerName}'");
+
                 if (type.Equals("bytes", StringComparison.OrdinalIgnoreCase))
                 {
                     var (imageResult, contentType) = await ServiceCollection.BingImageSearchService.GetWrestlerImageResultBytes(wrestlerName);

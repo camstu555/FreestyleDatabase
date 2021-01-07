@@ -15,13 +15,25 @@ namespace FreestyleDatabase.AzureFunction
             {
                 Console.WriteLine("Attempting to look up a wrestler...");
 
-                var wrestlerId = req.Query["id"];
-                var wrestlerName = req.Query["name"];
-                var matchCount = req.Query["count"];
+                var wrestlerId = string.Empty;
 
-                if (string.IsNullOrEmpty(matchCount))
+                if (req.Query.ContainsKey("id"))
                 {
-                    matchCount = "10";
+                    wrestlerId = req.Query["id"];
+                }
+
+                var wrestlerName = string.Empty;
+
+                if (req.Query.ContainsKey("name"))
+                {
+                    wrestlerId = req.Query["name"];
+                }
+
+                var matchCount = "10";
+
+                if (req.Query.ContainsKey("count"))
+                {
+                    matchCount = req.Query["count"];
                 }
 
                 if (string.IsNullOrEmpty(wrestlerId) && string.IsNullOrEmpty(wrestlerName))
