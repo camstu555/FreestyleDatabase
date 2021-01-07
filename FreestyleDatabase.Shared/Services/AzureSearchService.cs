@@ -119,9 +119,9 @@ namespace FreestyleDatabase.Shared.Services
             await response.CaptureFailedOperation();
         }
 
-        public async Task<string> Search(HttpRequest httpRequest, CancellationToken cancellationToken = default)
+        public async Task<string> Search(Uri requestUri, CancellationToken cancellationToken = default)
         {
-            var query = httpRequest.QueryString.Value.Replace('?', '&');
+            var query = requestUri.Query.Replace('?', '&');
             var route = string.Format(RouteTemplate, $"/indexes/{IndexName}/docs") + "&$count=true" + query;
 
             var request = new HttpRequestMessage(HttpMethod.Get, route);
