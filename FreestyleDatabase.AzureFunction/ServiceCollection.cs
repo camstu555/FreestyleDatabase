@@ -1,6 +1,8 @@
-﻿using FreestyleDatabase.Shared.Services;
+﻿using FreestyleDatabase.Shared.Models;
+using FreestyleDatabase.Shared.Services;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.WebJobs.Script.Grpc.Messages;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -49,6 +51,11 @@ namespace FreestyleDatabase.AzureFunction
 
         public static HttpResponseData ToResponse(this string data, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
+            if (string.IsNullOrEmpty(data))
+            {
+                statusCode = HttpStatusCode.NotFound;
+            }
+
             var response = new HttpResponseData(statusCode, data);
 
             if (response.Headers == null)
@@ -64,6 +71,13 @@ namespace FreestyleDatabase.AzureFunction
             }
 
             return response;
+        }
+
+        public static HttpResponseData ToResponse(this WrestlingAggregatesModel wrestlingAggregatesModel)
+        {
+            var data = JsonConvert.SerializeObject(wrestlingAggregatesModel);
+
+            return data.ToResponse();
         }
     }
 }

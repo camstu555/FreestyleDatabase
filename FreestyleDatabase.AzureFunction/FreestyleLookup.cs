@@ -1,8 +1,6 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -11,11 +9,11 @@ namespace FreestyleDatabase.AzureFunction
     public static class FreestyleLookup
     {
         [FunctionName(nameof(FreestyleLookup))]
-        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req, ILogger log)
+        public static async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequestData req)
         {
             try
             {
-                log.LogInformation("Attempting to look up a wrestler...");
+                Console.WriteLine("Attempting to look up a wrestler...");
 
                 var wrestlerId = req.Query["id"];
                 var wrestlerName = req.Query["name"];
@@ -28,33 +26,32 @@ namespace FreestyleDatabase.AzureFunction
 
                 if (string.IsNullOrEmpty(wrestlerId) && string.IsNullOrEmpty(wrestlerName))
                 {
-                    return new NotFoundResult();
+                    return string.Empty.ToResponse();
                 }
 
                 if (!string.IsNullOrEmpty(wrestlerName))
                 {
-                    var searchResults = await ServiceCollection.WrestlerSearchService.GetWrestlerDetailsByName(wrestlerName, Convert.ToInt32(matchCount));
+                    var searchResults = await ServiceCollection
+                        .WrestlerSearchService
+                        .GetWrestlerDetailsByName(wrestlerName, Convert.ToInt32(matchCount));
 
-                    return new ObjectResult(searchResults);
+                    return searchResults.ToResponse();
                 }
                 else
                 {
-                    var searchResults = await ServiceCollection.WrestlerSearchService.GetWrestlerDetails(wrestlerId, Convert.ToInt32(matchCount));
+                    var searchResults = await ServiceCollection
+                        .WrestlerSearchService
+                        .GetWrestlerDetails(wrestlerId, Convert.ToInt32(matchCount));
 
-                    return new ObjectResult(searchResults);
+                    return searchResults.ToResponse();
                 }
             }
             catch (InvalidOperationException ex)
             {
-                log.LogInformation("An error occured.");
-                log.LogError(ex.Message);
+                Console.WriteLine("An error occured.");
+                Console.WriteLine(ex.ToString());
 
-                return new ContentResult
-                {
-                    Content = ex.Message,
-                    ContentType = "application/json",
-                    StatusCode = 400
-                };
+                return ex.ToResponse();
             }
         }
     }
