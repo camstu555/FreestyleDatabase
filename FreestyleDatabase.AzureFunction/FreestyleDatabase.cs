@@ -1,8 +1,6 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -11,49 +9,46 @@ namespace FreestyleDatabase.AzureFunction
     public static class FreestyleDatabase
     {
         [FunctionName(nameof(FreestyleDatabase))]
-        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req, ILogger log)
+        public static async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequestData req)
         {
             try
             {
-                log.LogInformation("Attempting to fetch all wrestlers...");
+                Console.WriteLine("Attempting to fetch all wrestlers...");
 
                 var wrestlers = await ServiceCollection
                     .WrestlingDataService
                     .GetWrestlerDataAsync();
 
-                log.LogInformation($"Fetched {wrestlers.Count} wrestlers!");
+                Console.WriteLine($"Fetched {wrestlers.Count} wrestlers!");
 
                 if (await ServiceCollection.AzureSearchService.DoesIndexExist())
                 {
-                    log.LogInformation("Attempting to tear down index...");
+                    Console.WriteLine("Attempting to tear down index...");
                     await ServiceCollection.AzureSearchService.DeleteIndex();
-                    log.LogInformation("Index destroyed!");
+                    Console.WriteLine("Index destroyed!");
                 }
 
-                log.LogInformation("Attempting to create new index...");
+                Console.WriteLine("Attempting to create new index...");
 
-                await ServiceCollection.AzureSearchService.CreateIndex();
+                await ServiceCollection
+                    .AzureSearchService
+                    .CreateIndex();
 
-                log.LogInformation("Index created!");
-                log.LogInformation("Attempting to populate index...");
+                Console.WriteLine("Index created!");
+                Console.WriteLine("Attempting to populate index...");
 
-                await ServiceCollection.AzureSearchService.CreateDocuments(wrestlers);
+                await ServiceCollection
+                    .AzureSearchService
+                    .CreateDocuments(wrestlers);
 
-                log.LogInformation("Documents uploaded!");
-
-                return new AcceptedResult();
+                return "\"Documents uploaded!\"".ToResponse();
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
-                log.LogInformation("An error occured.");
-                log.LogError(ex.Message);
+                Console.WriteLine("An error occured.");
+                Console.WriteLine(ex.Message);
 
-                return new ContentResult
-                {
-                    Content = ex.Message,
-                    ContentType = "application/json",
-                    StatusCode = 400
-                };
+                return ex.ToResponse();
             }
         }
     }
