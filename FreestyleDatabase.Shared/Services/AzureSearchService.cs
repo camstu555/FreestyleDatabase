@@ -135,9 +135,9 @@ namespace FreestyleDatabase.Shared.Services
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<string> AutoComplete(HttpRequest httpRequest, CancellationToken cancellationToken = default)
+        public async Task<string> AutoComplete(Uri requestUri, CancellationToken cancellationToken = default)
         {
-            var query = httpRequest.QueryString.Value.Replace('?', '&');
+            var query = requestUri.Query.Replace('?', '&');
             var route = string.Format(RouteTemplate, $"/indexes/{IndexName}/docs/autocomplete") + query;
 
             var request = new HttpRequestMessage(HttpMethod.Get, route);
@@ -151,9 +151,9 @@ namespace FreestyleDatabase.Shared.Services
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<string> Suggest(HttpRequest httpRequest, CancellationToken cancellationToken = default)
+        public async Task<string> Suggest(Uri requestUri, CancellationToken cancellationToken = default)
         {
-            var query = httpRequest.QueryString.Value.Replace('?', '&');
+            var query = requestUri.Query.Replace('?', '&');
             var route = string.Format(RouteTemplate, $"/indexes/{IndexName}/docs/suggest") + query;
 
             var request = new HttpRequestMessage(HttpMethod.Get, route);
