@@ -181,7 +181,7 @@ namespace FreestyleDatabase.Shared.Extensions
 
             var helper = new SlugHelper();
 
-            return helper.GenerateSlug($"{model.WrestlerName2}").ToLower();
+            return helper.GenerateSlug($"{model.WrestlerName1}").ToLower();
         }
 
         public static string GetMatchId(this WrestlingDataModel model)
@@ -195,7 +195,7 @@ namespace FreestyleDatabase.Shared.Extensions
 
             var normalize = model.Date.Value.Date.ToShortDateString();
 
-            return helper.GenerateSlug($"{normalize}-{model.WrestlerName1}-vs-{model.WrestlerImage2}-round-{model.Round ?? "0"}").ToLower();
+            return helper.GenerateSlug($"{normalize}-{model.WrestlerName1}-vs-{model.WrestlerName1}-round-{model.Round ?? "0"}").ToLower();
         }
 
         public static string GetWrestlerName2Id(this WrestlingDataModel model)
