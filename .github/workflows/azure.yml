@@ -16,18 +16,17 @@ jobs:
     - name: 'Azure Login'
       uses: Azure/login@v1
       with:
-        creds: ${{ env.AZURE_CREDENTIALS }}
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
       
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@master
     
-#     - name: 'Setup NODE.js 12'
-#     - uses: actions/checkout@v2
-#     - uses: actions/setup-node@v2
-#       with:
-#         node-version: '12'
-#     - run: npm i -g azure-functions-core-tools@3 --unsafe-perm true
+    - name: 'Setup NODE.js 12'
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+    - run: |
+        npm i -g azure-functions-core-tools@3 --unsafe-perm true
       
     - name: 'Setup .NET Core SDK 5.0.x'
       uses: actions/setup-dotnet@v1
