@@ -103,7 +103,7 @@ namespace FreestyleDatabase.Shared.Services
                     Brackets = data.GsxBracket.Value,
                 };
 
-                newData.ApplyMetaData();
+                newData.ApplyMetaData(i);
 
                 results.Add(newData);
             }

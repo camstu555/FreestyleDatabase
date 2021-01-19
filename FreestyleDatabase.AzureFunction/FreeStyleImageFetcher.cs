@@ -32,7 +32,6 @@ namespace FreestyleDatabase.AzureFunction
                     type = req.Query["type"];
                 }
 
-
                 Console.WriteLine($"Searching for '{wrestlerName}'");
 
                 if (type.Equals("bytes", StringComparison.OrdinalIgnoreCase))

@@ -179,7 +179,17 @@ namespace FreestyleDatabase.Shared.Extensions
                 return string.Empty;
             }
 
-            var helper = new SlugHelper();
+            var config = new SlugHelperConfiguration
+            {
+                ForceLowerCase = true,
+                TrimWhitespace = true,
+                CollapseWhiteSpace = false,
+                CollapseDashes = false
+            };
+
+            config.AllowedChars.Remove('.');
+
+            var helper = new SlugHelper(config);
 
             return helper.GenerateSlug($"{model.WrestlerName1}").ToLower();
         }
@@ -205,12 +215,22 @@ namespace FreestyleDatabase.Shared.Extensions
                 return string.Empty;
             }
 
-            var helper = new SlugHelper();
+            var config = new SlugHelperConfiguration
+            {
+                ForceLowerCase = true,
+                TrimWhitespace = true,
+                CollapseWhiteSpace = false,
+                CollapseDashes = false
+            };
+
+            config.AllowedChars.Remove('.');
+
+            var helper = new SlugHelper(config);
 
             return helper.GenerateSlug($"{model.WrestlerName2}").ToLower();
         }
 
-        public static void ApplyMetaData(this WrestlingDataModel model)
+        public static void ApplyMetaData(this WrestlingDataModel model, int index)
         {
             try
             {
@@ -233,9 +253,9 @@ namespace FreestyleDatabase.Shared.Extensions
                 model.Venue = model.Venue?.Trim();
                 model.Video = model.Video?.Trim();
                 model.WeightClass = model.WeightClass?.Trim();
-                model.WrestlerName1 = model.GetFixedWrestlerName1()?.Trim()?.Replace(".", string.Empty);
+                model.WrestlerName1 = model.GetFixedWrestlerName1()?.Trim();
                 model.WrestlerId1 = model.GetWrestlerName1Id();
-                model.WrestlerName2 = model.GetFixedWrestlerName2()?.Trim()?.Replace(".", string.Empty);
+                model.WrestlerName2 = model.GetFixedWrestlerName2()?.Trim();
                 model.WrestlerId2 = model.GetWrestlerName2Id();
 
                 model.WrestlerImage2 = model.GetImageOrDefaultWrestler2()?.Trim();
@@ -243,7 +263,7 @@ namespace FreestyleDatabase.Shared.Extensions
 
                 var helper = new SlugHelper();
 
-                model.Id = helper.GenerateSlug($"{model.Date.Value.Date.Ticks}-{model.WrestlerName1}-vs-{model.WrestlerName2}");
+                model.Id = helper.GenerateSlug($"{index}-{model.WrestlerName1}-vs-{model.WrestlerName2}");
             }
             catch
             {
