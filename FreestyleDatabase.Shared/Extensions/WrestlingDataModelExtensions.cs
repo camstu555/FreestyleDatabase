@@ -187,11 +187,9 @@ namespace FreestyleDatabase.Shared.Extensions
                 CollapseDashes = false
             };
 
-            config.AllowedChars.Remove('.');
-
             var helper = new SlugHelper(config);
 
-            return helper.GenerateSlug($"{model.WrestlerName1}").ToLower();
+            return helper.GenerateSlug($"{model.WrestlerName1.Replace(".", string.Empty)}").ToLower();
         }
 
         public static string GetMatchId(this WrestlingDataModel model)
@@ -223,11 +221,9 @@ namespace FreestyleDatabase.Shared.Extensions
                 CollapseDashes = false
             };
 
-            config.AllowedChars.Remove('.');
-
             var helper = new SlugHelper(config);
 
-            return helper.GenerateSlug($"{model.WrestlerName2}").ToLower();
+            return helper.GenerateSlug($"{model.WrestlerName2.Replace(".", string.Empty)}").ToLower();
         }
 
         public static void ApplyMetaData(this WrestlingDataModel model, int index)
