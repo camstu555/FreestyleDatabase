@@ -8,7 +8,6 @@ env:
   AZURE_FUNCTIONAPP_PACKAGE_PATH: './FreestyleDatabase.AzureFunction'    # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '5.0'# set this to the dotnet version to use
 
-
 jobs:
   build-and-deploy:
     runs-on: windows-latest
@@ -33,6 +32,13 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Azure Login
+      uses: Azure/login@v1
+      with:
+        # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
+        creds: ${{ env.AZURE_CREDENTIALS }}
+        enable-AzPSSession: true
 
     - name: 'Resolve Project Dependencies Using Dotnet'
       shell: pwsh
