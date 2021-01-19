@@ -13,14 +13,18 @@ jobs:
   build-and-deploy:
     runs-on: windows-latest
     steps:
+      
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@master
-      
-    - name: Setup .NET Core SDK 3.1.x
-      uses: actions/setup-dotnet@v1
+    
+    - name: 'Setup NODE.js 12'
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
       with:
-        dotnet-version: 3.1.x
-    - name: Setup .NET Core SDK 5.0.x
+        node-version: '12'
+    - run: npm i -g azure-functions-core-tools@3 --unsafe-perm true
+      
+    - name: 'Setup .NET Core SDK 5.0.x'
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
@@ -34,12 +38,7 @@ jobs:
       shell: pwsh
       run: |
         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-        dotnet build --configuration Release --output ./output
+        dotnet publish --configuration Release
         popd
-    - name: 'Azure Functions Action'
-      uses: Azure/functions-action@v1.1.8
-      id: fa
-      with:
-        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-        package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-        publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+        cd ./${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/bin/Release/net5.0/publish
+        func azure functionapp publish FreestyleDatabase.AzureFunction
