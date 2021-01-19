@@ -5,7 +5,6 @@
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
     <OutputType>Exe</OutputType>
     <_FunctionsSkipCleanOutput>true</_FunctionsSkipCleanOutput>
-    <RootNamespace>FreestyleDatabase.AzureFunction</RootNamespace>
   </PropertyGroup>
   <Target Name="CopyRuntimes" AfterTargets="AfterBuild" Condition=" '$(OS)' == 'UNIX' ">
     <!-- To workaround a bug where the files aren't copied correctly for non-Windows platforms -->
@@ -32,7 +31,6 @@
     </None>
     <None Update="local.settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
   </ItemGroup>
 </Project>
