@@ -204,7 +204,7 @@ namespace FreestyleDatabase.Shared.Extensions
 
             var helper = new SlugHelper(config);
 
-            var normal = $"{model.WrestlerName1.Replace(".", string.Empty)}-vs-{model.WrestlerName1.Replace(".", string.Empty)}";
+            var normal = $"{model.WrestlerName1.Replace(".", string.Empty)}-vs-{model.WrestlerName2.Replace(".", string.Empty)}";
 
             if (!string.IsNullOrEmpty(model.Round))
             {
