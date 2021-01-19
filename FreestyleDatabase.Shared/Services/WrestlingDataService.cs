@@ -103,7 +103,7 @@ namespace FreestyleDatabase.Shared.Services
                     Video = data.GsxVideo.Value,
                     Brackets = data.GsxBracket.Value,
                     RecordNumber = i
-                };
+                }; 
 
                 newData.ApplyMetaData();
 
