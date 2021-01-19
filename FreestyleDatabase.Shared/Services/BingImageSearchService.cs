@@ -51,6 +51,22 @@ namespace FreestyleDatabase.Shared.Services
             return (ms.ToArray(), wrestler.EncodingFormat);
         }
 
+        public async Task<(Stream, string)> GetWrestlerImageResultStream(string wrestlerName)
+        {
+            var wrestler = await GetWrestlerSearchResult(wrestlerName);
+            var message = new HttpRequestMessage(HttpMethod.Get, wrestler.ContentUrl);
+            var response = await httpClient.SendAsync(message);
+
+            var ms = new MemoryStream();
+            using var rs = await response.Content.ReadAsStreamAsync();
+
+            await rs.CopyToAsync(ms);
+
+            ms.Seek(0, SeekOrigin.Begin);
+
+            return (ms, wrestler.EncodingFormat);
+        }
+
         private async Task<BingResultItem> GetWrestlerSearchResult(string wrestlerName)
         {
             if (string.IsNullOrEmpty(wrestlerName))
