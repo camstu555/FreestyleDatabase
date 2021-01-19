@@ -6,7 +6,7 @@ on:
 env:
   AZURE_FUNCTIONAPP_NAME: freestyledb  # set this to your application's name
   AZURE_FUNCTIONAPP_PACKAGE_PATH: './FreestyleDatabase.AzureFunction'    # set this to the path to your web app project, defaults to the repository root
-  DOTNET_VERSION: '5.0'# set this to the dotnet version to use
+  DOTNET_VERSION: '5.0' # set this to the dotnet version to use
 
 jobs:
   build-and-deploy:
@@ -22,18 +22,15 @@ jobs:
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@master
     
-#     - name: 'Setup NODE.js 12'
-#     - uses: actions/checkout@v2
-#     - uses: actions/setup-node@v2
-#     - run: |
-#         npm i -g azure-functions-core-tools@3 --unsafe-perm true
-      
-    - name: 'Setup .NET Core SDK 5.0.x'
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
+    - name: 'Setup NODE.js 12'
+      uses: actions/setup-node@v2
     
-    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+    - name: 'Install FUNC cli'
+      shell: pwsh
+      run: |
+        npm i -g azure-functions-core-tools@3 --unsafe-perm true
+    
+    - name: Setup DotNet
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
