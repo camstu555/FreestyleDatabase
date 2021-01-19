@@ -265,8 +265,6 @@ namespace FreestyleDatabase.Shared.Extensions
                 model.WrestlerImage2 = model.GetImageOrDefaultWrestler2()?.Trim();
                 model.WrestlerImage1 = model.GetImageOrDefaultWrestler1()?.Trim();
 
-                var helper = new SlugHelper();
-
                 model.Id = GetMatchId(model);
             }
             catch

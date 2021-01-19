@@ -69,6 +69,7 @@ namespace FreestyleDatabase.Shared.Services
         {
             var results = new List<WrestlingDataModel>();
             var googleData = await googleSheetService.GetSheetAsync();
+            var existingIds = new Dictionary<string, int>();
 
             if (googleData == null)
             {
@@ -101,9 +102,21 @@ namespace FreestyleDatabase.Shared.Services
                     Score = data.GsxScore.Value,
                     Video = data.GsxVideo.Value,
                     Brackets = data.GsxBracket.Value,
+                    RecordNumber = i
                 };
 
                 newData.ApplyMetaData();
+
+                if (existingIds.ContainsKey(newData.Id))
+                {
+                    existingIds[newData.Id] = existingIds[newData.Id] + 1;
+
+                    newData.Id = $"{existingIds[newData.Id]}-{newData.Id}";
+                }
+                else
+                {
+                    existingIds[newData.Id] = 0;
+                }
 
                 results.Add(newData);
             }
