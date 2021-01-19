@@ -194,16 +194,24 @@ namespace FreestyleDatabase.Shared.Extensions
 
         public static string GetMatchId(this WrestlingDataModel model)
         {
-            if (!model.Date.HasValue)
+            var config = new SlugHelperConfiguration
             {
-                model.Date = DateTimeOffset.MinValue;
+                ForceLowerCase = true,
+                TrimWhitespace = true,
+                CollapseWhiteSpace = false,
+                CollapseDashes = false
+            };
+
+            var helper = new SlugHelper(config);
+
+            var normal = $"{model.WrestlerName1.Replace(".", string.Empty)}-vs-{model.WrestlerName1.Replace(".", string.Empty)}";
+
+            if (!string.IsNullOrEmpty(model.Round))
+            {
+                return helper.GenerateSlug($"{normal}-round-{model.Round}");
             }
 
-            var helper = new SlugHelper();
-
-            var normalize = model.Date.Value.Date.ToShortDateString();
-
-            return helper.GenerateSlug($"{normalize}-{model.WrestlerName1}-vs-{model.WrestlerName1}-round-{model.Round ?? "0"}").ToLower();
+            return helper.GenerateSlug(normal);
         }
 
         public static string GetWrestlerName2Id(this WrestlingDataModel model)
@@ -226,7 +234,7 @@ namespace FreestyleDatabase.Shared.Extensions
             return helper.GenerateSlug($"{model.WrestlerName2.Replace(".", string.Empty)}").ToLower();
         }
 
-        public static void ApplyMetaData(this WrestlingDataModel model, int index)
+        public static void ApplyMetaData(this WrestlingDataModel model)
         {
             try
             {
@@ -259,7 +267,7 @@ namespace FreestyleDatabase.Shared.Extensions
 
                 var helper = new SlugHelper();
 
-                model.Id = helper.GenerateSlug($"{index}-{model.WrestlerName1}-vs-{model.WrestlerName2}");
+                model.Id = GetMatchId(model);
             }
             catch
             {
