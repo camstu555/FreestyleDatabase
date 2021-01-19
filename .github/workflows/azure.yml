@@ -47,4 +47,4 @@ jobs:
         dotnet publish --configuration Release
         popd
         cd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/bin/Release/net5.0/publish'
-        func azure functionapp publish FreestyleDatabase.AzureFunction
+        func azure functionapp publish freestyledb
