@@ -64,12 +64,27 @@ namespace FreestyleDatabase.Shared.Models
 
         public int RecordNumber { get; set; }
 
-        public int MatchYear { get; set; }
+        public int MatchYear
+        {
+            get
+            {
+                if (Date.HasValue)
+                {
+                    return Date.Value.Year;
+                }
 
-        public int MatchMonth { get; set; }
-
-        public int MatchDay { get; set; }
+                return DateTime.Now.Year;
+            }
+        }
 
         public string Title { get; set; }
+
+        public string WrestlerFirstName2 { get; set; }
+
+        public string WrestlerLastName2 { get; set; }
+
+        public string WrestlerFirstName1 { get; set; }
+
+        public string WrestlerLastName1 { get; set; }
     }
 }

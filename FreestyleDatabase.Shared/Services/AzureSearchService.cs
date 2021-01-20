@@ -2,6 +2,7 @@
 using FreestyleDatabase.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -91,15 +92,15 @@ namespace FreestyleDatabase.Shared.Services
 
         public async Task CreateDocuments(List<WrestlingDataModel> wrestlers, CancellationToken cancellationToken = default)
         {
-            var route = string.Format(RouteTemplate, $"/indexes/{IndexName}/docs/index");
-
-            var request = new HttpRequestMessage(HttpMethod.Post, route);
-            request.Headers.TryAddWithoutValidation("api-key", Access);
-
             if (wrestlers == null || wrestlers.Count == 0)
             {
                 return;
             }
+
+            var route = string.Format(RouteTemplate, $"/indexes/{IndexName}/docs/index");
+
+            var request = new HttpRequestMessage(HttpMethod.Post, route);
+            request.Headers.TryAddWithoutValidation("api-key", Access);
 
             var payload = new
             {
@@ -119,6 +120,33 @@ namespace FreestyleDatabase.Shared.Services
             await response.CaptureFailedOperation();
         }
 
+        public async Task UpdateDocument(List<WrestlingDataModel> wrestlers, CancellationToken cancellationToken = default)
+        {
+            var route = string.Format(RouteTemplate, $"/indexes/{IndexName}/docs/index");
+
+            var request = new HttpRequestMessage(HttpMethod.Post, route);
+            request.Headers.TryAddWithoutValidation("api-key", Access);
+
+            var payload = new AzureRequest(AzureDocument.Create(wrestlers));
+
+            var payloadAsJson = JsonConvert
+                .SerializeObject(payload);
+
+            var payloadAsContent = new StringContent(payloadAsJson, Encoding.UTF8, "application/json");
+
+            request.Content = payloadAsContent;
+
+            var response = await httpClient
+                .SendAsync(request, cancellationToken);
+
+            await response.CaptureFailedOperation();
+        }
+
+        public Task UpdateDocument(WrestlingDataModel wrestler, CancellationToken cancellationToken = default)
+        {
+            return UpdateDocument(new List<WrestlingDataModel> { wrestler }, cancellationToken);
+        }
+
         public async Task<string> Search(Uri requestUri, CancellationToken cancellationToken = default)
         {
             var query = requestUri.Query.Replace('?', '&');
@@ -133,6 +161,15 @@ namespace FreestyleDatabase.Shared.Services
             await response.CaptureFailedOperation();
 
             return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task<T> Search<T>(Uri requestUri, CancellationToken cancellationToken = default)
+        {
+            var results = await Search(requestUri, cancellationToken);
+            var parsed = JObject.Parse(results);
+            var array = parsed["value"];
+
+            return array.ToObject<T>();
         }
 
         public async Task<string> AutoComplete(Uri requestUri, CancellationToken cancellationToken = default)
@@ -214,9 +251,7 @@ namespace FreestyleDatabase.Shared.Services
                 var isDouble = prop.Name.Equals(nameof(WrestlingDataModel.WreslterName1Score), StringComparison.OrdinalIgnoreCase) ||
                             prop.Name.Equals(nameof(WrestlingDataModel.WreslterName2Score), StringComparison.OrdinalIgnoreCase);
 
-                var isInt = prop.Name.Equals(nameof(WrestlingDataModel.MatchDay), StringComparison.OrdinalIgnoreCase)           ||
-                            prop.Name.Equals(nameof(WrestlingDataModel.MatchMonth), StringComparison.OrdinalIgnoreCase)         ||
-                            prop.Name.Equals(nameof(WrestlingDataModel.MatchYear), StringComparison.OrdinalIgnoreCase)          ||
+                var isInt = prop.Name.Equals(nameof(WrestlingDataModel.MatchYear), StringComparison.OrdinalIgnoreCase)          ||
                             prop.Name.Equals(nameof(WrestlingDataModel.RecordNumber), StringComparison.OrdinalIgnoreCase);
 
                 result.Add(new
@@ -239,6 +274,83 @@ namespace FreestyleDatabase.Shared.Services
             }
 
             return result;
+        }
+
+        internal class AzureRequest
+        {
+            [JsonProperty(PropertyName = "value")]
+            public List<AzureDocument> Value { get; private set; }
+
+            public AzureRequest(AzureDocument document)
+            {
+                Value = new List<AzureDocument>() { document };
+            }
+
+            public AzureRequest(List<AzureDocument> documents)
+            {
+                Value = documents;
+            }
+
+            public AzureRequest()
+            {
+                Value = new List<AzureDocument>();
+            }
+        }
+
+        internal class AzureDocument : WrestlingDataModel
+        {
+            [JsonProperty(PropertyName = "@search.action")]
+            public string Action { get; set; } = "mergeOrUpload";
+
+            public static AzureDocument Create(WrestlingDataModel dataModel)
+            {
+                return new AzureDocument
+                {
+                    Brackets = dataModel.Brackets,
+                    Country1 = dataModel.Country1,
+                    Country1Emoji = dataModel.Country1Emoji,
+                    Date = dataModel.Date,
+                    FullCountryName1 = dataModel.FullCountryName1,
+                    FullCountryName2 = dataModel.FullCountryName2,
+                    Country2 = dataModel.Country2,
+                    Country2Emoji = dataModel.Country2Emoji,
+                    Id = dataModel.Id,
+                    Location = dataModel.Location,
+                    RecordNumber = dataModel.RecordNumber,
+                    Result = dataModel.Result,
+                    Result2 = dataModel.Result2,
+                    Round = dataModel.Round,
+                    Score = dataModel.Score,
+                    Title = dataModel.Title,
+                    Venue = dataModel.Venue,
+                    Video = dataModel.Video,
+                    WeightClass = dataModel.WeightClass,
+                    WreslterName1Score = dataModel.WreslterName1Score,
+                    WreslterName2Score = dataModel.WreslterName2Score,
+                    WrestlerId1 = dataModel.WrestlerId1,
+                    WrestlerId2 = dataModel.WrestlerId2,
+                    WrestlerImage1 = dataModel.WrestlerImage1,
+                    WrestlerImage2 = dataModel.WrestlerImage2,
+                    WrestlerName1 = dataModel.WrestlerName1,
+                    WrestlerFirstName1 = dataModel.WrestlerFirstName1,
+                    WrestlerLastName1 = dataModel.WrestlerLastName1,
+                    WrestlerName2 = dataModel.
+                    WrestlerFirstName2 = dataModel.WrestlerFirstName2,
+                    WrestlerLastName2 = dataModel.WrestlerLastName2
+                };
+            }
+
+            public static List<AzureDocument> Create(List<WrestlingDataModel> dataModel)
+            {
+                var results = new List<AzureDocument>();
+
+                foreach (var item in dataModel)
+                {
+                    results.Add(Create(item));
+                }
+
+                return results;
+            }
         }
     }
 }

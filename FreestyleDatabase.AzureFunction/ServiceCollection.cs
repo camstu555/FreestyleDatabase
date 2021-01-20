@@ -14,7 +14,7 @@ namespace FreestyleDatabase.AzureFunction
 {
     public static class ServiceCollection
     {
-        public static BingImageSearchService BingImageSearchService = new BingImageSearchService(HttpClient);
+        public static BingImageSearchService BingImageSearchService = new BingImageSearchService(HttpClient, AzureSearchService, StorageAccountService);
 
         public static HttpClient HttpClient => new HttpClient();
 
@@ -25,6 +25,8 @@ namespace FreestyleDatabase.AzureFunction
         public static AzureSearchService AzureSearchService => new AzureSearchService(HttpClient);
 
         public static WrestlerSearchService WrestlerSearchService => new WrestlerSearchService(HttpClient);
+
+        public static StorageAccountService StorageAccountService => new StorageAccountService();
 
         public static Uri GetDisplayUrl(this HttpRequestData req)
         {

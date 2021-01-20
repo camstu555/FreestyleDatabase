@@ -1,10 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using FreestyleDatabase.Shared.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace FreestyleDatabase.Shared.Services
 {
@@ -14,11 +16,15 @@ namespace FreestyleDatabase.Shared.Services
         private const string HeaderName = "Ocp-Apim-Subscription-Key";
         private const string Url = "https://api.bing.microsoft.com/v7.0/images/search?q={0}+wrestling";
         private readonly HttpClient httpClient;
+        private readonly AzureSearchService azureSearchService;
+        private readonly StorageAccountService storageAccountService;
         private readonly Dictionary<string, BingResultItem> cache = new Dictionary<string, BingResultItem>();
 
-        public BingImageSearchService(HttpClient httpClient)
+        public BingImageSearchService(HttpClient httpClient, AzureSearchService azureSearchService, StorageAccountService storageAccountService)
         {
             this.httpClient = httpClient;
+            this.azureSearchService = azureSearchService;
+            this.storageAccountService = storageAccountService;
         }
 
         public async Task<string> GetWrestlerImageResult(string wrestlerName)
@@ -35,7 +41,7 @@ namespace FreestyleDatabase.Shared.Services
             return json.ContentUrl;
         }
 
-        public async Task<(byte[], string)> GetWrestlerImageResultBytes(string wrestlerName)
+        public async Task<(byte[], string)> GetWrestlerImageResultBytes(string wrestlerName, string wrestlerId)
         {
             var wrestler = await GetWrestlerSearchResult(wrestlerName);
             var message = new HttpRequestMessage(HttpMethod.Get, wrestler.ContentUrl);
@@ -47,6 +53,73 @@ namespace FreestyleDatabase.Shared.Services
             await rs.CopyToAsync(ms);
 
             ms.Seek(0, SeekOrigin.Begin);
+
+            if (!string.IsNullOrEmpty(wrestlerId))
+            {
+                {
+                    var query = new Uri($"https://d.com/dummy?$filter=WrestlerId1 eq '{wrestlerId}'");
+
+                    var wrestlerResults = await azureSearchService.Search<List<WrestlingDataModel>>(query);
+
+                    var fileName = $"{wrestlerId}.{wrestler.EncodingFormat}";
+
+                    if (!await storageAccountService.HasFile(fileName))
+                    {
+                        await storageAccountService.SaveFile(fileName, ms);
+                    }
+
+                    var newHref = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?storage={HttpUtility.UrlEncode(fileName)}";
+                    var hasMoreThan1RecordUpdated = false;
+
+                    foreach (var w in wrestlerResults)
+                    {
+                        if (w.WrestlerImage1.Equals(newHref, StringComparison.OrdinalIgnoreCase))
+                        {
+                            continue;
+                        }
+
+                        w.WrestlerImage1 = newHref;
+                        hasMoreThan1RecordUpdated = true;
+                    }
+
+                    if (hasMoreThan1RecordUpdated)
+                    {
+                        await azureSearchService.UpdateDocument(wrestlerResults);
+                    }
+                }
+
+                {
+                    var query = new Uri($"https://d.com/dummy?$filter=WrestlerId2 eq '{wrestlerId}'");
+
+                    var wrestlerResults = await azureSearchService.Search<List<WrestlingDataModel>>(query);
+
+                    var fileName = $"{wrestlerId}.{wrestler.EncodingFormat}";
+
+                    if (!await storageAccountService.HasFile(fileName))
+                    {
+                        await storageAccountService.SaveFile(fileName, ms);
+                    }
+
+                    var newHref = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?storage={HttpUtility.UrlEncode(fileName)}";
+                    var hasMoreThan1RecordUpdated = false;
+
+                    foreach (var w in wrestlerResults)
+                    {
+                        if (w.WrestlerImage2.Equals(newHref, StringComparison.OrdinalIgnoreCase))
+                        {
+                            continue;
+                        }
+
+                        w.WrestlerImage2 = newHref;
+                        hasMoreThan1RecordUpdated = true;
+                    }
+
+                    if (hasMoreThan1RecordUpdated)
+                    {
+                        await azureSearchService.UpdateDocument(wrestlerResults);
+                    }
+                }
+            }
 
             return (ms.ToArray(), wrestler.EncodingFormat);
         }

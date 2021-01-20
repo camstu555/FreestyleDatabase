@@ -1,4 +1,5 @@
-﻿using FreestyleDatabase.Shared.Models;
+﻿using BinaryFog.NameParser;
+using FreestyleDatabase.Shared.Models;
 using FreestyleDatabase.Shared.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -87,7 +88,7 @@ namespace FreestyleDatabase.Shared.Extensions
         {
             if (string.IsNullOrEmpty(model.WrestlerImage1))
             {
-                model.WrestlerImage1 = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?name={HttpUtility.UrlEncode(model.WrestlerName1)}&type=bytes";
+                model.WrestlerImage1 = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?name={HttpUtility.UrlEncode(model.WrestlerName1)}&id={HttpUtility.UrlEncode(model.WrestlerId1)}";
             }
 
             return model.WrestlerImage1;
@@ -97,7 +98,7 @@ namespace FreestyleDatabase.Shared.Extensions
         {
             if (string.IsNullOrEmpty(model.WrestlerImage2))
             {
-                model.WrestlerImage2 = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?name={HttpUtility.UrlEncode(model.WrestlerName2)}&type=bytes";
+                model.WrestlerImage2 = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?name={HttpUtility.UrlEncode(model.WrestlerName2)}&id={HttpUtility.UrlEncode(model.WrestlerId2)}";
             }
 
             return model.WrestlerImage2;
@@ -267,15 +268,6 @@ namespace FreestyleDatabase.Shared.Extensions
 
                 model.Id = GetMatchId(model);
 
-                if (model.Date.HasValue)
-                {
-                    var date = model.Date.Value.DateTime;
-
-                    model.MatchYear = date.Year;
-                    model.MatchMonth = date.Month;
-                    model.MatchDay = date.Day;
-                }
-
                 model.Title = $"{model.WrestlerName1} vs {model.WrestlerName2}";
 
                 if (string.IsNullOrEmpty(model.WrestlerName2))
@@ -291,6 +283,32 @@ namespace FreestyleDatabase.Shared.Extensions
             catch
             {
                 // ignored
+            }
+
+            try
+            {
+                var wrester1 = FullNameParser.Parse(model.WrestlerName1);
+
+                model.WrestlerLastName1 = wrester1.LastName;
+                model.WrestlerFirstName1 = wrester1.FirstName;
+            }
+            catch
+            {
+
+                // ignore
+            }
+
+            try
+            {
+                var wrester2 = FullNameParser.Parse(model.WrestlerName2);
+
+                model.WrestlerLastName2 = wrester2.LastName;
+                model.WrestlerFirstName2 = wrester2.FirstName;
+            }
+            catch
+            {
+
+                // ignore
             }
         }
 

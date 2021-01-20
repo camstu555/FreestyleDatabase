@@ -36,7 +36,7 @@ namespace FreestyleDatabase.AzureFunction
 
                 if (type.Equals("bytes", StringComparison.OrdinalIgnoreCase))
                 {
-                    var (imageResult, contentType) = await ServiceCollection.BingImageSearchService.GetWrestlerImageResultBytes(wrestlerName);
+                    var (imageResult, contentType) = await ServiceCollection.BingImageSearchService.GetWrestlerImageResultBytes(wrestlerName, null);
 
                     Console.WriteLine($"Found '{wrestlerName}' with byte count: {imageResult.Length}");
 

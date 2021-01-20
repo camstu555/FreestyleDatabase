@@ -23,7 +23,25 @@ namespace FreestyleDatabase.AzureFunction
                 wrestlerName = req.Query["name"];
             }
 
-            var (imageResult, contentType) = await ServiceCollection.BingImageSearchService.GetWrestlerImageResultBytes(wrestlerName);
+            var wrestlerId = string.Empty;
+
+            if (req.Query.ContainsKey("id"))
+            {
+                wrestlerId = req.Query["id"];
+            }
+
+            var isStorage = req.Query.ContainsKey("storage");
+
+            if (isStorage)
+            {
+                var fileName = req.Query["storage"];
+
+                var (bytes, _) = await ServiceCollection.StorageAccountService.GetFile(fileName);
+
+                return bytes;
+            }
+
+            var (imageResult, contentType) = await ServiceCollection.BingImageSearchService.GetWrestlerImageResultBytes(wrestlerName, wrestlerId);
 
             Console.WriteLine($"Found '{wrestlerName}' with byte count: {imageResult.Length}");
 
