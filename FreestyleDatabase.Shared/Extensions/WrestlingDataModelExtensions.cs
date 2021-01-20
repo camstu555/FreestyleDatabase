@@ -268,8 +268,6 @@ namespace FreestyleDatabase.Shared.Extensions
 
                 model.Id = GetMatchId(model);
 
-                model.Title = $"{model.WrestlerName1} vs {model.WrestlerName2}";
-
                 if (string.IsNullOrEmpty(model.WrestlerName2))
                 {
                     model.Title = $"{model.WrestlerName1}";
@@ -285,6 +283,8 @@ namespace FreestyleDatabase.Shared.Extensions
                 // ignored
             }
 
+            var hasLastName = true;
+
             try
             {
                 var wrester1 = FullNameParser.Parse(model.WrestlerName1);
@@ -294,7 +294,7 @@ namespace FreestyleDatabase.Shared.Extensions
             }
             catch
             {
-
+                hasLastName = false;
                 // ignore
             }
 
@@ -307,8 +307,17 @@ namespace FreestyleDatabase.Shared.Extensions
             }
             catch
             {
-
+                hasLastName = false;
                 // ignore
+            }
+
+            if (hasLastName)
+            {
+                model.Title = $"{model.WrestlerLastName1} vs {model.WrestlerLastName2}";
+            }
+            else
+            {
+                model.Title = $"{model.WrestlerName1} vs {model.WrestlerName2}";
             }
         }
 
