@@ -63,5 +63,11 @@ namespace FreestyleDatabase.Shared.Models
         public string WrestlerId2 { get; set; }
 
         public int RecordNumber { get; set; }
+
+        public int MatchYear { get; set; }
+
+        public int MatchMonth { get; set; }
+
+        public int MatchDay { get; set; }
     }
 }

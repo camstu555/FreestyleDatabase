@@ -209,9 +209,14 @@ namespace FreestyleDatabase.Shared.Services
                     continue;
                 }
 
-                var isDate = prop.Name.Equals("date", StringComparison.OrdinalIgnoreCase);
-                var isInt = prop.Name.Equals("WreslterName1Score", StringComparison.OrdinalIgnoreCase) || prop.Name.Equals("WreslterName2Score", StringComparison.OrdinalIgnoreCase) || prop.Name.Equals("RecordNumber", StringComparison.OrdinalIgnoreCase);
-                //var isName = prop.Name.Equals("WreslterName1", StringComparison.OrdinalIgnoreCase) || prop.Name.Equals("WreslterName2", StringComparison.OrdinalIgnoreCase);
+                var isDate = prop.Name.Equals(nameof(WrestlingDataModel.Date), StringComparison.OrdinalIgnoreCase);
+
+                var isInt = prop.Name.Equals(nameof(WrestlingDataModel.WreslterName1Score), StringComparison.OrdinalIgnoreCase) || 
+                            prop.Name.Equals(nameof(WrestlingDataModel.WreslterName2Score), StringComparison.OrdinalIgnoreCase) || 
+                            prop.Name.Equals(nameof(WrestlingDataModel.MatchDay), StringComparison.OrdinalIgnoreCase)           ||
+                            prop.Name.Equals(nameof(WrestlingDataModel.MatchMonth), StringComparison.OrdinalIgnoreCase)         ||
+                            prop.Name.Equals(nameof(WrestlingDataModel.MatchYear), StringComparison.OrdinalIgnoreCase)          ||
+                            prop.Name.Equals(nameof(WrestlingDataModel.RecordNumber), StringComparison.OrdinalIgnoreCase);
 
                 result.Add(new
                 {

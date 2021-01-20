@@ -266,6 +266,15 @@ namespace FreestyleDatabase.Shared.Extensions
                 model.WrestlerImage1 = model.GetImageOrDefaultWrestler1()?.Trim();
 
                 model.Id = GetMatchId(model);
+
+                if (model.Date.HasValue)
+                {
+                    var date = model.Date.Value.DateTime;
+
+                    model.MatchYear = date.Year;
+                    model.MatchMonth = date.Month;
+                    model.MatchDay = date.Day;
+                }
             }
             catch
             {
