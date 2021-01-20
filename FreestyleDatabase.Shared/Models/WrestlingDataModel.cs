@@ -69,5 +69,7 @@ namespace FreestyleDatabase.Shared.Models
         public int MatchMonth { get; set; }
 
         public int MatchDay { get; set; }
+
+        public string Title { get; set; }
     }
 }

@@ -275,6 +275,18 @@ namespace FreestyleDatabase.Shared.Extensions
                     model.MatchMonth = date.Month;
                     model.MatchDay = date.Day;
                 }
+
+                model.Title = $"{model.WrestlerName1} vs {model.WrestlerName2}";
+
+                if (string.IsNullOrEmpty(model.WrestlerName2))
+                {
+                    model.Title = $"{model.WrestlerName1}";
+                }
+
+                if (string.IsNullOrEmpty(model.WrestlerName1))
+                {
+                    model.Title = $"{model.WrestlerName2}";
+                }
             }
             catch
             {

@@ -1,0 +1,28 @@
+﻿<fast-card class="wrestler-match">
+    <div class="wrestler-match__fight-container">
+        <div class="wrestler-match__winner">
+            <img src="@Match.GetImageOrDefaultWrestler1()" alt="@Match.WrestlerName1" />
+            <fast-badge fill="primary" color="white">Win</fast-badge>
+        </div>
+        <div class="wrestler-match__loser">
+            <img src="@Match.GetImageOrDefaultWrestler2()" alt="@Match.WrestlerName2" />
+        </div>
+    </div>
+    <div class="wrestler-match__info-container">
+        <div class="wrestler-match__title">@Match.Title</div>
+        <div class="wrestler-match__date">@Match.Date?.DateTime.ToShortDateString()</div>
+        <div class="wrestler-match__meta">
+            <div class="wrestler-match__meta-round">@Match.Round</div>
+            <div class="wrestler-match__meta-score">@Match.Score</div>
+            <div class="wrestler-match__meta-method">@Match.Result</div>
+        </div>
+    </div>
+    <div class="wrestler-match__action-container">
+        <fast-anchor href="@Match.Video" target="_blank">
+            Watch Replay
+        </fast-anchor>
+        <fast-anchor href="@Match.Brackets" target="_blank">
+            Bracket
+        </fast-anchor>
+    </div>
+</fast-card>

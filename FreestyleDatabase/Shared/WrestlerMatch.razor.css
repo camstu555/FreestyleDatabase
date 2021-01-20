@@ -1,0 +1,22 @@
+﻿img {
+    width: 256px;
+    max-height: 160px;
+}
+
+.wrestler-match {
+    overflow: hidden;
+    display: flex;
+}
+
+    .wrestler-match > div,
+    .wrestler-match .wrestler-match__meta > div {
+        display: flex;
+    }
+
+.wrestler-match__winner {
+    position: relative;
+}
+
+fast-badge {
+    position: absolute;
+}
