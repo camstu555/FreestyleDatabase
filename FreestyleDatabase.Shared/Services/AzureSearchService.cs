@@ -211,9 +211,10 @@ namespace FreestyleDatabase.Shared.Services
 
                 var isDate = prop.Name.Equals(nameof(WrestlingDataModel.Date), StringComparison.OrdinalIgnoreCase);
 
-                var isInt = prop.Name.Equals(nameof(WrestlingDataModel.WreslterName1Score), StringComparison.OrdinalIgnoreCase) || 
-                            prop.Name.Equals(nameof(WrestlingDataModel.WreslterName2Score), StringComparison.OrdinalIgnoreCase) || 
-                            prop.Name.Equals(nameof(WrestlingDataModel.MatchDay), StringComparison.OrdinalIgnoreCase)           ||
+                var isDouble = prop.Name.Equals(nameof(WrestlingDataModel.WreslterName1Score), StringComparison.OrdinalIgnoreCase) ||
+                            prop.Name.Equals(nameof(WrestlingDataModel.WreslterName2Score), StringComparison.OrdinalIgnoreCase);
+
+                var isInt = prop.Name.Equals(nameof(WrestlingDataModel.MatchDay), StringComparison.OrdinalIgnoreCase)           ||
                             prop.Name.Equals(nameof(WrestlingDataModel.MatchMonth), StringComparison.OrdinalIgnoreCase)         ||
                             prop.Name.Equals(nameof(WrestlingDataModel.MatchYear), StringComparison.OrdinalIgnoreCase)          ||
                             prop.Name.Equals(nameof(WrestlingDataModel.RecordNumber), StringComparison.OrdinalIgnoreCase);
@@ -223,11 +224,13 @@ namespace FreestyleDatabase.Shared.Services
                     name = prop.Name,
                     type = isDate
                         ? "Edm.DateTimeOffset"
-                        : isInt
+                        : isDouble
                             ? "Edm.Double"
-                            : "Edm.String",
+                            : isInt 
+                                ? "Edm.Int32"
+                                : "Edm.String",
                     key = prop.Name.Equals("id", StringComparison.OrdinalIgnoreCase),
-                    searchable = !isDate && !isInt,
+                    searchable = !isDate && !isInt && !isDouble,
                     filterable = true,
                     sortable = true,
                     facetable = true,
