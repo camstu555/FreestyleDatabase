@@ -14,11 +14,10 @@ namespace FreestyleDatabase.Shared.Services
     {
         private const string Access = "6551be3838d04560bb319fa43a1d3960";
         private const string HeaderName = "Ocp-Apim-Subscription-Key";
-        private const string Url = "https://api.bing.microsoft.com/v7.0/images/search?q={0}+wrestling&imageContent=face";
+        private const string Url = "https://api.bing.microsoft.com/v7.0/images/search?q={0}+wrestling";
         private readonly HttpClient httpClient;
         private readonly AzureSearchService azureSearchService;
         private readonly StorageAccountService storageAccountService;
-        private readonly Dictionary<string, BingResultItem> cache = new Dictionary<string, BingResultItem>();
 
         public BingImageSearchService(HttpClient httpClient, AzureSearchService azureSearchService, StorageAccountService storageAccountService)
         {
@@ -230,11 +229,6 @@ namespace FreestyleDatabase.Shared.Services
                 throw new InvalidOperationException("Wrestler name must be provided.");
             }
 
-            if (cache.ContainsKey(wrestlerName))
-            {
-                return cache[wrestlerName];
-            }
-
             var route = string.Format(Url, wrestlerName);
             var message = new HttpRequestMessage(HttpMethod.Get, route);
 
@@ -250,8 +244,6 @@ namespace FreestyleDatabase.Shared.Services
             var response = await request.Content.ReadAsStringAsync();
             var json = JsonConvert.DeserializeObject<BingResult>(response);
             var result = json.Value.First();
-
-            cache[wrestlerName] = result;
 
             return result;
         }
