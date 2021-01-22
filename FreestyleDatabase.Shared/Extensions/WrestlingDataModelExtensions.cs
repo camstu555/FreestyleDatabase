@@ -108,7 +108,7 @@ namespace FreestyleDatabase.Shared.Extensions
         {
             if (string.IsNullOrEmpty(model.WrestlerThumbnail1))
             {
-                model.WrestlerThumbnail1 = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?name={HttpUtility.UrlEncode(model.WrestlerName1)}&id={HttpUtility.UrlEncode(model.WrestlerId2)}&type=thumbnail";
+                model.WrestlerThumbnail1 = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?name={HttpUtility.UrlEncode(model.WrestlerName1)}&id={HttpUtility.UrlEncode(model.WrestlerId1)}&type=thumbnail";
             }
 
             return model.WrestlerThumbnail1;
@@ -118,7 +118,7 @@ namespace FreestyleDatabase.Shared.Extensions
         {
             if (string.IsNullOrEmpty(model.WrestlerThumbnail2))
             {
-                model.WrestlerThumbnail2 = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?name={HttpUtility.UrlEncode(model.WrestlerName2)}&id={HttpUtility.UrlEncode(model.WrestlerId1)}&type=thumbnail";
+                model.WrestlerThumbnail2 = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?name={HttpUtility.UrlEncode(model.WrestlerName2)}&id={HttpUtility.UrlEncode(model.WrestlerId2)}&type=thumbnail";
             }
 
             return model.WrestlerThumbnail2;

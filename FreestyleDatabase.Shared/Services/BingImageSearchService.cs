@@ -73,7 +73,7 @@ namespace FreestyleDatabase.Shared.Services
 
                     foreach (var w in wrestlerResults)
                     {
-                        if (w.WrestlerImage1.Equals(newHref, StringComparison.OrdinalIgnoreCase))
+                        if (w.WrestlerImage1 != null && w.WrestlerImage1.Equals(newHref, StringComparison.OrdinalIgnoreCase))
                         {
                             continue;
                         }
@@ -105,7 +105,7 @@ namespace FreestyleDatabase.Shared.Services
 
                     foreach (var w in wrestlerResults)
                     {
-                        if (w.WrestlerImage2.Equals(newHref, StringComparison.OrdinalIgnoreCase))
+                        if (w.WrestlerImage2 != null && w.WrestlerImage2.Equals(newHref, StringComparison.OrdinalIgnoreCase))
                         {
                             continue;
                         }
@@ -156,7 +156,7 @@ namespace FreestyleDatabase.Shared.Services
 
                     foreach (var w in wrestlerResults)
                     {
-                        if (w.WrestlerImage1.Equals(newHref, StringComparison.OrdinalIgnoreCase))
+                        if (w.WrestlerThumbnail1 != null && w.WrestlerThumbnail1.Equals(newHref, StringComparison.OrdinalIgnoreCase))
                         {
                             continue;
                         }
@@ -188,7 +188,7 @@ namespace FreestyleDatabase.Shared.Services
 
                     foreach (var w in wrestlerResults)
                     {
-                        if (w.WrestlerImage2.Equals(newHref, StringComparison.OrdinalIgnoreCase))
+                        if (w.WrestlerThumbnail2 != null && w.WrestlerThumbnail2.Equals(newHref, StringComparison.OrdinalIgnoreCase))
                         {
                             continue;
                         }
