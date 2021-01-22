@@ -1,6 +1,6 @@
 ﻿<div class="wrestler-matches">
     <fast-accordion expand-mode="multi">
-        <fast-accordion-item slot="item">
+        <fast-accordion-item slot="item" expanded>
             @foreach (var match in Matches.Where(match => match.MatchYear == 2021))
             {
                 <WrestlerMatch Match="match" />
