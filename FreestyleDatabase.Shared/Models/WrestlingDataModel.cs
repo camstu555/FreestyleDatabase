@@ -22,6 +22,8 @@ namespace FreestyleDatabase.Shared.Models
 
         public string WrestlerImage1 { get; set; }
 
+        public string WrestlerThumbnail1 { get; set; }
+
         public string Result { get; set; }
 
         public string Score { get; set; }
@@ -35,6 +37,8 @@ namespace FreestyleDatabase.Shared.Models
         public string WrestlerName2 { get; set; }
 
         public string WrestlerImage2 { get; set; }
+
+        public string WrestlerThumbnail2 { get; set; }
 
         public string Result2 { get; set; }
 

@@ -1,12 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Functions.Worker;
+﻿using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FreestyleDatabase.AzureFunction
@@ -32,6 +27,8 @@ namespace FreestyleDatabase.AzureFunction
 
             var isStorage = req.Query.ContainsKey("storage");
 
+            var hasThumbnail = req.Query.ContainsKey("type");
+
             if (isStorage)
             {
                 var fileName = req.Query["storage"];
@@ -41,11 +38,22 @@ namespace FreestyleDatabase.AzureFunction
                 return bytes;
             }
 
-            var (imageResult, contentType) = await ServiceCollection.BingImageSearchService.GetWrestlerImageResultBytes(wrestlerName, wrestlerId);
+            if (!hasThumbnail)
+            {
+                var (imageResult, _) = await ServiceCollection.BingImageSearchService.GetWrestlerImageResultBytes(wrestlerName, wrestlerId);
 
-            Console.WriteLine($"Found '{wrestlerName}' with byte count: {imageResult.Length}");
+                Console.WriteLine($"Found '{wrestlerName}' with byte count: {imageResult.Length}");
 
-            return imageResult;
+                return imageResult;
+            }
+            else
+            {
+                var (imageResult, _) = await ServiceCollection.BingImageSearchService.GetWrestlerThumbailResultBytes(wrestlerName, wrestlerId);
+
+                Console.WriteLine($"Found '{wrestlerName}' with byte count: {imageResult.Length}");
+
+                return imageResult;
+            }
         }
     }
 }

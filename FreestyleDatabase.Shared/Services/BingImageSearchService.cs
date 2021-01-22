@@ -14,7 +14,7 @@ namespace FreestyleDatabase.Shared.Services
     {
         private const string Access = "6551be3838d04560bb319fa43a1d3960";
         private const string HeaderName = "Ocp-Apim-Subscription-Key";
-        private const string Url = "https://api.bing.microsoft.com/v7.0/images/search?q={0}+wrestling";
+        private const string Url = "https://api.bing.microsoft.com/v7.0/images/search?q={0}+wrestling&imageContent=portrait";
         private readonly HttpClient httpClient;
         private readonly AzureSearchService azureSearchService;
         private readonly StorageAccountService storageAccountService;
@@ -111,6 +111,89 @@ namespace FreestyleDatabase.Shared.Services
                         }
 
                         w.WrestlerImage2 = newHref;
+                        hasMoreThan1RecordUpdated = true;
+                    }
+
+                    if (hasMoreThan1RecordUpdated)
+                    {
+                        await azureSearchService.UpdateDocument(wrestlerResults);
+                    }
+                }
+            }
+
+            return (ms.ToArray(), wrestler.EncodingFormat);
+        }
+
+        public async Task<(byte[], string)> GetWrestlerThumbailResultBytes(string wrestlerName, string wrestlerId)
+        {
+            var wrestler = await GetWrestlerSearchResult(wrestlerName);
+            var message = new HttpRequestMessage(HttpMethod.Get, wrestler.ThumbnailUrl);
+            var response = await httpClient.SendAsync(message);
+
+            using var ms = new MemoryStream();
+            using var rs = await response.Content.ReadAsStreamAsync();
+
+            await rs.CopyToAsync(ms);
+
+            ms.Seek(0, SeekOrigin.Begin);
+
+            if (!string.IsNullOrEmpty(wrestlerId))
+            {
+                {
+                    var query = new Uri($"https://d.com/dummy?$filter=WrestlerId1 eq '{wrestlerId}'");
+
+                    var wrestlerResults = await azureSearchService.Search<List<WrestlingDataModel>>(query);
+
+                    var fileName = $"{wrestlerId}-thumbnail.{wrestler.EncodingFormat}";
+
+                    if (!await storageAccountService.HasFile(fileName))
+                    {
+                        await storageAccountService.SaveFile(fileName, ms);
+                    }
+
+                    var newHref = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?storage={HttpUtility.UrlEncode(fileName)}";
+                    var hasMoreThan1RecordUpdated = false;
+
+                    foreach (var w in wrestlerResults)
+                    {
+                        if (w.WrestlerImage1.Equals(newHref, StringComparison.OrdinalIgnoreCase))
+                        {
+                            continue;
+                        }
+
+                        w.WrestlerThumbnail1 = newHref;
+                        hasMoreThan1RecordUpdated = true;
+                    }
+
+                    if (hasMoreThan1RecordUpdated)
+                    {
+                        await azureSearchService.UpdateDocument(wrestlerResults);
+                    }
+                }
+
+                {
+                    var query = new Uri($"https://d.com/dummy?$filter=WrestlerId2 eq '{wrestlerId}'");
+
+                    var wrestlerResults = await azureSearchService.Search<List<WrestlingDataModel>>(query);
+
+                    var fileName = $"{wrestlerId}-thumbnail.{wrestler.EncodingFormat}";
+
+                    if (!await storageAccountService.HasFile(fileName))
+                    {
+                        await storageAccountService.SaveFile(fileName, ms);
+                    }
+
+                    var newHref = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?storage={HttpUtility.UrlEncode(fileName)}";
+                    var hasMoreThan1RecordUpdated = false;
+
+                    foreach (var w in wrestlerResults)
+                    {
+                        if (w.WrestlerImage2.Equals(newHref, StringComparison.OrdinalIgnoreCase))
+                        {
+                            continue;
+                        }
+
+                        w.WrestlerThumbnail2 = newHref;
                         hasMoreThan1RecordUpdated = true;
                     }
 

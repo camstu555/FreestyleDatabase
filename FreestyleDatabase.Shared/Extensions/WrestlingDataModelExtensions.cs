@@ -104,6 +104,26 @@ namespace FreestyleDatabase.Shared.Extensions
             return model.WrestlerImage2;
         }
 
+        public static string GetThumbnailOrDefaultWrestler1(this WrestlingDataModel model)
+        {
+            if (string.IsNullOrEmpty(model.WrestlerThumbnail1))
+            {
+                model.WrestlerThumbnail1 = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?name={HttpUtility.UrlEncode(model.WrestlerName1)}&id={HttpUtility.UrlEncode(model.WrestlerId2)}&type=thumbnail";
+            }
+
+            return model.WrestlerThumbnail1;
+        }
+
+        public static string GetThumbnailOrDefaultWrestler2(this WrestlingDataModel model)
+        {
+            if (string.IsNullOrEmpty(model.WrestlerThumbnail2))
+            {
+                model.WrestlerThumbnail2 = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?name={HttpUtility.UrlEncode(model.WrestlerName2)}&id={HttpUtility.UrlEncode(model.WrestlerId1)}&type=thumbnail";
+            }
+
+            return model.WrestlerThumbnail2;
+        }
+
         public static string GetCountry1Emoji(this WrestlingDataModel model)
         {
             try
@@ -264,7 +284,9 @@ namespace FreestyleDatabase.Shared.Extensions
                 model.WrestlerId2 = model.GetWrestlerName2Id();
 
                 model.WrestlerImage2 = model.GetImageOrDefaultWrestler2()?.Trim();
+                model.WrestlerThumbnail2 = model.GetThumbnailOrDefaultWrestler2()?.Trim();
                 model.WrestlerImage1 = model.GetImageOrDefaultWrestler1()?.Trim();
+                model.WrestlerThumbnail1 = model.GetThumbnailOrDefaultWrestler1()?.Trim();
 
                 model.Id = GetMatchId(model);
 
