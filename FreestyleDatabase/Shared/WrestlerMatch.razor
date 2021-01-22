@@ -1,28 +1,51 @@
 ﻿<fast-card class="wrestler-match">
     <div class="wrestler-match__fight-container">
         <div class="wrestler-match__winner">
-            <img src="@Match.GetImageOrDefaultWrestler1()" alt="@Match.WrestlerName1" />
-            <fast-badge fill="primary" color="white">Win</fast-badge>
+            <a href="/wrestler/@Match.WrestlerId1">
+                <img src="@Match.GetThumbnailOrDefaultWrestler1()" alt="@Match.WrestlerName1" />
+                @*<fast-badge fill="primary" color="white">Win</fast-badge>*@
+            </a>
         </div>
         <div class="wrestler-match__loser">
-            <img src="@Match.GetImageOrDefaultWrestler2()" alt="@Match.WrestlerName2" />
+            <a href="/wrestler/@Match.WrestlerId2">
+                <img src="@Match.GetThumbnailOrDefaultWrestler2()" alt="@Match.WrestlerName2" />
+            </a>
         </div>
     </div>
     <div class="wrestler-match__info-container">
-        <div class="wrestler-match__title">@Match.Title</div>
-        <div class="wrestler-match__date">@Match.Date?.DateTime.ToShortDateString()</div>
+        <div class="wrestler-match__title">@Match.Venue</div>
+        <div class="wrestler-match__date">@Match.Date?.DateTime.ToLongDateString()</div>
         <div class="wrestler-match__meta">
-            <div class="wrestler-match__meta-round">@Match.Round</div>
-            <div class="wrestler-match__meta-score">@Match.Score</div>
-            <div class="wrestler-match__meta-method">@Match.Result</div>
+            @if (!string.IsNullOrEmpty(Match.Round))
+            {
+                <div class="wrestler-match__meta-round">
+                    <strong>Round</strong>
+                    @Match.Round
+                </div>
+            }
+            <div class="wrestler-match__meta-score">
+                <strong>Score</strong>
+                @Match.Score
+            </div>
+            <div class="wrestler-match__meta-method">
+                <strong>Result</strong>
+                @Match.Result
+            </div>
         </div>
     </div>
     <div class="wrestler-match__action-container">
-        <fast-anchor href="@Match.Video" target="_blank">
-            Watch Replay
-        </fast-anchor>
-        <fast-anchor href="@Match.Brackets" target="_blank">
-            Bracket
-        </fast-anchor>
+        @if (!string.IsNullOrEmpty(Match.Video))
+        {
+            <fast-anchor href="@Match.Video" target="_blank">
+                Watch Replay
+            </fast-anchor>
+        }
+
+        @if (!string.IsNullOrEmpty(Match.Brackets))
+        {
+            <fast-anchor href="@Match.Brackets" target="_blank">
+                Bracket
+            </fast-anchor>
+        }
     </div>
 </fast-card>

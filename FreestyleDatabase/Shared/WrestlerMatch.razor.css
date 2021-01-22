@@ -1,16 +1,19 @@
 ﻿img {
-    width: 256px;
-    max-height: 160px;
+    object-fit: cover;
+    width: 100%;
+    height: 182px;
 }
 
 .wrestler-match {
     overflow: hidden;
     display: flex;
+    max-width: 1220px;
+    margin-bottom: 20px;
 }
 
-    .wrestler-match > div,
-    .wrestler-match .wrestler-match__meta > div {
+    .wrestler-match > div {
         display: flex;
+        flex: 1;
     }
 
 .wrestler-match__winner {
@@ -19,4 +22,45 @@
 
 fast-badge {
     position: absolute;
+}
+
+.wrestler-match__info-container {
+    flex-direction: column;
+    padding: 20px;
+}
+
+.wrestler-match__title {
+    text-transform: uppercase;
+    display: block;
+    font-size: 1.2em;
+    padding: 0 0 10px 0;
+    font-weight: bold;
+}
+
+.wrestler-match__meta {
+    display: flex;
+}
+
+    .wrestler-match__meta > div {
+        flex: 1;
+        border-right: 1px solid var(--light-gray);
+        padding-left: 20px;
+        margin-top: 15px;
+    }
+
+        .wrestler-match__meta > div:last-child {
+            border: 0 none;
+        }
+
+        .wrestler-match__meta > div:first-child {
+            padding-left: 0;
+        }
+
+        .wrestler-match__meta strong {
+            display: block;
+            color: var(--light-gray);
+        }
+
+.wrestler-match__action-container {
+    flex-direction: column;
 }

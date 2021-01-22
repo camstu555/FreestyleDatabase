@@ -1,4 +1,7 @@
 ﻿using Azure.Storage.Blobs;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Processing;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -15,11 +18,37 @@ namespace FreestyleDatabase.Shared.Services
             this._container = new BlobContainerClient(ConnectionString, AccountName);
         }
 
-        public async Task SaveFile(string fileName, Stream fileStream)
+        public async Task SaveFile(string fileName, Stream fileStream, bool shouldResize = false)
         {
-            var client = _container.GetBlobClient(fileName);
+            if (shouldResize)
+            {
+                using (var outStream = new MemoryStream())
+                using (var image = Image.Load(fileStream, out IImageFormat format))
+                {
+                    image.Mutate(i =>
+                    {
+                        i.Resize(new ResizeOptions
+                        {
+                            Mode = ResizeMode.Crop,
+                            Size = new Size(256, 256)
+                        });
+                    });
 
-            await client.UploadAsync(fileStream);
+                    image.Save(outStream, format);
+
+                    var client = _container.GetBlobClient(fileName);
+
+                    outStream.Seek(0, SeekOrigin.Begin);
+
+                    await client.UploadAsync(outStream);
+                }
+            }
+            else
+            {
+                var client = _container.GetBlobClient(fileName);
+
+                await client.UploadAsync(fileStream);
+            }
 
             fileStream.Seek(0, SeekOrigin.Begin);
         }

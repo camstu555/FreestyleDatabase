@@ -336,7 +336,7 @@ namespace FreestyleDatabase.Shared.Services
                     WrestlerName1 = dataModel.WrestlerName1,
                     WrestlerFirstName1 = dataModel.WrestlerFirstName1,
                     WrestlerLastName1 = dataModel.WrestlerLastName1,
-                    WrestlerName2 = dataModel.
+                    WrestlerName2 = dataModel.WrestlerName2,
                     WrestlerFirstName2 = dataModel.WrestlerFirstName2,
                     WrestlerLastName2 = dataModel.WrestlerLastName2
                 };

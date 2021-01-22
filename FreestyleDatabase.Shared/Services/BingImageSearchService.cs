@@ -147,7 +147,7 @@ namespace FreestyleDatabase.Shared.Services
 
                     if (!await storageAccountService.HasFile(fileName))
                     {
-                        await storageAccountService.SaveFile(fileName, ms);
+                        await storageAccountService.SaveFile(fileName, ms, true);
                     }
 
                     var newHref = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?storage={HttpUtility.UrlEncode(fileName)}";
@@ -179,7 +179,7 @@ namespace FreestyleDatabase.Shared.Services
 
                     if (!await storageAccountService.HasFile(fileName))
                     {
-                        await storageAccountService.SaveFile(fileName, ms);
+                        await storageAccountService.SaveFile(fileName, ms, true);
                     }
 
                     var newHref = $"https://freestyledb.azurewebsites.net/api/FreeStyleImageFetcher2?storage={HttpUtility.UrlEncode(fileName)}";
