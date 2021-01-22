@@ -14,7 +14,7 @@ namespace FreestyleDatabase.Shared.Services
     {
         private const string Access = "6551be3838d04560bb319fa43a1d3960";
         private const string HeaderName = "Ocp-Apim-Subscription-Key";
-        private const string Url = "https://api.bing.microsoft.com/v7.0/images/search?q={0}+wrestling&imageContent=portrait";
+        private const string Url = "https://api.bing.microsoft.com/v7.0/images/search?q={0}+wrestling&imageContent=face";
         private readonly HttpClient httpClient;
         private readonly AzureSearchService azureSearchService;
         private readonly StorageAccountService storageAccountService;
