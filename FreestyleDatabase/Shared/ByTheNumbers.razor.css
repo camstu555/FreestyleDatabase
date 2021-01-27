@@ -1,23 +1,42 @@
-﻿.byTheNumbers {
-    position: fixed;
-    right: -84px;
-    top: -148px;
-    width: 300px;
-    height: 1000px;
-    background: rgba(32,32,32, .8);
-    z-index: 999;
+﻿.statBlock {
     padding: 10px;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: flex-start;
+    width: 800px;
+    height: auto;
+    border: 5px solid;
+    border-color: var(--priamry-alt);
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
+
+
+.number {
+    order: 0;
+    flex: 0 1 auto;
+    align-self: auto;
+    padding: 30px;
+    text-align: center;
+}
+
+.linebreak {
+    width:100%;
+}
+
+
+
 
 h2 {
     font-size: 3em;
     color: var(--secondary);
-    display: inline-block;
-    margin-right: 20px;
 }
 
 h3 {
-    display: inline-block;
+
 }
 
 img {

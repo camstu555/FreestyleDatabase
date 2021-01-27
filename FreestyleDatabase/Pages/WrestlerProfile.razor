@@ -5,16 +5,16 @@
 {
 
     <TitleSection Title="@SubTitle" SubTitle="@result.WrestlerName" NoMargins="true" />
-    @*<MetalArea GoldMedalMatches="result.GoldMedalMatches" SilverMedalMatches="result.SilverMedalMatches" BronzeMedalMatches="result.BronzeMedalMatches" />*@
-    @*<RecentMatches CurrentWrestlerId="@Id" Matches="@result.MostRecentMatches.Items" />*@
-    <WrestlerMatches Matches="result.MostRecentMatches.Items" />
-    @*<ByTheNumbers Image="@result.WrestlerImageUrl"
+    <ByTheNumbers Image="@result.WrestlerImageUrl"
                   Wins="@result.Wins" Losses="@result.Losses"
                   Since="@result.OldestMatchDate"
                   Pins="@result.Pins" Techs="@result.Techs" Points="@result.Points"
                   OffPts="@result.AverageOffensivePointsPerMatch"
                   DefPts="@result.AverageDefensivePointsPerMatch"
-                  Bonus="@result.BonusRate" />*@
+                  Bonus="@result.BonusRate" />
+    <MetalArea GoldMedalMatches="result.GoldMedalMatches" SilverMedalMatches="result.SilverMedalMatches" BronzeMedalMatches="result.BronzeMedalMatches" />
+    @*<RecentMatches CurrentWrestlerId="@Id" Matches="@result.MostRecentMatches.Items" />*@
+    <WrestlerMatches Matches="result.MostRecentMatches.Items" />
 
 }
 else
