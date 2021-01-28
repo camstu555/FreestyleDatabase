@@ -6,12 +6,9 @@
     justify-content: center;
     align-content: center;
     align-items: flex-start;
-    width: 800px;
+    width: 100%;
     height: auto;
-    border: 5px solid;
-    border-color: var(--priamry-alt);
-    border-radius: 10px;
-    margin-bottom: 20px;
+    
 }
 
 
@@ -19,13 +16,14 @@
     order: 0;
     flex: 0 1 auto;
     align-self: auto;
-    padding: 30px;
+    padding: 20px;
+    margin: 20px;
     text-align: center;
+    border: 5px solid;
+    border-color: var(--priamry-alt);
+    border-radius: 10px;
 }
 
-.linebreak {
-    width:100%;
-}
 
 
 
