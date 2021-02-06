@@ -12,11 +12,11 @@ namespace FreestyleDatabase.Shared.Extensions
             {
                 response.EnsureSuccessStatusCode();
             }
-            catch
+            catch (Exception ex)
             {
                 var content = await response.Content.ReadAsStringAsync();
 
-                throw new InvalidOperationException(content);
+                throw new InvalidOperationException(content, ex);
             }
         }
     }

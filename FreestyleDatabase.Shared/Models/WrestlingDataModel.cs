@@ -81,6 +81,19 @@ namespace FreestyleDatabase.Shared.Models
             }
         }
 
+        public int MatchMonth
+        {
+            get
+            {
+                if (Date.HasValue)
+                {
+                    return Date.Value.Month;
+                }
+
+                return DateTime.Now.Month;
+            }
+        }
+
         public string Title { get; set; }
 
         public string WrestlerFirstName2 { get; set; }
@@ -90,5 +103,21 @@ namespace FreestyleDatabase.Shared.Models
         public string WrestlerFirstName1 { get; set; }
 
         public string WrestlerLastName1 { get; set; }
+
+        public bool IsForfeit
+        {
+            get
+            {
+                return string.IsNullOrEmpty(WrestlerId2) || (string.IsNullOrEmpty(WrestlerFirstName2) || string.IsNullOrEmpty(WrestlerLastName2));
+            }
+        }
+
+        public bool HasVideo
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(Video);
+            }
+        }
     }
 }

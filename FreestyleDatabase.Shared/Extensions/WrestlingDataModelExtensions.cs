@@ -225,11 +225,23 @@ namespace FreestyleDatabase.Shared.Extensions
 
             var helper = new SlugHelper(config);
 
-            var normal = $"{model.WrestlerName1.Replace(".", string.Empty)}-vs-{model.WrestlerName2.Replace(".", string.Empty)}";
+            var normal = $"{model.MatchYear}-{model.MatchMonth}-{model.WrestlerName1.Replace(".", string.Empty)}-vs-{model.WrestlerName2.Replace(".", string.Empty)}";
+
+            if (model.IsForfeit)
+            {
+                normal = $"{model.MatchYear}-{model.MatchMonth}-{model.WrestlerName1.Replace(".", string.Empty)}-vs-fft";
+            }
 
             if (!string.IsNullOrEmpty(model.Round))
             {
-                return helper.GenerateSlug($"{normal}-round-{model.Round}");
+                var round = model.Round;
+
+                if (round.Contains("/", StringComparison.OrdinalIgnoreCase))
+                {
+                    round = round.Replace('/', '-');
+                }
+
+                return helper.GenerateSlug($"{normal}-round-{round}");
             }
 
             return helper.GenerateSlug(normal);
@@ -340,6 +352,11 @@ namespace FreestyleDatabase.Shared.Extensions
             else
             {
                 model.Title = $"{model.WrestlerName1} vs {model.WrestlerName2}";
+            }
+
+            if (model.IsForfeit)
+            {
+                model.Title = $"{model.WrestlerName1} vs FFT";
             }
         }
 

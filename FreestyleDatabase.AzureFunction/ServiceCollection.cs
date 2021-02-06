@@ -5,6 +5,7 @@ using Microsoft.Azure.WebJobs.Script.Grpc.Messages;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
@@ -76,11 +77,66 @@ namespace FreestyleDatabase.AzureFunction
             return response;
         }
 
+        public static HttpResponseData ToResponse(this List<WrestlingDataModel> wrestlingDataModels)
+        {
+            var data = JsonConvert.SerializeObject(wrestlingDataModels);
+
+            return data.ToResponse();
+        }
+
+        public static HttpResponseData ToResponse(this DataAggregateModel dataAggregateModel)
+        {
+            var data = JsonConvert.SerializeObject(dataAggregateModel);
+
+            return data.ToResponse();
+        }
+
         public static HttpResponseData ToResponse(this WrestlingAggregatesModel wrestlingAggregatesModel)
         {
             var data = JsonConvert.SerializeObject(wrestlingAggregatesModel);
 
             return data.ToResponse();
+        }
+
+        public static DataAggregateModel ToDataModel(this List<WrestlingDataModel> wrestlingDataModels)
+        {
+            var result = new DataAggregateModel();
+
+            var matches = wrestlingDataModels.Select(x => x.Id).Distinct().ToList();
+            var forfeits = wrestlingDataModels.Where(x => x.IsForfeit).Select(x => x.Id).Distinct().ToList();
+            var videos = wrestlingDataModels.Where(x => x.HasVideo).Select(x => x.Video).Distinct().ToList();
+            var wrestler1s = wrestlingDataModels.Where(x => !string.IsNullOrEmpty(x.WrestlerName1)).Select(x => x.WrestlerName1).Distinct().ToList();
+            var wrestler2s = wrestlingDataModels.Where(x => !string.IsNullOrEmpty(x.WrestlerName2)).Select(x => x.WrestlerName2).Distinct().ToList();
+
+            var wrestlers = new List<string>();
+            wrestlers.AddRange(wrestler1s);
+            wrestlers.AddRange(wrestler2s);
+            wrestlers = wrestlers.Distinct().ToList();
+
+            var countries1s = wrestlingDataModels.Where(x => !string.IsNullOrEmpty(x.Country1)).Select(x => x.Country1).Distinct().ToList();
+            var countries2s = wrestlingDataModels.Where(x => !string.IsNullOrEmpty(x.Country2)).Select(x => x.Country2).Distinct().ToList();
+
+            var countries = new List<string>();
+            countries.AddRange(countries1s);
+            countries.AddRange(countries2s);
+            countries = countries.Distinct().ToList();
+
+            result.TotalMatches = matches.Count;
+            result.Matches.AddRange(matches);
+
+            result.MatchesWithForfeits.AddRange(forfeits);
+            result.TotalMatchesWithForfeits = forfeits.Count;
+
+            result.MatchesWithVideo.AddRange(videos);
+            result.TotalMatchesWithVideo = videos.Count;
+
+            result.Countries.AddRange(countries);
+            result.TotalCountries = countries.Count;
+
+            result.EarliestMatchDate = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.Date).FirstOrDefault();
+            result.MostRecentMatchDate = wrestlingDataModels.OrderByDescending(x => x.Date).Select(x => x.Date).FirstOrDefault();
+
+            return result;
         }
 
         public static HttpResponseData ToResponse(this byte[] imageByes, string contentType)

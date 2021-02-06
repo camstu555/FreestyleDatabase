@@ -163,6 +163,42 @@ namespace FreestyleDatabase.Shared.Services
             return await response.Content.ReadAsStringAsync();
         }
 
+        public async Task<List<T>> GetAll<T>(List<T> currentResults = null, Uri moreLink = null, CancellationToken cancellationToken = default)
+        {
+            if (currentResults == null)
+            {
+                currentResults = new List<T>();
+            }
+
+            if (moreLink == null)
+            {
+                moreLink = new Uri(string.Format(RouteTemplate, $"/indexes/{IndexName}/docs") + "&$count=true&$top=99999");
+            }
+
+            var request = new HttpRequestMessage(HttpMethod.Get, moreLink);
+            request.Headers.TryAddWithoutValidation("api-key", QueryAccess);
+
+            var response = await httpClient
+                .SendAsync(request, cancellationToken);
+
+            await response.CaptureFailedOperation();
+
+            var resultsAsJson = await response.Content.ReadAsStringAsync();
+
+            var parsed = JObject.Parse(resultsAsJson);
+            var moreLinkValue = parsed["@odata.nextLink"];
+            var array = parsed["value"];
+
+            currentResults.AddRange(array.ToObject<List<T>>());
+
+            if (moreLinkValue != null && Uri.TryCreate(moreLinkValue.Value<string>(), UriKind.RelativeOrAbsolute, out moreLink))
+            {
+                return await GetAll<T>(currentResults, moreLink, cancellationToken);
+            }
+
+            return currentResults;
+        }
+
         public async Task<T> Search<T>(Uri requestUri, CancellationToken cancellationToken = default)
         {
             var results = await Search(requestUri, cancellationToken);
@@ -252,7 +288,11 @@ namespace FreestyleDatabase.Shared.Services
                             prop.Name.Equals(nameof(WrestlingDataModel.WreslterName2Score), StringComparison.OrdinalIgnoreCase);
 
                 var isInt = prop.Name.Equals(nameof(WrestlingDataModel.MatchYear), StringComparison.OrdinalIgnoreCase)          ||
+                            prop.Name.Equals(nameof(WrestlingDataModel.MatchMonth), StringComparison.OrdinalIgnoreCase)         ||
                             prop.Name.Equals(nameof(WrestlingDataModel.RecordNumber), StringComparison.OrdinalIgnoreCase);
+
+                var isBool = prop.Name.Equals(nameof(WrestlingDataModel.IsForfeit), StringComparison.OrdinalIgnoreCase) ||
+                            prop.Name.Equals(nameof(WrestlingDataModel.HasVideo), StringComparison.OrdinalIgnoreCase);
 
                 result.Add(new
                 {
@@ -263,9 +303,11 @@ namespace FreestyleDatabase.Shared.Services
                             ? "Edm.Double"
                             : isInt 
                                 ? "Edm.Int32"
-                                : "Edm.String",
+                                : isBool 
+                                    ? "Edm.Boolean"
+                                    : "Edm.String",
                     key = prop.Name.Equals("id", StringComparison.OrdinalIgnoreCase),
-                    searchable = !isDate && !isInt && !isDouble,
+                    searchable = !isDate && !isInt && !isDouble && !isBool,
                     filterable = true,
                     sortable = true,
                     facetable = true,
