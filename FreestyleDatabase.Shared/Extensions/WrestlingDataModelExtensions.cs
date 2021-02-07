@@ -232,6 +232,8 @@ namespace FreestyleDatabase.Shared.Extensions
                 normal = $"{model.MatchYear}-{model.MatchMonth}-{model.WrestlerName1.Replace(".", string.Empty)}-vs-fft";
             }
 
+            var result = helper.GenerateSlug(normal);
+
             if (!string.IsNullOrEmpty(model.Round))
             {
                 var round = model.Round;
@@ -241,10 +243,14 @@ namespace FreestyleDatabase.Shared.Extensions
                     round = round.Replace('/', '-');
                 }
 
-                return helper.GenerateSlug($"{normal}-round-{round}");
+                result = helper.GenerateSlug($"{normal}-round-{round}");
             }
 
-            return helper.GenerateSlug(normal);
+            if (result.Contains("-round-round")) {
+                result = result.Replace("-round-round", "-round");
+            }
+
+            return result;
         }
 
         public static string GetWrestlerName2Id(this WrestlingDataModel model)
