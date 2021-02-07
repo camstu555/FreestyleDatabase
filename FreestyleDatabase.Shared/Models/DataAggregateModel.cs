@@ -25,8 +25,6 @@ namespace FreestyleDatabase.Shared.Models
 
         public int TotalCountries { get; set; }
 
-        public List<string> Countries { get; private set; }
-
         public DateTimeOffset? EarliestMatchDate { get; set; }
 
         public string EarliestMatchId { get; set; }
@@ -62,6 +60,8 @@ namespace FreestyleDatabase.Shared.Models
         public List<string> MatchesWithForfeits { get; private set; }
 
         public List<string> Matches { get; private set; }
+
+        public List<string> Countries { get; private set; }
         
     }
 }
