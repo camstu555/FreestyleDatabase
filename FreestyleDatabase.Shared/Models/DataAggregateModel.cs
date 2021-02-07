@@ -13,6 +13,8 @@ namespace FreestyleDatabase.Shared.Models
             Matches = new List<string>();
             Countries = new List<string>();
             Wrestlers = new List<string>();
+            WeightClasses = new List<string>();
+            Locations = new List<string>();
         }
 
         public int TotalMatches { get; set; }
@@ -24,6 +26,10 @@ namespace FreestyleDatabase.Shared.Models
         public int TotalWrestlers { get; set; }
 
         public int TotalCountries { get; set; }
+
+        public int TotalWeightClasses { get; set; }
+
+        public int TotalLocations { get; set; }
 
         public DateTimeOffset? EarliestMatchDate { get; set; }
 
@@ -61,7 +67,14 @@ namespace FreestyleDatabase.Shared.Models
 
         public List<string> Matches { get; private set; }
 
+
         public List<string> Countries { get; private set; }
+        
+
+        public List<string> WeightClasses { get; private set; }
+        
+
+        public List<string> Locations { get; private set; }
         
     }
 }

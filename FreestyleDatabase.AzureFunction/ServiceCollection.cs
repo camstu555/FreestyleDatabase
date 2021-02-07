@@ -105,6 +105,8 @@ namespace FreestyleDatabase.AzureFunction
             var matches = wrestlingDataModels.Select(x => x.Id).Distinct().ToList();
             var forfeits = wrestlingDataModels.Where(x => x.IsForfeit).Select(x => x.Id).Distinct().ToList();
             var videos = wrestlingDataModels.Where(x => x.HasVideo).Select(x => x.Video).Distinct().ToList();
+            var weightClasses = wrestlingDataModels.Where(x => !string.IsNullOrEmpty(x.WeightClass)).Select(x => x.WeightClass).Distinct().ToList();
+            var locations = wrestlingDataModels.Where(x => !string.IsNullOrEmpty(x.Location)).Select(x => x.Location).Distinct().ToList();
             var wrestler1s = wrestlingDataModels.Where(x => !string.IsNullOrEmpty(x.WrestlerName1)).Select(x => x.WrestlerName1).Distinct().ToList();
             var wrestler2s = wrestlingDataModels.Where(x => !string.IsNullOrEmpty(x.WrestlerName2)).Select(x => x.WrestlerName2).Distinct().ToList();
 
@@ -121,11 +123,14 @@ namespace FreestyleDatabase.AzureFunction
             countries.AddRange(countries2s);
             countries = countries.Distinct().ToList();
 
-            result.TotalWrestlers = wrestlers.Count;
             result.Wrestlers.AddRange(wrestlers);
+            result.TotalWrestlers = wrestlers.Count;
 
-            result.TotalMatches = matches.Count;
+            result.TotalLocations = locations.Count;
+            result.Locations.AddRange(locations);
+
             result.Matches.AddRange(matches);
+            result.TotalMatches = matches.Count;
 
             result.MatchesWithForfeits.AddRange(forfeits);
             result.TotalMatchesWithForfeits = forfeits.Count;
@@ -135,6 +140,9 @@ namespace FreestyleDatabase.AzureFunction
 
             result.Countries.AddRange(countries);
             result.TotalCountries = countries.Count;
+
+            result.WeightClasses.AddRange(weightClasses);
+            result.TotalWeightClasses = weightClasses.Count;
 
             result.EarliestMatchDate = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.Date).FirstOrDefault();
             result.EarliestMatchId = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.Id).FirstOrDefault();
