@@ -121,6 +121,9 @@ namespace FreestyleDatabase.AzureFunction
             countries.AddRange(countries2s);
             countries = countries.Distinct().ToList();
 
+            result.TotalWrestlers = wrestlers.Count;
+            result.Wrestlers.AddRange(wrestlers);
+
             result.TotalMatches = matches.Count;
             result.Matches.AddRange(matches);
 
@@ -134,7 +137,20 @@ namespace FreestyleDatabase.AzureFunction
             result.TotalCountries = countries.Count;
 
             result.EarliestMatchDate = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.Date).FirstOrDefault();
+            result.EarliestMatchId = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.Id).FirstOrDefault();
+            result.EarliestMatchTitle = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.Title).FirstOrDefault();
+            result.EarliestMatchWrestler1Image = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.WrestlerImage1).FirstOrDefault();
+            result.EarliestMatchWrestler1Name = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.WrestlerName1).FirstOrDefault();
+            result.EarliestMatchWrestler2Image = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.WrestlerImage2).FirstOrDefault();
+            result.EarliestMatchWrestler2Name = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.WrestlerName2).FirstOrDefault();
+
             result.MostRecentMatchDate = wrestlingDataModels.OrderByDescending(x => x.Date).Select(x => x.Date).FirstOrDefault();
+            result.MostRecentMatchId = wrestlingDataModels.OrderByDescending(x => x.Date).Select(x => x.Id).FirstOrDefault();
+            result.MostRecentMatchTitle = wrestlingDataModels.OrderByDescending(x => x.Date).Select(x => x.Title).FirstOrDefault();
+            result.MostRecentMatchWrestler1Image = wrestlingDataModels.OrderByDescending(x => x.Date).Select(x => x.WrestlerImage1).FirstOrDefault();
+            result.MostRecentMatchWrestler1Name = wrestlingDataModels.OrderByDescending(x => x.Date).Select(x => x.WrestlerName1).FirstOrDefault();
+            result.MostRecentMatchWrestler2Image = wrestlingDataModels.OrderByDescending(x => x.Date).Select(x => x.WrestlerImage2).FirstOrDefault();
+            result.MostRecentMatchWrestler2Name = wrestlingDataModels.OrderByDescending(x => x.Date).Select(x => x.WrestlerName2).FirstOrDefault();
 
             return result;
         }
