@@ -300,6 +300,9 @@ namespace FreestyleDatabase.Shared.Extensions
                 model.WrestlerImage1 = model.GetImageOrDefaultWrestler1()?.Trim();
                 model.WrestlerThumbnail1 = model.GetThumbnailOrDefaultWrestler1()?.Trim();
 
+                model.IsForfeit = string.IsNullOrEmpty(model.WrestlerId2);
+                model.HasVideo = !string.IsNullOrEmpty(model.Video);
+
                 model.Id = GetMatchId(model);
 
                 if (string.IsNullOrEmpty(model.WrestlerName2))
