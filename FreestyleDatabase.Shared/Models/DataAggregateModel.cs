@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace FreestyleDatabase.Shared.Models
 {
@@ -17,18 +18,22 @@ namespace FreestyleDatabase.Shared.Models
 
         public int TotalMatches { get; set; }
 
+        [JsonIgnore]
         public List<string> Matches { get; private set; }
 
         public int TotalMatchesWithVideo { get; set; }
 
+        [JsonIgnore]
         public List<string> MatchesWithVideo { get; private set; }
 
         public int TotalMatchesWithForfeits { get; set; }
 
+        [JsonIgnore]
         public List<string> MatchesWithForfeits { get; private set; }
 
         public int TotalWrestlers { get; set; }
 
+        [JsonIgnore]
         public List<string> Wrestlers { get; private  set; }
 
         public int TotalCountries { get; set; }
