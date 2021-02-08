@@ -105,6 +105,8 @@ namespace FreestyleDatabase.AzureFunction
             var matches = wrestlingDataModels.Select(x => x.Id).Distinct().ToList();
             var forfeits = wrestlingDataModels.Where(x => x.IsForfeit).Select(x => x.Id).Distinct().ToList();
             var videos = wrestlingDataModels.Where(x => x.HasVideo).Select(x => x.Video).Distinct().ToList();
+            var weightClasses = wrestlingDataModels.Where(x => !string.IsNullOrEmpty(x.WeightClass)).Select(x => x.WeightClass).Distinct().ToList();
+            var locations = wrestlingDataModels.Where(x => !string.IsNullOrEmpty(x.Location)).Select(x => x.Location).Distinct().ToList();
             var wrestler1s = wrestlingDataModels.Where(x => !string.IsNullOrEmpty(x.WrestlerName1)).Select(x => x.WrestlerName1).Distinct().ToList();
             var wrestler2s = wrestlingDataModels.Where(x => !string.IsNullOrEmpty(x.WrestlerName2)).Select(x => x.WrestlerName2).Distinct().ToList();
 
@@ -121,8 +123,14 @@ namespace FreestyleDatabase.AzureFunction
             countries.AddRange(countries2s);
             countries = countries.Distinct().ToList();
 
-            result.TotalMatches = matches.Count;
+            result.Wrestlers.AddRange(wrestlers);
+            result.TotalWrestlers = wrestlers.Count;
+
+            result.TotalLocations = locations.Count;
+            result.Locations.AddRange(locations);
+
             result.Matches.AddRange(matches);
+            result.TotalMatches = matches.Count;
 
             result.MatchesWithForfeits.AddRange(forfeits);
             result.TotalMatchesWithForfeits = forfeits.Count;
@@ -133,8 +141,24 @@ namespace FreestyleDatabase.AzureFunction
             result.Countries.AddRange(countries);
             result.TotalCountries = countries.Count;
 
+            result.WeightClasses.AddRange(weightClasses);
+            result.TotalWeightClasses = weightClasses.Count;
+
             result.EarliestMatchDate = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.Date).FirstOrDefault();
+            result.EarliestMatchId = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.Id).FirstOrDefault();
+            result.EarliestMatchTitle = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.Title).FirstOrDefault();
+            result.EarliestMatchWrestler1Image = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.WrestlerImage1).FirstOrDefault();
+            result.EarliestMatchWrestler1Name = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.WrestlerName1).FirstOrDefault();
+            result.EarliestMatchWrestler2Image = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.WrestlerImage2).FirstOrDefault();
+            result.EarliestMatchWrestler2Name = wrestlingDataModels.OrderBy(x => x.Date).Select(x => x.WrestlerName2).FirstOrDefault();
+
             result.MostRecentMatchDate = wrestlingDataModels.OrderByDescending(x => x.Date).Select(x => x.Date).FirstOrDefault();
+            result.MostRecentMatchId = wrestlingDataModels.OrderByDescending(x => x.Date).Select(x => x.Id).FirstOrDefault();
+            result.MostRecentMatchTitle = wrestlingDataModels.OrderByDescending(x => x.Date).Select(x => x.Title).FirstOrDefault();
+            result.MostRecentMatchWrestler1Image = wrestlingDataModels.OrderByDescending(x => x.Date).Select(x => x.WrestlerImage1).FirstOrDefault();
+            result.MostRecentMatchWrestler1Name = wrestlingDataModels.OrderByDescending(x => x.Date).Select(x => x.WrestlerName1).FirstOrDefault();
+            result.MostRecentMatchWrestler2Image = wrestlingDataModels.OrderByDescending(x => x.Date).Select(x => x.WrestlerImage2).FirstOrDefault();
+            result.MostRecentMatchWrestler2Name = wrestlingDataModels.OrderByDescending(x => x.Date).Select(x => x.WrestlerName2).FirstOrDefault();
 
             return result;
         }

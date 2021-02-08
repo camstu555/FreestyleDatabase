@@ -111,7 +111,7 @@ namespace FreestyleDatabase.Shared.Services
                 {
                     existingIds[newData.Id] = existingIds[newData.Id] + 1;
 
-                    newData.Id = $"{existingIds[newData.Id]}-{newData.Id}";
+                    newData.Id = $"{newData.Id}-{existingIds[newData.Id]}";
                 }
                 else
                 {

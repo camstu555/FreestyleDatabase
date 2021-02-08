@@ -104,20 +104,8 @@ namespace FreestyleDatabase.Shared.Models
 
         public string WrestlerLastName1 { get; set; }
 
-        public bool IsForfeit
-        {
-            get
-            {
-                return string.IsNullOrEmpty(WrestlerId2) || (string.IsNullOrEmpty(WrestlerFirstName2) || string.IsNullOrEmpty(WrestlerLastName2));
-            }
-        }
+        public bool IsForfeit { get; set; }
 
-        public bool HasVideo
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(Video);
-            }
-        }
+        public bool HasVideo { get; set; }
     }
 }
