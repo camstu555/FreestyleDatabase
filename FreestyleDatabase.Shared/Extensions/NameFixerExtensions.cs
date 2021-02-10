@@ -6,6 +6,7 @@ namespace FreestyleDatabase.Shared.Services
     {
         private static readonly Dictionary<string, string> AmericanNames = new Dictionary<string, string>()
         {
+            {"Vitali Arujau", "Vito Arujau" },
             {"Jordan Ernest Burroughs", "Jordan Burroughs"},
             {"Jordan Michael Oliver", "Jordan Oliver"},
             {"Daton Duain Fix", "Daton Fix"},
